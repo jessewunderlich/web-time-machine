@@ -238,8 +238,15 @@ export default function Era2021() {
                       className={styles.chatInputField}
                       placeholder="Ask about web history..."
                       readOnly
+                      aria-label="Chat input (decorative demo — this input is read-only)"
                     />
-                    <button className={styles.chatSend}>↑</button>
+                    <button
+                      className={styles.chatSend}
+                      type="button"
+                      aria-label="Send message (decorative — this chatbot is a demo)"
+                    >
+                      ↑
+                    </button>
                   </div>
                 </div>
               </div>

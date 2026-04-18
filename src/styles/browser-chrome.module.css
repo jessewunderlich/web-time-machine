@@ -1,0 +1,357 @@
+/* ─── BrowserChrome shared / era-specific styles ──────────────────────────
+ * Extracted from src/components/browser-chrome/BrowserChrome.tsx which held
+ * 50+ inline style objects. Era-specific colors (topBg, borderColor) still
+ * flow via CSS custom properties set on the root wrapper as inline styles
+ * so the ERA_CONFIG data stays the single source of truth for per-era theming.
+ * ───────────────────────────────────────────────────────────────────── */
+
+/* ─── Win9x / IE6 title-bar control button (used by 1996 + 2000) ─────── */
+.winBtn {
+  background: #c0c0c0;
+  border: 1px outset #fff;
+  width: 16px;
+  height: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 9px;
+  color: #000;
+  cursor: pointer;
+  user-select: none;
+}
+
+/* ─── BSOD overlay (Era 2000 easter egg) ─────────────────────────────── */
+.bsod {
+  position: absolute;
+  inset: 0;
+  background: #0000aa;
+  color: #fff;
+  font-family: 'Courier New', monospace;
+  padding: 2rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  cursor: pointer;
+}
+.bsodBody {
+  max-width: 600px;
+}
+.bsodLead {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+.bsodCode {
+  font-size: 1.1rem;
+  font-weight: bold;
+  margin-top: 1.5rem;
+}
+.bsodDetail {
+  margin-top: 1.5rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+.bsodHint {
+  font-size: 0.75rem;
+  opacity: 0.8;
+}
+
+/* ─── Shared outer shells ────────────────────────────────────────────── */
+.shell1991 {
+  border: 2px solid var(--chrome-border, #808080);
+  font-family: 'Courier New', monospace;
+  background: #000;
+}
+.shell1996,
+.shell2000 {
+  border: 3px outset var(--chrome-border, #808080);
+  background: #000;
+}
+.shell2000 {
+  position: relative;
+}
+.shell2005 {
+  border: 1px solid var(--chrome-border, #a0a0a0);
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15);
+}
+.shell2010 {
+  border: 1px solid var(--chrome-border, #b0b0b0);
+  border-radius: 8px 8px 0 0;
+  overflow: hidden;
+}
+.shell2015 {
+  border: 1px solid var(--chrome-border, #d8d8d8);
+  border-radius: 12px 12px 0 0;
+  overflow: hidden;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.08);
+}
+.shell2021 {
+  border: 1px solid var(--chrome-border, #333);
+  border-radius: 12px;
+  overflow: hidden;
+  background: #0d0d1a;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+/* ─── 1991 — Lynx terminal strip ─────────────────────────────────────── */
+.lynxBar {
+  background: var(--chrome-top-bg, #c0c0c0);
+  border-bottom: 2px solid var(--chrome-border, #808080);
+  padding: 2px 4px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 12px;
+}
+.lynxName {
+  font-weight: bold;
+  color: var(--chrome-top-color, #000);
+}
+.lynxUrl {
+  color: #666;
+  font-size: 11px;
+  margin-left: auto;
+}
+
+/* ─── 1996 / 2000 — Win9x title bar ──────────────────────────────────── */
+.winTitle {
+  background: linear-gradient(90deg, #000080, #1084d0);
+  padding: 3px 6px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 12px;
+  color: #fff;
+  font-weight: bold;
+  font-family: Arial, sans-serif;
+}
+.winTitleBtns {
+  display: flex;
+  gap: 2px;
+}
+
+/* ─── 1996 / 2000 — toolbar ──────────────────────────────────────────── */
+.winToolbar {
+  background: var(--chrome-top-bg, #c0c0c0);
+  border-bottom: 2px solid var(--chrome-border, #808080);
+  padding: 3px 6px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  font-size: 11px;
+  font-family: Arial, sans-serif;
+}
+.winToolBtn {
+  background: #c0c0c0;
+  border: 1px outset #fff;
+  padding: 2px 5px;
+  cursor: pointer;
+  font-size: 10px;
+}
+.winAddr {
+  flex: 1;
+  background: #fff;
+  border: 1px inset #808080;
+  padding: 1px 4px;
+  font-size: 11px;
+  color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.winGoBtn {
+  background: #c0c0c0;
+  border: 1px outset #fff;
+  padding: 2px 8px;
+  cursor: pointer;
+  font-size: 10px;
+}
+
+/* ─── 2000 — minimized overlay ───────────────────────────────────────── */
+.minimizedWrap {
+  position: relative;
+}
+.minimizedWrap[data-minimized='true'] {
+  opacity: 0.3;
+}
+.minimizedNote {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 0.85rem;
+  font-family: Arial, sans-serif;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 10;
+  pointer-events: none;
+}
+
+/* ─── 2005 — Firefox 1.5 tabs + toolbar ──────────────────────────────── */
+.ffTabStrip {
+  background: var(--chrome-top-bg, #e6e3da);
+  padding: 6px 8px 0;
+  display: flex;
+  gap: 4px;
+  align-items: flex-end;
+  font-family: Arial, sans-serif;
+  font-size: 11px;
+}
+.ffTab {
+  border: 1px solid var(--chrome-border, #a0a0a0);
+  border-radius: 4px 4px 0 0;
+  padding: 3px 10px;
+  cursor: pointer;
+  font-size: 11px;
+  white-space: nowrap;
+  background: #d0cdc4;
+  color: #555;
+}
+.ffTab[data-active='true'] {
+  background: #fff;
+  border-bottom: 1px solid #fff;
+  color: #000;
+}
+.ffAddressBar {
+  background: #e6e3da;
+  padding: 4px 8px;
+  display: flex;
+  gap: 4px;
+  align-items: center;
+  border-top: 1px solid var(--chrome-border, #a0a0a0);
+  font-size: 11px;
+}
+.ffNavBtn {
+  background: linear-gradient(180deg, #f5f5f5, #ddd);
+  border: 1px solid var(--chrome-border, #a0a0a0);
+  border-radius: 3px;
+  padding: 2px 6px;
+  cursor: pointer;
+  font-size: 10px;
+}
+.ffUrlBox {
+  flex: 1;
+  background: #fff;
+  border: 1px solid var(--chrome-border, #a0a0a0);
+  border-radius: 3px;
+  padding: 2px 6px;
+  font-size: 11px;
+}
+
+/* ─── 2010 — Chrome 8 ────────────────────────────────────────────────── */
+.chrBar {
+  background: var(--chrome-top-bg, #dadada);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  font-family: Arial, sans-serif;
+  font-size: 12px;
+}
+.chrNav {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+.chrNavBtn {
+  background: #c8c8c8;
+  border: none;
+  border-radius: 50%;
+  width: 22px;
+  height: 22px;
+  cursor: pointer;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.chrOmnibox {
+  flex: 1;
+  background: #fff;
+  border: 1px solid var(--chrome-border, #b0b0b0);
+  border-radius: 12px;
+  padding: 3px 10px;
+  font-size: 11px;
+  text-align: center;
+  color: #333;
+}
+.chrIcons {
+  display: flex;
+  gap: 4px;
+}
+.chrIcon {
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+}
+
+/* ─── 2015 — Safari ──────────────────────────────────────────────────── */
+.safariBar {
+  background: var(--chrome-top-bg, #f5f5f5);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: -apple-system, sans-serif;
+  font-size: 12px;
+}
+.trafficLights {
+  display: flex;
+  gap: 6px;
+}
+.trafficLight {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+}
+.lightRed {
+  background: #ff5f57;
+}
+.lightYellow {
+  background: #ffbd2e;
+}
+.lightGreen {
+  background: #28c840;
+}
+.safariUrl {
+  flex: 1;
+  background: #e8e8e8;
+  border-radius: 6px;
+  padding: 3px 10px;
+  text-align: center;
+  font-size: 11px;
+  color: #666;
+}
+
+/* ─── 2021 — Arc minimalist ──────────────────────────────────────────── */
+.arcBar {
+  background: var(--chrome-top-bg, #1a1a2e);
+  padding: 8px 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  font-family: -apple-system, sans-serif;
+}
+.arcLight {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  opacity: 0.7;
+}
+.arcUrl {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  padding: 4px 10px;
+  text-align: center;
+  font-size: 11px;
+  color: rgba(255, 255, 255, 0.4);
+}
+.arcMenu {
+  color: rgba(255, 255, 255, 0.3);
+  font-size: 14px;
+}
