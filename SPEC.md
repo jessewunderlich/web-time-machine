@@ -74,7 +74,7 @@ src/
 - **Elements:** Glossy buttons with reflections, "Web 2.0" badge/starburst, RSS icon, tag cloud, rounded corners everywhere, gradient headers
 - **Text:** Lucida Grande / Trebuchet MS
 - **Content:** MySpace, early social media, AJAX, jQuery, skeuomorphism origins
-- **Browser Chrome:** Firefox 3 frame
+- **Browser Chrome:** Mozilla Firefox 1.5 frame
 
 ### Era 5: 2010-2014 — "Flat Design"
 - **Background:** Bold solid colors (iOS 7 palette)
