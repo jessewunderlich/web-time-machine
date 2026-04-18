@@ -52,7 +52,6 @@ function buildEra1996(ctx: AudioContext, dest: AudioNode): SoundHandle {
   const notes = [261.63, 329.63, 392.0]; // C4, E4, G4
   let noteIdx = 0;
   const activeOscs: OscillatorNode[] = [];
-  let intervalId: ReturnType<typeof setInterval>;
 
   const playNote = () => {
     const osc = ctx.createOscillator();
@@ -70,7 +69,7 @@ function buildEra1996(ctx: AudioContext, dest: AudioNode): SoundHandle {
   };
 
   playNote();
-  intervalId = setInterval(playNote, 450);
+  const intervalId = setInterval(playNote, 450);
 
   return {
     stop: () => {
