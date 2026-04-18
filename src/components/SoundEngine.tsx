@@ -118,6 +118,7 @@ function buildEra2000(ctx: AudioContext, dest: AudioNode): SoundHandle {
 }
 
 function buildEra2005(ctx: AudioContext, dest: AudioNode): SoundHandle {
+  const activeOscs: OscillatorNode[] = [];
   const ding = () => {
     const osc = ctx.createOscillator();
     osc.type = 'sine';
@@ -129,12 +130,23 @@ function buildEra2005(ctx: AudioContext, dest: AudioNode): SoundHandle {
     gain.connect(dest);
     osc.start();
     osc.stop(ctx.currentTime + 0.65);
+    activeOscs.push(osc);
+    // Cleanup ref after oscillator ends
+    osc.onended = () => {
+      const idx = activeOscs.indexOf(osc);
+      if (idx !== -1) activeOscs.splice(idx, 1);
+    };
   };
 
   ding();
   const intervalId = setInterval(ding, 5000);
 
-  return { stop: () => clearInterval(intervalId) };
+  return {
+    stop: () => {
+      clearInterval(intervalId);
+      activeOscs.forEach((o) => { try { o.stop(); } catch (_) {} });
+    },
+  };
 }
 
 function buildEra2010(ctx: AudioContext, dest: AudioNode): SoundHandle {

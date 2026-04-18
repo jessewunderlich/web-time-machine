@@ -286,22 +286,33 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
           <span>{cfg.name} — [{cfg.url}]</span>
           <div style={{ display: 'flex', gap: '2px' }}>
             <div
+              role="button"
+              tabIndex={0}
               style={winBtnStyle}
               onClick={() => setMinimized(true)}
+              onKeyDown={(e) => e.key === 'Enter' && setMinimized(true)}
               title="Minimize"
+              aria-label="Minimize window"
             >
               _
             </div>
             <div
+              role="button"
+              tabIndex={0}
               style={winBtnStyle}
               onClick={() => setMinimized(false)}
+              onKeyDown={(e) => e.key === 'Enter' && setMinimized(false)}
               title="Restore"
+              aria-label="Restore window"
             >
               □
             </div>
             <div
+              role="button"
+              tabIndex={0}
               style={{ ...winBtnStyle, background: '#c0c0c0' }}
               onClick={() => setCrashed(true)}
+              onKeyDown={(e) => e.key === 'Enter' && setCrashed(true)}
               title="Close"
             >
               ✕
