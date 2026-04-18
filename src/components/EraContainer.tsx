@@ -1,22 +1,23 @@
 'use client';
 
-import dynamic from 'next/dynamic';
 import ScrollProvider from './ScrollProvider';
 import EraTransition from './EraTransition';
 import KeyboardNav from './KeyboardNav';
 import SoundToggle from './SoundToggle';
 import ProgressBar from './ProgressBar';
 import EraNav from './EraNav';
-
-// Lazy-load era components — each uses 'use client' + GSAP/browser APIs
-// ssr: false is required here and must be in a Client Component (Next.js 16+)
-const Era1991 = dynamic(() => import('./eras/Era1991'), { ssr: false });
-const Era1996 = dynamic(() => import('./eras/Era1996'), { ssr: false });
-const Era2000 = dynamic(() => import('./eras/Era2000'), { ssr: false });
-const Era2005 = dynamic(() => import('./eras/Era2005'), { ssr: false });
-const Era2010 = dynamic(() => import('./eras/Era2010'), { ssr: false });
-const Era2015 = dynamic(() => import('./eras/Era2015'), { ssr: false });
-const Era2021 = dynamic(() => import('./eras/Era2021'), { ssr: false });
+// Era components are client components already. Import them directly so the
+// server can render the full JSX tree and React 19 can hydrate cleanly.
+// An earlier attempt used next/dynamic with `ssr: false`, which emitted
+// BAILOUT_TO_CLIENT_SIDE_RENDERING placeholders that React 19 refused to
+// reconcile in production (hydration threw NotFoundError: insertBefore).
+import Era1991 from './eras/Era1991';
+import Era1996 from './eras/Era1996';
+import Era2000 from './eras/Era2000';
+import Era2005 from './eras/Era2005';
+import Era2010 from './eras/Era2010';
+import Era2015 from './eras/Era2015';
+import Era2021 from './eras/Era2021';
 
 export default function EraContainer() {
   return (

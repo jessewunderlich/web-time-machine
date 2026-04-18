@@ -16,16 +16,19 @@ export default function Era2005() {
 
   useGSAP(
     () => {
-      gsap.from(layoutRef.current, {
-        opacity: 0,
-        y: 24,
-        duration: 0.7,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: eraRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
-        },
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from(layoutRef.current, {
+          opacity: 0,
+          y: 24,
+          duration: 0.7,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: eraRef.current,
+            start: 'top 75%',
+            toggleActions: 'play none none reverse',
+          },
+        });
       });
     },
     { scope: eraRef }

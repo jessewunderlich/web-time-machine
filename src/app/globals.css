@@ -67,6 +67,18 @@ section[id^="era-"] {
   box-sizing: border-box;
 }
 
+/* Respect user's motion preference — disables CSS animations/transitions sitewide.
+ * JS-driven animations (GSAP, typewriter, chatbot auto-advance) have their own
+ * guards using useReducedMotion() and gsap.matchMedia(). */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
 /* Site-level intro overlay */
 .site-intro {
   position: fixed;

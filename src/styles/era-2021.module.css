@@ -144,28 +144,31 @@
   transform: translateY(-2px);
 }
 
+.glassCard.span9 { grid-column: span 9; }
+.glassCard.span8 { grid-column: span 8; }
 .glassCard.span7 { grid-column: span 7; }
+.glassCard.span6 { grid-column: span 6; }
 .glassCard.span5 { grid-column: span 5; }
 .glassCard.span4 { grid-column: span 4; }
-.glassCard.span8 { grid-column: span 8; }
-.glassCard.span6 { grid-column: span 6; }
 .glassCard.span3 { grid-column: span 3; }
 
 @media (max-width: 900px) {
+  .glassCard.span9,
+  .glassCard.span8,
   .glassCard.span7,
   .glassCard.span5,
-  .glassCard.span8,
   .glassCard.span4 { grid-column: span 4; }
   .glassCard.span6 { grid-column: span 2; }
   .glassCard.span3 { grid-column: span 2; }
 }
 
 @media (max-width: 600px) {
-  .glassCard.span7,
-  .glassCard.span5,
+  .glassCard.span9,
   .glassCard.span8,
-  .glassCard.span4,
+  .glassCard.span7,
   .glassCard.span6,
+  .glassCard.span5,
+  .glassCard.span4,
   .glassCard.span3 { grid-column: span 2; }
 }
 

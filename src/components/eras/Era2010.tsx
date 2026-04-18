@@ -17,32 +17,35 @@ export default function Era2010() {
 
   useGSAP(
     () => {
-      gsap.from(heroRef.current, {
-        opacity: 0,
-        y: 40,
-        duration: 0.8,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: eraRef.current,
-          start: 'top 75%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-
-      if (cardsRef.current) {
-        gsap.from(cardsRef.current.children, {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from(heroRef.current, {
           opacity: 0,
-          y: 30,
-          stagger: 0.1,
-          duration: 0.5,
-          ease: 'power2.out',
+          y: 40,
+          duration: 0.8,
+          ease: 'power3.out',
           scrollTrigger: {
-            trigger: cardsRef.current,
-            start: 'top 80%',
+            trigger: eraRef.current,
+            start: 'top 75%',
             toggleActions: 'play none none reverse',
           },
         });
-      }
+
+        if (cardsRef.current) {
+          gsap.from(cardsRef.current.children, {
+            opacity: 0,
+            y: 30,
+            stagger: 0.1,
+            duration: 0.5,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: cardsRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none reverse',
+            },
+          });
+        }
+      });
     },
     { scope: eraRef }
   );

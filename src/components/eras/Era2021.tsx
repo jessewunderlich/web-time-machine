@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
 import HistoricalSites from '../HistoricalSites';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import styles from '../../styles/era-2021.module.css';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -27,44 +28,49 @@ export default function Era2021() {
   const eraRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const gridRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
   const [visibleMessages, setVisibleMessages] = useState(1);
   const [typing, setTyping] = useState(false);
 
   useGSAP(
     () => {
-      gsap.from(headlineRef.current, {
-        opacity: 0,
-        y: 40,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: eraRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-
-      if (gridRef.current) {
-        gsap.from(Array.from(gridRef.current.children), {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from(headlineRef.current, {
           opacity: 0,
-          y: 24,
-          stagger: 0.12,
-          duration: 0.6,
-          ease: 'power2.out',
+          y: 40,
+          duration: 1,
+          ease: 'power3.out',
           scrollTrigger: {
-            trigger: gridRef.current,
-            start: 'top 80%',
+            trigger: eraRef.current,
+            start: 'top 70%',
             toggleActions: 'play none none reverse',
           },
         });
-      }
+
+        if (gridRef.current) {
+          gsap.from(Array.from(gridRef.current.children), {
+            opacity: 0,
+            y: 24,
+            stagger: 0.12,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none reverse',
+            },
+          });
+        }
+      });
     },
     { scope: eraRef }
   );
 
-  // Easter egg: chatbot auto-advances messages
+  // Easter egg: chatbot auto-advances messages.
+  // Reduced motion: reveal the full conversation immediately, no typing delay.
   useEffect(() => {
-    if (visibleMessages >= AI_MESSAGES.length) return;
+    if (reducedMotion || visibleMessages >= AI_MESSAGES.length) return;
     const timer = setTimeout(() => {
       setTyping(true);
       setTimeout(() => {
@@ -73,7 +79,12 @@ export default function Era2021() {
       }, 1800);
     }, 2500);
     return () => clearTimeout(timer);
-  }, [visibleMessages]);
+  }, [visibleMessages, reducedMotion]);
+
+  // When the reduced-motion flag flips on (including first paint after mount),
+  // surface all messages at once instead of auto-advancing.
+  const messagesToRender = reducedMotion ? AI_MESSAGES.length : visibleMessages;
+  const showTyping = reducedMotion ? false : typing;
 
   const bentoItems = [
     {
@@ -179,7 +190,7 @@ export default function Era2021() {
               ))}
 
               {/* 3D floating cube card */}
-              <div className={`${styles.glassCard} ${styles['span3' as keyof typeof styles]}`}>
+              <div className={`${styles.glassCard} ${styles.span3}`}>
                 <div className={`${styles.cardAccent} ${styles.accentPink}`} />
                 <div className={styles.cardLabel}>CSS 3D</div>
                 <div className={styles.floatingElement}>
@@ -195,19 +206,18 @@ export default function Era2021() {
               </div>
 
               {/* AI Chatbot — easter egg */}
-              <div className={`${styles.glassCard} ${styles['span9' as keyof typeof styles] || styles['span7' as keyof typeof styles]}`}
-                style={{ gridColumn: 'span 9' }}>
+              <div className={`${styles.glassCard} ${styles.span9}`}>
                 <div className={`${styles.cardAccent} ${styles.accentPurple}`} />
                 <div className={styles.chatbotWidget}>
                   <div className={styles.chatbotHeader}>
                     <div className={styles.chatbotDot} />
                     <span className={styles.chatbotName}>TimeMachineAI</span>
                     <span className={styles.chatbotStatus}>
-                      {typing ? 'typing...' : 'online'}
+                      {showTyping ? 'typing...' : 'online'}
                     </span>
                   </div>
                   <div className={styles.chatbotMessages}>
-                    {AI_MESSAGES.slice(0, visibleMessages).map((msg, i) => (
+                    {AI_MESSAGES.slice(0, messagesToRender).map((msg, i) => (
                       <div
                         key={i}
                         className={`${styles.chatMsg} ${msg.role === 'user' ? styles.chatMsgUser : ''}`}
@@ -215,7 +225,7 @@ export default function Era2021() {
                         {msg.text}
                       </div>
                     ))}
-                    {typing && (
+                    {showTyping && (
                       <div className={styles.typingIndicator}>
                         <div className={styles.typingDot} />
                         <div className={styles.typingDot} />
@@ -249,9 +259,9 @@ export default function Era2021() {
                 technology ever built — and it&apos;s still only getting started.
               </p>
               <ul className={styles.list} style={{ marginTop: '1rem' }}>
-                <li>This site was built with Next.js 16, GSAP, and Framer Motion</li>
+                <li>This site was built with Next.js 16, GSAP, and Tailwind CSS</li>
                 <li>Each era uses period-accurate CSS to style its section</li>
-                <li>There are 4 easter eggs hidden in the eras — did you find them all?</li>
+                <li>There are 7 easter eggs hidden in the eras — did you find them all?</li>
                 <li>Tim Berners-Lee never patented the web. He gave it to all of us.</li>
               </ul>
             </div>

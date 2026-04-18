@@ -17,16 +17,21 @@ export default function Era1996() {
 
   useGSAP(
     () => {
-      gsap.from(tableRef.current, {
-        opacity: 0,
-        scale: 0.95,
-        duration: 0.6,
-        ease: 'back.out(1.2)',
-        scrollTrigger: {
-          trigger: eraRef.current,
-          start: 'top 80%',
-          toggleActions: 'play none none reverse',
-        },
+      // Respect prefers-reduced-motion: skip the intro animation entirely
+      // (gsap.matchMedia auto-reverts when the media query stops matching).
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from(tableRef.current, {
+          opacity: 0,
+          scale: 0.95,
+          duration: 0.6,
+          ease: 'back.out(1.2)',
+          scrollTrigger: {
+            trigger: eraRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+          },
+        });
       });
     },
     { scope: eraRef }
