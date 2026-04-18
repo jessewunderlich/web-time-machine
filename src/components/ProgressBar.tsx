@@ -93,13 +93,12 @@ export default function ProgressBar() {
   }, []);
 
   const scrollToEra = (id: string) => {
-    // Explicit reduced-motion handling: jump instead of smooth-scroll when
-    // the user has requested reduced motion. Belt-and-suspenders over the
-    // browser-level handling of `behavior: 'smooth'`.
     document.getElementById(id)?.scrollIntoView({
       behavior: reducedMotion ? 'auto' : 'smooth',
     });
-    // Keep the URL hash in sync for shareable deep-links.
+    // Update active label immediately (optimistic) so color + underline match
+    // the URL before IntersectionObserver fires at scroll-end.
+    setCurrentEra(id as EraId);
     if (typeof window !== 'undefined') {
       window.history.replaceState(null, '', `#${id}`);
     }

@@ -54,12 +54,13 @@ export default function EraNav() {
     ERAS.find((e) => e.id === currentEraId)?.eraStyle ?? 'terminal';
 
   const scrollToEra = (id: string) => {
-    // Browsers already honor prefers-reduced-motion for scrollIntoView's
-    // smooth behavior, but being explicit guarantees deterministic behavior
-    // across engines and for programmatic a11y testing.
     document.getElementById(id)?.scrollIntoView({
       behavior: reducedMotion ? 'auto' : 'smooth',
     });
+    // Update active dot immediately (optimistic) so it matches the URL update
+    // below. IntersectionObserver will confirm the same value once the scroll
+    // animation lands — no flash or conflict.
+    setCurrentEraId(id);
     // Keep the URL hash in sync so users can share /#era-2005 and land
     // directly on that era. replaceState (not pushState) avoids cluttering
     // the back button with every dot click.
