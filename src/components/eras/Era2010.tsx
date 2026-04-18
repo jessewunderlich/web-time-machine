@@ -137,11 +137,12 @@ export default function Era2010() {
           <div className={`${styles.colorSection} ${styles.blue}`}>
             <h3 className={styles.colorSectionTitle}>The Year Everything Went Mobile</h3>
             <p className={styles.colorSectionText}>
-              By 2014, mobile internet usage overtook desktop for the first time.
-              Developers scrambled to make sites that worked on 320px screens.
-              Media queries, flexbox, and viewport meta tags became essential.
-              The mobile-first approach — designing for the smallest screen first —
-              became gospel.
+              By 2014 the majority of Americans had a smartphone and mobile-first
+              was no longer optional — though mobile wouldn’t overtake desktop in
+              global page-view share until 2017 per StatCounter. Developers
+              scrambled to make sites work on 320px screens. Media queries,
+              flexbox, and viewport meta tags became essential. The mobile-first
+              approach — designing for the smallest screen first — became gospel.
             </p>
           </div>
 
@@ -156,7 +157,7 @@ export default function Era2010() {
                 '2013 — iOS 7 overhaul: Apple goes flat, shocks the design world',
                 '2013 — Material Design principles begin forming at Google',
                 '2014 — Google announces Material Design at Google I/O',
-                '2014 — Mobile internet traffic surpasses desktop for the first time',
+                '2014 — Mobile browsing becomes mainstream; StatCounter traffic crossover arrives 2017',
               ].map((item) => (
                 <li key={item}>
                   <span className={styles.dot} />

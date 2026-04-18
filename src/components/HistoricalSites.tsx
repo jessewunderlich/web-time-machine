@@ -56,7 +56,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
     {
       name: 'Apple.com',
       year: '2001',
-      description: 'Aqua UI — brushed metal and translucency',
+      description: 'Aqua UI — translucency and pinstripes (brushed metal arrived later in 10.3)',
       screenshotClass: 'apple01',
     },
     {
@@ -76,7 +76,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
     {
       name: 'YouTube',
       year: '2005',
-      description: 'Broadcast yourself — founded in a garage',
+      description: 'Broadcast yourself — founded Feb 2005 in Chad Hurley’s garage',
       screenshotClass: 'youtube05',
     },
     {
@@ -121,8 +121,8 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
     },
     {
       name: 'GitHub',
-      year: '2018',
-      description: 'Dark mode arrives — the web wants to rest',
+      year: '2020',
+      description: 'Dark mode arrives (Dec 2020) — the web wants to rest',
       screenshotClass: 'github18',
     },
   ],
