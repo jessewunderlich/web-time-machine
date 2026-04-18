@@ -6,6 +6,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
 import HistoricalSites from '../HistoricalSites';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import styles from '../../styles/era-2000.module.css';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -13,25 +14,39 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 export default function Era2000() {
   const eraRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
+  const reducedMotion = useReducedMotion();
   const [showPopup, setShowPopup] = useState(true);
-  // Start with content visible — the loading screen is a decorative easter egg
-  // triggered only when the user clicks "SKIP INTRO" or the animation finishes.
-  // Starting false caused a janky flash-then-reveal on scroll-into-view.
-  const [loaded, setLoaded] = useState(false);
+  // `loaded` gates the Flash-era loading screen easter egg. It flips true when
+  // the user clicks "SKIP INTRO" or the reveal animation finishes. Reduced
+  // motion users skip the easter egg (derived, not stored in state).
+  const [loadedState, setLoaded] = useState(false);
+  const loaded = reducedMotion || loadedState;
   const [hasEntered, setHasEntered] = useState(false);
 
   useGSAP(
     () => {
-      gsap.from(innerRef.current, {
-        opacity: 0,
-        y: 30,
-        duration: 0.8,
-        scrollTrigger: {
+      const mm = gsap.matchMedia();
+      // Always register the onEnter trigger so the loading-screen state flips,
+      // but skip the visual fade for users who prefer reduced motion.
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from(innerRef.current, {
+          opacity: 0,
+          y: 30,
+          duration: 0.8,
+          scrollTrigger: {
+            trigger: eraRef.current,
+            start: 'top 80%',
+            toggleActions: 'play none none reverse',
+            onEnter: () => setHasEntered(true),
+          },
+        });
+      });
+      mm.add('(prefers-reduced-motion: reduce)', () => {
+        ScrollTrigger.create({
           trigger: eraRef.current,
           start: 'top 80%',
-          toggleActions: 'play none none reverse',
           onEnter: () => setHasEntered(true),
-        },
+        });
       });
     },
     { scope: eraRef }

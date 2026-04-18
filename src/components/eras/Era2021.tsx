@@ -34,32 +34,35 @@ export default function Era2021() {
 
   useGSAP(
     () => {
-      gsap.from(headlineRef.current, {
-        opacity: 0,
-        y: 40,
-        duration: 1,
-        ease: 'power3.out',
-        scrollTrigger: {
-          trigger: eraRef.current,
-          start: 'top 70%',
-          toggleActions: 'play none none reverse',
-        },
-      });
-
-      if (gridRef.current) {
-        gsap.from(Array.from(gridRef.current.children), {
+      const mm = gsap.matchMedia();
+      mm.add('(prefers-reduced-motion: no-preference)', () => {
+        gsap.from(headlineRef.current, {
           opacity: 0,
-          y: 24,
-          stagger: 0.12,
-          duration: 0.6,
-          ease: 'power2.out',
+          y: 40,
+          duration: 1,
+          ease: 'power3.out',
           scrollTrigger: {
-            trigger: gridRef.current,
-            start: 'top 80%',
+            trigger: eraRef.current,
+            start: 'top 70%',
             toggleActions: 'play none none reverse',
           },
         });
-      }
+
+        if (gridRef.current) {
+          gsap.from(Array.from(gridRef.current.children), {
+            opacity: 0,
+            y: 24,
+            stagger: 0.12,
+            duration: 0.6,
+            ease: 'power2.out',
+            scrollTrigger: {
+              trigger: gridRef.current,
+              start: 'top 80%',
+              toggleActions: 'play none none reverse',
+            },
+          });
+        }
+      });
     },
     { scope: eraRef }
   );
