@@ -1,0 +1,397 @@
+.wrapper {
+  margin-top: 2rem;
+  padding: 1rem 0;
+}
+
+.heading {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 1rem;
+  padding-left: 1rem;
+}
+
+.scrollRow {
+  display: flex;
+  gap: 16px;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  padding: 0 1rem 1rem;
+  -ms-overflow-style: none;
+  scrollbar-width: thin;
+}
+
+.card {
+  flex-shrink: 0;
+  width: 300px;
+  border-radius: 8px;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  scroll-snap-align: start;
+}
+
+/* ─── Mini browser chrome ─────────────────────────────────────────── */
+.chrome {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  background: rgba(255, 255, 255, 0.06);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.trafficLights {
+  display: flex;
+  gap: 5px;
+  flex-shrink: 0;
+}
+
+.light {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+}
+
+.lightRed { background: #ff5f57; }
+.lightYellow { background: #febc2e; }
+.lightGreen { background: #28c840; }
+
+.urlBar {
+  flex: 1;
+  font-size: 9px;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', monospace;
+  color: rgba(255, 255, 255, 0.35);
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 4px;
+  padding: 3px 8px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ─── Screenshot area (CSS art) ───────────────────────────────────── */
+.screenshot {
+  width: 100%;
+  aspect-ratio: 16 / 10;
+  position: relative;
+  overflow: hidden;
+}
+
+/* === 1991 Era === */
+.cern91 {
+  background: #c0c0c0;
+  background-image:
+    repeating-linear-gradient(0deg, transparent, transparent 18px, #999 18px, #999 19px);
+  display: flex;
+  align-items: flex-start;
+}
+.cern91::before {
+  content: 'World Wide Web\ACERN - European Laboratory\Afor Particle Physics\A\AThe WorldWideWeb (W3)\Ais a wide-area hypermedia\Ainformation retrieval\Ainitiative...';
+  white-space: pre-wrap;
+  font-family: 'Times New Roman', serif;
+  font-size: 11px;
+  color: #00008b;
+  text-decoration: underline;
+  padding: 8px;
+  line-height: 19px;
+}
+
+.mosaic93 {
+  background: #c0c0c0;
+  border: 2px inset #999;
+}
+.mosaic93::before {
+  content: '▤ NCSA Mosaic for X 2.4\A━━━━━━━━━━━━━━━━━━\A🌐 Welcome to NCSA Mosaic\Aan Internet information\Abrowser and World Wide\AWeb client.';
+  white-space: pre-wrap;
+  font-family: 'Courier New', monospace;
+  font-size: 10px;
+  color: #000;
+  padding: 6px;
+  line-height: 16px;
+}
+
+/* === 1996 Era === */
+.spacejam96 {
+  background: #000 url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="4" height="4"><rect width="1" height="1" fill="%23444"/></svg>') repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.spacejam96::before {
+  content: '🏀 SPACE JAM';
+  font-family: Impact, sans-serif;
+  font-size: 28px;
+  color: #ff6600;
+  text-shadow: 2px 2px #000;
+}
+
+.yahoo97 {
+  background: #fff;
+}
+.yahoo97::before {
+  content: 'Yahoo!\A━━━━━━━━━━\A• Arts & Humanities\A• Business & Economy\A• Computers & Internet\A• Education\A• Entertainment\A• Government';
+  white-space: pre-wrap;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  color: #000;
+  padding: 6px;
+  line-height: 15px;
+}
+.yahoo97::after {
+  content: 'Yahoo!';
+  position: absolute;
+  top: 4px;
+  left: 8px;
+  font-family: Impact, sans-serif;
+  font-size: 16px;
+  color: #f00;
+}
+
+.geocities97 {
+  background: repeating-linear-gradient(45deg, #ffff00 0px, #ffff00 10px, #000 10px, #000 20px);
+}
+.geocities97::before {
+  content: '🏗 Under Construction 🏗\A\AVisitor Counter: 000042\A\A✉ Sign my Guestbook!';
+  white-space: pre-wrap;
+  font-family: 'Comic Sans MS', cursive;
+  font-size: 11px;
+  color: #fff;
+  background: rgba(0, 0, 0, 0.7);
+  padding: 8px;
+  text-align: center;
+  width: 100%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+/* === 2000 Era === */
+.newgrounds00 {
+  background: linear-gradient(180deg, #1a1a1a 0%, #333 100%);
+}
+.newgrounds00::before {
+  content: '⚡ NEWGROUNDS ⚡\A\AFlash Portal\A━━━━━━━━━━━━\A▶ Games  ▶ Movies\A▶ Audio  ▶ Art';
+  white-space: pre-wrap;
+  font-family: 'Trebuchet MS', sans-serif;
+  font-size: 11px;
+  color: #ff8800;
+  padding: 10px;
+  line-height: 16px;
+}
+
+.apple01 {
+  background: linear-gradient(180deg, #b0c4de 0%, #7a98b8 50%, #e8eef5 51%, #d4dce8 100%);
+}
+.apple01::before {
+  content: ' Apple\A━━━━━━━━━━━━━\A  Think Different.\A\A  Introducing the iPod.\A  1,000 songs in your\A  pocket.';
+  white-space: pre-wrap;
+  font-family: 'Lucida Grande', sans-serif;
+  font-size: 10px;
+  color: #333;
+  padding: 8px;
+  line-height: 15px;
+}
+
+.google02 {
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.google02::before {
+  content: 'Google';
+  font-family: 'Times New Roman', serif;
+  font-size: 32px;
+  font-weight: bold;
+  color: #4285f4;
+}
+.google02::after {
+  content: '[ _________________________ ]\A\A Google Search   I\'m Feeling Lucky';
+  white-space: pre-wrap;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  color: #666;
+  text-align: center;
+  margin-top: 4px;
+}
+
+/* === 2005 Era === */
+.myspace05 {
+  background: #003366;
+}
+.myspace05::before {
+  content: 'MySpace\A━━━━━━━━━\ATom\'s Profile\A\A♫ Now Playing:\A  Blink 182 — All The Small\A  Things\A\AFriends: 847,293';
+  white-space: pre-wrap;
+  font-family: Verdana, sans-serif;
+  font-size: 9px;
+  color: #fff;
+  padding: 8px;
+  line-height: 14px;
+}
+
+.youtube05 {
+  background: #fff;
+  border-bottom: 3px solid #cc0000;
+}
+.youtube05::before {
+  content: 'You Tube\A━━━━━━━━━━━━\A🎬 Broadcast Yourself™\A\A▶ Me at the zoo\A  8,267,921 views\A  ★★★★☆';
+  white-space: pre-wrap;
+  font-family: Arial, sans-serif;
+  font-size: 10px;
+  color: #333;
+  padding: 8px;
+  line-height: 15px;
+}
+
+.facebook06 {
+  background: #3b5998;
+}
+.facebook06::before {
+  content: 'facebook\A━━━━━━━━━━━\A\ANews Feed\A━━━━━━━━━\AMark Zuckerberg\Ais now friends with\ADustin Moskovitz\A\A👍 Like  💬 Comment';
+  white-space: pre-wrap;
+  font-family: 'Lucida Grande', sans-serif;
+  font-size: 9px;
+  color: #fff;
+  padding: 8px;
+  line-height: 14px;
+}
+
+/* === 2010 Era === */
+.ios7appstore {
+  background: linear-gradient(180deg, #f7f7f7 0%, #e9e9e9 100%);
+}
+.ios7appstore::before {
+  content: '■ App Store\A━━━━━━━━━━━━\A🔵 Featured  🔍 Search\A\ABest New Apps\A━━━━━━━━━━━━\A◼ Instagram  ◼ Vine\A◼ Snapchat   ◼ Uber';
+  white-space: pre-wrap;
+  font-family: -apple-system, 'Helvetica Neue', sans-serif;
+  font-size: 9px;
+  color: #333;
+  padding: 8px;
+  line-height: 14px;
+}
+
+.bootstrap11 {
+  background: #2c2c2c;
+}
+.bootstrap11::before {
+  content: 'Bootstrap\Afrom Twitter\A━━━━━━━━━━━━━━━\ASimple and flexible HTML,\ACSS, and JavaScript\Afor popular UI components.\A\A[Download Bootstrap] [View on GitHub]';
+  white-space: pre-wrap;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 9px;
+  color: #fff;
+  padding: 10px;
+  line-height: 14px;
+}
+
+.flatui13 {
+  background: #ecf0f1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  padding: 10px;
+}
+.flatui13::before {
+  content: '';
+  background: #1abc9c;
+  border-radius: 3px;
+  aspect-ratio: 2/1;
+}
+.flatui13::after {
+  content: '';
+  background: #3498db;
+  border-radius: 3px;
+  aspect-ratio: 2/1;
+}
+
+/* === 2015 Era === */
+.stripe16 {
+  background: linear-gradient(135deg, #6772e5 0%, #32325d 100%);
+}
+.stripe16::before {
+  content: 'Stripe\A\APayments infrastructure\Afor the internet.\A\AMillions of companies use\AStripe to accept payments.';
+  white-space: pre-wrap;
+  font-family: -apple-system, 'Camphor', sans-serif;
+  font-size: 10px;
+  color: #fff;
+  padding: 12px;
+  line-height: 16px;
+}
+
+.airbnb17 {
+  background: #fff;
+}
+.airbnb17::before {
+  content: '⌂ airbnb\A━━━━━━━━━━━━━━\A\ABook unique homes and\Aexperiences all over\Athe world.\A\A[   Where are you going?   ]';
+  white-space: pre-wrap;
+  font-family: 'Cereal', -apple-system, sans-serif;
+  font-size: 10px;
+  color: #484848;
+  padding: 12px;
+  line-height: 16px;
+}
+.airbnb17::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #ff5a5f;
+}
+
+.github18 {
+  background: #0d1117;
+}
+.github18::before {
+  content: '🐙 GitHub\A━━━━━━━━━━━━━━━\ABuild and ship software\Aon a single, collaborative\Aplatform.\A\A[Sign up for GitHub]';
+  white-space: pre-wrap;
+  font-family: -apple-system, 'Segoe UI', sans-serif;
+  font-size: 10px;
+  color: #c9d1d9;
+  padding: 12px;
+  line-height: 16px;
+}
+
+/* === 2021 Era === */
+.chatgpt22 {
+  background: #343541;
+}
+.chatgpt22::before {
+  content: '◉ ChatGPT\A━━━━━━━━━━━━━━━\A\A🧑 Write me a haiku about\A   the web\A\A🤖 Pixels dance and glow\A   Links connect the scattered\A   thoughts — One web, all of us';
+  white-space: pre-wrap;
+  font-family: 'Söhne', -apple-system, sans-serif;
+  font-size: 9px;
+  color: #d1d5db;
+  padding: 10px;
+  line-height: 14px;
+}
+
+.vercel22 {
+  background: #000;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.vercel22::before {
+  content: '▲ Vercel\A━━━━━━━━━━━━━━━\A\AYour Web. Accelerated.\A\ADeployments: 3\AFramework: Next.js 14\AStatus: ● Ready';
+  white-space: pre-wrap;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 9px;
+  color: #eee;
+  padding: 10px;
+  line-height: 14px;
+}
+
+.arc23 {
+  background: linear-gradient(135deg, #5b4fb0 0%, #8b5cf6 50%, #c084fc 100%);
+}
+.arc23::before {
+  content: '◎ Arc\A━━━━━━━━━━━━━━━\A\AThe internet, organised\Aaround you.\A\ASpaces · Easels · Boosts\A\A✨ A browser that browses\A   for you';
+  white-space: pre-wrap;
+  font-family: -apple-system, sans-serif;
+  font-size: 9px;
+  color: #fff;
+  padding: 10px;
+  line-height: 14px;
+}

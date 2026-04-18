@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
+import HistoricalSites from '../HistoricalSites';
 import styles from '../../styles/era-1996.module.css';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -194,6 +195,7 @@ You are visitor number:
           </div>
         </div>
       </BrowserChrome>
+      <HistoricalSites era="1996" />
     </section>
   );
 }

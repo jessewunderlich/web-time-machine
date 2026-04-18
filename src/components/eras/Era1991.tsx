@@ -2,6 +2,7 @@
 
 import { useRef, useState, useEffect } from 'react';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
+import HistoricalSites from '../HistoricalSites';
 import styles from '../../styles/era-1991.module.css';
 
 const ASCII_HEADER = `
@@ -206,6 +207,7 @@ export default function Era1991() {
           </div>
         </div>
       </BrowserChrome>
+      <HistoricalSites era="1991" />
     </section>
   );
 }

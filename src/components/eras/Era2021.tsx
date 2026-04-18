@@ -5,6 +5,7 @@ import { useGSAP } from '@gsap/react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
+import HistoricalSites from '../HistoricalSites';
 import styles from '../../styles/era-2021.module.css';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
@@ -257,6 +258,7 @@ export default function Era2021() {
           </div>
         </div>
       </BrowserChrome>
+      <HistoricalSites era="2021" />
     </section>
   );
 }

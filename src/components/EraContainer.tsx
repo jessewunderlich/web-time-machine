@@ -5,6 +5,8 @@ import ScrollProvider from './ScrollProvider';
 import EraTransition from './EraTransition';
 import KeyboardNav from './KeyboardNav';
 import SoundToggle from './SoundToggle';
+import ProgressBar from './ProgressBar';
+import EraNav from './EraNav';
 
 // Lazy-load era components — each uses 'use client' + GSAP/browser APIs
 // ssr: false is required here and must be in a Client Component (Next.js 16+)
@@ -19,6 +21,8 @@ const Era2021 = dynamic(() => import('./eras/Era2021'), { ssr: false });
 export default function EraContainer() {
   return (
     <ScrollProvider>
+      <ProgressBar />
+      <EraNav />
       <KeyboardNav />
       <SoundToggle />
       {/* Intro splash */}
@@ -179,7 +183,7 @@ export default function EraContainer() {
         }}
       >
         <div style={{ marginBottom: '0.5rem' }}>
-          Built with Next.js · GSAP · Framer Motion · Tailwind CSS
+          Built with Next.js · GSAP · Tailwind CSS
         </div>
         <div>The web is for everyone — Tim Berners-Lee, 1991</div>
       </footer>

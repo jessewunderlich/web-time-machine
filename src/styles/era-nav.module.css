@@ -1,0 +1,141 @@
+.nav {
+  position: fixed;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  z-index: 9000;
+}
+
+.dotWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  flex-shrink: 0;
+  transition: width 0.25s ease, height 0.25s ease, box-shadow 0.25s ease;
+}
+
+.dotActive {
+  width: 16px;
+  height: 16px;
+}
+
+/* ─── Era-specific dot styles ─────────────────────────────────────── */
+
+/* 1991 — monochrome green terminal */
+.dotTerminal {
+  background: #00ff00;
+  box-shadow: 0 0 6px #00ff00, 0 0 2px #00ff00;
+}
+.dotTerminal.dotActive {
+  box-shadow: 0 0 10px #00ff00, 0 0 20px rgba(0, 255, 0, 0.4);
+}
+
+/* 1996 — bright neon */
+.dotNeon {
+  background: #ff00ff;
+  box-shadow: 0 0 8px #ff00ff, 0 0 16px rgba(255, 0, 255, 0.5);
+}
+.dotNeon.dotActive {
+  background: #ffffff;
+  box-shadow: 0 0 12px #ff00ff, 0 0 24px #ff00ff;
+}
+
+/* 2000 — glossy pill */
+.dotGlossy {
+  background: linear-gradient(135deg, #aaccff 0%, #0044cc 60%, #002288 100%);
+  box-shadow:
+    inset 0 1px 2px rgba(255, 255, 255, 0.55),
+    0 2px 5px rgba(0, 0, 0, 0.45);
+}
+.dotGlossy.dotActive {
+  box-shadow:
+    inset 0 1px 3px rgba(255, 255, 255, 0.7),
+    0 3px 8px rgba(0, 68, 204, 0.6);
+}
+
+/* 2005 — orange gradient / reflection */
+.dotGradient {
+  background: linear-gradient(135deg, #ffcc00 0%, #ff6600 100%);
+  box-shadow: 0 2px 5px rgba(255, 100, 0, 0.45);
+}
+.dotGradient.dotActive {
+  box-shadow: 0 3px 10px rgba(255, 140, 0, 0.65);
+}
+
+/* 2010 — flat teal, no shadow */
+.dotFlat {
+  background: #1abc9c;
+  box-shadow: none;
+}
+.dotFlat.dotActive {
+  background: #16a085;
+}
+
+/* 2015 — minimal thin ring */
+.dotRing {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.65);
+  box-shadow: none;
+}
+.dotRing.dotActive {
+  border-color: #fff;
+  box-shadow: 0 0 6px rgba(255, 255, 255, 0.4);
+}
+
+/* 2021 — glassmorphic */
+.dotGlass {
+  background: rgba(139, 92, 246, 0.3);
+  border: 1px solid rgba(139, 92, 246, 0.6);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+}
+.dotGlass.dotActive {
+  background: rgba(139, 92, 246, 0.55);
+  box-shadow: 0 4px 18px rgba(139, 92, 246, 0.55);
+}
+
+/* ─── Tooltip ─────────────────────────────────────────────────────── */
+.tooltip {
+  position: absolute;
+  left: calc(100% + 12px);
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(0, 0, 0, 0.85);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  padding: 6px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  pointer-events: none;
+  white-space: nowrap;
+  z-index: 1;
+}
+
+.tooltipYear {
+  font-size: 11px;
+  font-weight: 700;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.tooltipRange {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
