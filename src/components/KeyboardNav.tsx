@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { navigateWithTransition } from '../lib/view-transition';
 
 const ERA_IDS = [
   'era-1991',
@@ -39,7 +40,7 @@ export default function KeyboardNav() {
       return best;
     };
 
-    const scrollTo = (i: number) => {
+    const scrollToElement = (i: number) => {
       const el = document.getElementById(ERA_IDS[i]);
       if (el) {
         el.scrollIntoView({
@@ -53,18 +54,25 @@ export default function KeyboardNav() {
       }
     };
 
+    // Adjacent-era moves (arrow keys) stay as smooth scroll — short
+    // distance, continuity is nice. Number-key jumps (1–7) are arbitrary
+    // long-range teleports, where a crossfade View Transition reads better
+    // than a chaotic multi-era smooth scroll.
+    const scrollAdjacent = scrollToElement;
+    const scrollJump = (i: number) => navigateWithTransition(() => scrollToElement(i));
+
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement).tagName;
       if (tag === 'INPUT' || tag === 'TEXTAREA') return;
 
       if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
         e.preventDefault();
-        scrollTo(Math.min(getCurrentIndex() + 1, ERA_IDS.length - 1));
+        scrollAdjacent(Math.min(getCurrentIndex() + 1, ERA_IDS.length - 1));
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         e.preventDefault();
-        scrollTo(Math.max(getCurrentIndex() - 1, 0));
+        scrollAdjacent(Math.max(getCurrentIndex() - 1, 0));
       } else if (e.key >= '1' && e.key <= '7') {
-        scrollTo(parseInt(e.key, 10) - 1);
+        scrollJump(parseInt(e.key, 10) - 1);
       }
     };
 

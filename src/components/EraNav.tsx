@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { navigateWithTransition } from '../lib/view-transition';
 import styles from '../styles/era-nav.module.css';
 
 const ERAS = [
@@ -54,8 +55,12 @@ export default function EraNav() {
     ERAS.find((e) => e.id === currentEraId)?.eraStyle ?? 'terminal';
 
   const scrollToEra = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: reducedMotion ? 'auto' : 'smooth',
+    // View Transition crossfade on programmatic era jumps (see ProgressBar
+    // for rationale). Native fallback preserves the current smooth-scroll.
+    navigateWithTransition(() => {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: reducedMotion ? 'auto' : 'smooth',
+      });
     });
     // Update active dot immediately (optimistic) so it matches the URL update
     // below. IntersectionObserver will confirm the same value once the scroll

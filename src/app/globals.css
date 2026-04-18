@@ -86,6 +86,26 @@ section[id^="era-"][tabindex]:focus-visible {
     transition-duration: 0.001ms !important;
     scroll-behavior: auto !important;
   }
+  /* Disable View Transitions for users who opted out of motion. The JS
+   * helper already short-circuits, but this belt-and-suspenders ensures
+   * the CSS-only fallback path is also quiet. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+/* View Transitions — a smooth crossfade when the user jumps eras via nav
+ * dots or number-key shortcuts (see src/lib/view-transition.ts for the JS
+ * side). Unsupported browsers ignore these at-rules entirely.
+ *
+ * Browser support (April 2026): Chrome 126+, Edge 126+, Safari 18.2+,
+ * Firefox 144+ (same-document). Graceful enhancement — falls back to
+ * plain smooth-scroll in older browsers. */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 0.4s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Skip-to-content link — visually hidden until focused. Lets keyboard /

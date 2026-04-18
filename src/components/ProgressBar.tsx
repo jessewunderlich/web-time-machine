@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useReducedMotion } from '../hooks/useReducedMotion';
+import { navigateWithTransition } from '../lib/view-transition';
 import styles from '../styles/progress-bar.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -93,8 +94,15 @@ export default function ProgressBar() {
   }, []);
 
   const scrollToEra = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({
-      behavior: reducedMotion ? 'auto' : 'smooth',
+    // Use View Transition crossfade on programmatic era jumps when supported.
+    // Smooth-scrolling through 5 intermediate eras on a 1991→2021 jump is
+    // visually chaotic; a crossfade is a more honest representation of
+    // "teleporting" through the timeline. Falls back to smooth-scroll where
+    // unsupported (Firefox on non-144+, older Safari).
+    navigateWithTransition(() => {
+      document.getElementById(id)?.scrollIntoView({
+        behavior: reducedMotion ? 'auto' : 'smooth',
+      });
     });
     // Update active label immediately (optimistic) so color + underline match
     // the URL before IntersectionObserver fires at scroll-end.

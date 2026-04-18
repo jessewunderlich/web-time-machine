@@ -15,7 +15,13 @@ export default function ScrollProvider({ children }: { children: React.ReactNode
 
     // Smooth scroll via native CSS scroll-behavior + GSAP ScrollTrigger config
     // (Lenis removed — ESM-only package causes Next.js hydration crash)
-    ScrollTrigger.config({ limitCallbacks: true });
+    //
+    // `ignoreMobileResize: true` prevents pinned ScrollTrigger spacers from
+    // jumping when the iOS Safari address bar collapses/expands during
+    // scroll (documented GSAP issue — address bar change fires a resize
+    // that ScrollTrigger would otherwise treat as a layout change). Safe on
+    // desktop because the resize event only fires meaningfully on mobile.
+    ScrollTrigger.config({ limitCallbacks: true, ignoreMobileResize: true });
     gsap.ticker.lagSmoothing(0);
 
     // Deep-link support: if the page loaded with e.g. /#era-2005, the native
