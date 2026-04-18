@@ -60,6 +60,12 @@ export default function EraNav() {
     document.getElementById(id)?.scrollIntoView({
       behavior: reducedMotion ? 'auto' : 'smooth',
     });
+    // Keep the URL hash in sync so users can share /#era-2005 and land
+    // directly on that era. replaceState (not pushState) avoids cluttering
+    // the back button with every dot click.
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', `#${id}`);
+    }
   };
 
   return (

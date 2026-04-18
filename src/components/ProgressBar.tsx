@@ -99,6 +99,10 @@ export default function ProgressBar() {
     document.getElementById(id)?.scrollIntoView({
       behavior: reducedMotion ? 'auto' : 'smooth',
     });
+    // Keep the URL hash in sync for shareable deep-links.
+    if (typeof window !== 'undefined') {
+      window.history.replaceState(null, '', `#${id}`);
+    }
   };
 
   const currentColor =

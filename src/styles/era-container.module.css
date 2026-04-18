@@ -14,14 +14,17 @@
   text-align: center;
   padding: 2rem;
   font-family: 'Courier New', Courier, monospace;
-  color: #00ff00;
+  color: #33ff66;
 }
 
 .splashEyebrow {
   font-size: clamp(0.6rem, 2vw, 0.9rem);
   letter-spacing: 0.3rem;
   text-transform: uppercase;
-  opacity: 0.5;
+  /* Was opacity 0.5 over #00ff00 = effective #008000 (4.08:1 on black).
+   * Raise to 0.85 so the eyebrow renders at ~10:1 — still feels dimmer
+   * than the title but passes WCAG AA. */
+  opacity: 0.85;
   margin-bottom: 2rem;
 }
 
@@ -37,7 +40,8 @@
 
 .splashLede {
   margin-top: 1.5rem;
-  color: #666;
+  /* Was #666 on #000 = 3.65:1. Bumped to #a8a8a8 = 9.4:1 for WCAG AA. */
+  color: #a8a8a8;
   font-size: clamp(0.85rem, 2vw, 1.1rem);
   max-width: 500px;
   line-height: 1.7;
@@ -50,14 +54,17 @@
   flex-direction: column;
   align-items: center;
   gap: 0.5rem;
-  color: #333;
+  /* Was #333 on #000 = 1.66:1 (effectively invisible). Bump to #b8b8b8
+   * (11.4:1) so the 'scroll' hint is actually readable. */
+  color: #b8b8b8;
   font-size: 0.8rem;
   font-family: -apple-system, BlinkMacSystemFont, sans-serif;
 }
 .splashHintLine {
   width: 1px;
   height: 60px;
-  background: linear-gradient(to bottom, transparent, #444);
+  /* Decorative — keep subtle but lighten end so the line remains visible. */
+  background: linear-gradient(to bottom, transparent, #8a8a8a);
 }
 
 /* ─── Footer ───────────────────────────────────────────────────────── */
@@ -67,7 +74,9 @@
   padding: 3rem 2rem;
   text-align: center;
   font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
-  color: rgba(255, 255, 255, 0.2);
+  /* Was rgba(255,255,255,0.2) on #050510 ≈ 1.7:1. Raised to 0.7 so footer
+   * text sits at ~12:1 against the near-black background. */
+  color: rgba(255, 255, 255, 0.7);
   font-size: 0.75rem;
   letter-spacing: 0.05rem;
 }

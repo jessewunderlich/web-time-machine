@@ -15,6 +15,19 @@ interface EraTransitionProps {
   label?: string;
 }
 
+// Era colors span from pure black (#000000) to cream (#f0ece4), which means
+// neither pure white nor pure black text maintains ≥3:1 contrast across every
+// transition's crossfade. A panel behind the text fixes this deterministically
+// for any pair of era backgrounds.
+//
+// Math checked: rgba(0,0,0,0.6) panel behind white text gives ≥5.74:1 minimum
+// contrast at every sampled scroll position across all six era transitions,
+// passing WCAG AA (4.5:1) for normal text. See commit message for sweep data.
+const PANEL_BG = 'rgba(0,0,0,0.6)';
+const TEXT_COLOR_STRONG = '#ffffff';
+const TEXT_COLOR_SOFT = 'rgba(255,255,255,0.9)';
+const TEXT_SHADOW = '0 2px 20px rgba(0,0,0,0.6)';
+
 export default function EraTransition({
   fromYear,
   toYear,
@@ -110,7 +123,9 @@ export default function EraTransition({
         }}
       />
 
-      {/* Centered content — sticky so it stays visible while pinned */}
+      {/* Centered content — sticky so it stays visible while pinned. The
+          inner panel guarantees ≥4.5:1 contrast against any era background
+          mid-crossfade, so the label + year are always readable. */}
       <div
         style={{
           position: 'sticky',
@@ -126,57 +141,71 @@ export default function EraTransition({
       >
         <div
           style={{
-            fontSize: '0.7rem',
-            textTransform: 'uppercase',
-            letterSpacing: '0.3rem',
-            opacity: 0.5,
-            color: '#fff',
-            marginBottom: '1rem',
-            fontFamily: 'monospace',
+            // Semi-opaque dark panel sits behind the text. Backdrop-filter
+            // adds a subtle softening without hurting contrast.
+            background: PANEL_BG,
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            padding: 'clamp(1.5rem, 4vw, 3rem) clamp(2rem, 6vw, 4rem)',
+            borderRadius: '1rem',
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'center',
           }}
         >
-          {label ?? 'The web is changing'}
-        </div>
+          <div
+            style={{
+              fontSize: '0.7rem',
+              textTransform: 'uppercase',
+              letterSpacing: '0.3rem',
+              color: TEXT_COLOR_SOFT,
+              marginBottom: '1rem',
+              fontFamily: 'monospace',
+            }}
+          >
+            {label ?? 'The web is changing'}
+          </div>
 
-        <div
-          style={{
-            fontFamily: 'monospace',
-            fontSize: 'clamp(4rem, 15vw, 10rem)',
-            fontWeight: 700,
-            color: '#fff',
-            opacity: 0.9,
-            lineHeight: 1,
-            letterSpacing: '-0.03em',
-            textShadow: '0 4px 40px rgba(0,0,0,0.4)',
-            transform: `scale(${scale})`,
-            transition: 'transform 0.05s linear',
-            willChange: 'transform',
-          }}
-        >
-          {displayYear}
-        </div>
+          <div
+            style={{
+              fontFamily: 'monospace',
+              fontSize: 'clamp(4rem, 15vw, 10rem)',
+              fontWeight: 700,
+              color: TEXT_COLOR_STRONG,
+              lineHeight: 1,
+              letterSpacing: '-0.03em',
+              textShadow: TEXT_SHADOW,
+              transform: `scale(${scale})`,
+              transition: 'transform 0.05s linear',
+              willChange: 'transform',
+            }}
+          >
+            {displayYear}
+          </div>
 
-        <div
-          style={{
-            color: 'rgba(255,255,255,0.4)',
-            fontSize: '2rem',
-            marginTop: '1rem',
-          }}
-        >
-          ↓
-        </div>
+          <div
+            style={{
+              color: TEXT_COLOR_SOFT,
+              fontSize: '2rem',
+              marginTop: '1rem',
+            }}
+            aria-hidden="true"
+          >
+            ↓
+          </div>
 
-        <div
-          style={{
-            marginTop: '0.5rem',
-            fontSize: '0.7rem',
-            color: 'rgba(255,255,255,0.35)',
-            textTransform: 'uppercase',
-            letterSpacing: '0.2rem',
-            fontFamily: 'monospace',
-          }}
-        >
-          {toYear}
+          <div
+            style={{
+              marginTop: '0.5rem',
+              fontSize: '0.7rem',
+              color: TEXT_COLOR_SOFT,
+              textTransform: 'uppercase',
+              letterSpacing: '0.2rem',
+              fontFamily: 'monospace',
+            }}
+          >
+            {toYear}
+          </div>
         </div>
       </div>
     </div>
