@@ -1,5 +1,7 @@
 'use client';
 
+import { useState, useEffect } from 'react';
+
 type Era = '1991' | '1996' | '2000' | '2005' | '2010' | '2015' | '2021';
 
 interface BrowserChromeProps {
@@ -74,8 +76,69 @@ const ERA_CONFIG: Record<Era, {
   },
 };
 
+// ── Shared Win9x/IE title-bar button style ───────────────────────────────────
+const winBtnStyle: React.CSSProperties = {
+  background: '#c0c0c0',
+  border: '1px outset #fff',
+  width: '16px',
+  height: '14px',
+  display: 'flex',
+  alignItems: 'center',
+  justifyContent: 'center',
+  fontSize: '9px',
+  color: '#000',
+  cursor: 'pointer',
+  userSelect: 'none',
+};
+
+// ── IE6 BSOD overlay ─────────────────────────────────────────────────────────
+function Bsod({ onDismiss }: { onDismiss: () => void }) {
+  useEffect(() => {
+    const handler = () => onDismiss();
+    window.addEventListener('keydown', handler);
+    return () => window.removeEventListener('keydown', handler);
+  }, [onDismiss]);
+
+  return (
+    <div
+      onClick={onDismiss}
+      style={{
+        position: 'absolute',
+        inset: 0,
+        background: '#0000AA',
+        color: '#fff',
+        fontFamily: 'Courier New, monospace',
+        padding: '2rem',
+        zIndex: 100,
+        display: 'flex',
+        flexDirection: 'column',
+        justifyContent: 'space-between',
+        cursor: 'pointer',
+      }}
+    >
+      <div>
+        <p style={{ fontSize: '1rem', lineHeight: 1.6, maxWidth: '600px' }}>
+          A problem has been detected and Windows has been shut down to prevent damage
+          to your computer.
+        </p>
+        <p style={{ fontSize: '1.1rem', fontWeight: 'bold', marginTop: '1.5rem' }}>
+          INTERNET_EXPLORER_6_FAULT
+        </p>
+        <p style={{ marginTop: '1.5rem', fontSize: '0.9rem', lineHeight: 1.6 }}>
+          Stop: 0x0000001E (0x00000000, 0x00000000)
+        </p>
+      </div>
+      <p style={{ fontSize: '0.75rem', opacity: 0.8 }}>
+        Press any key to restart...
+      </p>
+    </div>
+  );
+}
+
 export default function BrowserChrome({ era, children }: BrowserChromeProps) {
   const cfg = ERA_CONFIG[era];
+  const [crashed, setCrashed] = useState(false);
+  const [minimized, setMinimized] = useState(false);
 
   if (era === '1991') {
     return (
@@ -107,7 +170,7 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
     );
   }
 
-  if (era === '1996' || era === '2000') {
+  if (era === '1996') {
     return (
       <div
         style={{
@@ -118,9 +181,7 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
         {/* Title bar */}
         <div
           style={{
-            background: era === '2000'
-              ? 'linear-gradient(90deg, #000080, #1084d0)'
-              : 'linear-gradient(90deg, #000080, #1084d0)',
+            background: 'linear-gradient(90deg, #000080, #1084d0)',
             padding: '3px 6px',
             display: 'flex',
             alignItems: 'center',
@@ -134,23 +195,7 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
           <span>{cfg.name} — [{cfg.url}]</span>
           <div style={{ display: 'flex', gap: '2px' }}>
             {['_', '□', '✕'].map((btn) => (
-              <div
-                key={btn}
-                style={{
-                  background: '#c0c0c0',
-                  border: '1px outset #fff',
-                  width: '16px',
-                  height: '14px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  fontSize: '9px',
-                  color: '#000',
-                  cursor: 'pointer',
-                }}
-              >
-                {btn}
-              </div>
+              <div key={btn} style={winBtnStyle}>{btn}</div>
             ))}
           </div>
         </div>
@@ -213,6 +258,139 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
     );
   }
 
+  if (era === '2000') {
+    return (
+      <div
+        style={{
+          border: `3px outset ${cfg.borderColor}`,
+          background: '#000',
+          position: 'relative',
+        }}
+      >
+        {crashed && <Bsod onDismiss={() => setCrashed(false)} />}
+
+        {/* Title bar */}
+        <div
+          style={{
+            background: 'linear-gradient(90deg, #000080, #1084d0)',
+            padding: '3px 6px',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            fontSize: '12px',
+            color: '#fff',
+            fontWeight: 'bold',
+            fontFamily: 'Arial, sans-serif',
+          }}
+        >
+          <span>{cfg.name} — [{cfg.url}]</span>
+          <div style={{ display: 'flex', gap: '2px' }}>
+            <div
+              style={winBtnStyle}
+              onClick={() => setMinimized(true)}
+              title="Minimize"
+            >
+              _
+            </div>
+            <div
+              style={winBtnStyle}
+              onClick={() => setMinimized(false)}
+              title="Restore"
+            >
+              □
+            </div>
+            <div
+              style={{ ...winBtnStyle, background: '#c0c0c0' }}
+              onClick={() => setCrashed(true)}
+              title="Close"
+            >
+              ✕
+            </div>
+          </div>
+        </div>
+
+        {/* Toolbar */}
+        <div
+          style={{
+            background: cfg.topBg,
+            borderBottom: `2px solid ${cfg.borderColor}`,
+            padding: '3px 6px',
+            display: 'flex',
+            gap: '4px',
+            alignItems: 'center',
+            fontSize: '11px',
+            fontFamily: 'Arial, sans-serif',
+          }}
+        >
+          {['◀', '▶', '✕', '⟳', '🏠'].map((btn) => (
+            <div
+              key={btn}
+              style={{
+                background: '#c0c0c0',
+                border: '1px outset #fff',
+                padding: '2px 5px',
+                cursor: 'pointer',
+                fontSize: '10px',
+              }}
+            >
+              {btn}
+            </div>
+          ))}
+          <div
+            style={{
+              flex: 1,
+              background: '#fff',
+              border: '1px inset #808080',
+              padding: '1px 4px',
+              fontSize: '11px',
+              color: '#000',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+            }}
+          >
+            {cfg.url}
+          </div>
+          <div
+            style={{
+              background: '#c0c0c0',
+              border: '1px outset #fff',
+              padding: '2px 8px',
+              cursor: 'pointer',
+              fontSize: '10px',
+            }}
+          >
+            Go
+          </div>
+        </div>
+
+        {/* Content — with minimized overlay */}
+        <div style={{ position: 'relative', opacity: minimized ? 0.3 : 1 }}>
+          {minimized && (
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                color: '#fff',
+                fontSize: '0.85rem',
+                fontFamily: 'Arial, sans-serif',
+                background: 'rgba(0,0,0,0.4)',
+                zIndex: 10,
+                pointerEvents: 'none',
+              }}
+            >
+              — minimized —
+            </div>
+          )}
+          {children}
+        </div>
+      </div>
+    );
+  }
+
   if (era === '2005') {
     return (
       <div
@@ -234,7 +412,6 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
             fontSize: '11px',
           }}
         >
-          {/* Tabs */}
           {['MySpace ♥ music', 'Google', 'Del.icio.us'].map((tab, i) => (
             <div
               key={tab}
@@ -387,7 +564,6 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
             fontSize: '12px',
           }}
         >
-          {/* Traffic lights */}
           <div style={{ display: 'flex', gap: '6px' }}>
             {['#ff5f57', '#ffbd2e', '#28c840'].map((color) => (
               <div

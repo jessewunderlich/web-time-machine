@@ -88,8 +88,19 @@ You are visitor number:
               </span>
             </div>
 
-            <div className={styles.title}>~*~ The GeoCities Era ~*~</div>
+            <div className={styles.title}>
+              ~*~ The GeoCities Era ~*~
+              <span className={styles.newBadge}>NEW!</span>
+            </div>
             <div className={styles.subtitle}>1996 — 1999</div>
+
+            {/* Animated row: spinning @ and NEW! badges */}
+            <div className={styles.animatedRow}>
+              <span className={styles.spinAt}>@</span>
+              Welcome to the World Wide Web!
+              <span className={styles.spinAt}>@</span>
+              <span className={styles.newBadge}>NEW!</span>
+            </div>
 
             <hr className={styles.hr} />
 

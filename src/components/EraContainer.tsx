@@ -3,6 +3,8 @@
 import dynamic from 'next/dynamic';
 import ScrollProvider from './ScrollProvider';
 import EraTransition from './EraTransition';
+import KeyboardNav from './KeyboardNav';
+import SoundToggle from './SoundToggle';
 
 // Lazy-load era components — each uses 'use client' + GSAP/browser APIs
 // ssr: false is required here and must be in a Client Component (Next.js 16+)
@@ -17,6 +19,8 @@ const Era2021 = dynamic(() => import('./eras/Era2021'), { ssr: false });
 export default function EraContainer() {
   return (
     <ScrollProvider>
+      <KeyboardNav />
+      <SoundToggle />
       {/* Intro splash */}
       <div
         style={{
