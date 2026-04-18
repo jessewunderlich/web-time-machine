@@ -54,6 +54,15 @@ section[id^="era-"] {
   position: relative;
 }
 
+/* The skip-link target (section[tabindex="-1"]) receives programmatic focus.
+ * Suppress the default focus ring around the 100vh section — a giant outline
+ * on the whole viewport is distracting and the skip itself is confirmation.
+ * Keyboard users still see focus on the actual interactive controls inside. */
+section[id^="era-"][tabindex]:focus,
+section[id^="era-"][tabindex]:focus-visible {
+  outline: none;
+}
+
 /* Transition zones between eras */
 .era-transition {
   position: relative;

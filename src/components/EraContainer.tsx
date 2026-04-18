@@ -18,12 +18,14 @@ import Era2005 from './eras/Era2005';
 import Era2010 from './eras/Era2010';
 import Era2015 from './eras/Era2015';
 import Era2021 from './eras/Era2021';
+import styles from '../styles/era-container.module.css';
 
 export default function EraContainer() {
   return (
     <ScrollProvider>
       {/* Skip to first era section — bypasses fixed nav/sound toggle for
-       * keyboard and screen-reader users. Hidden visually until focused. */}
+       * keyboard and screen-reader users. Hidden visually until focused.
+       * The target section has tabIndex={-1} so activation moves focus. */}
       <a href="#era-1991" className="skip-link">
         Skip to content
       </a>
@@ -31,77 +33,22 @@ export default function EraContainer() {
       <EraNav />
       <KeyboardNav />
       <SoundToggle />
+
+      {/* Single page-level <main> landmark wraps every era + the intro splash.
+       * Lets screen-reader users jump straight past the fixed nav/sound toggle
+       * with a "main" landmark command. Only one main per page (WCAG). */}
+      <main id="main-content">
+
       {/* Intro splash */}
-      <div
-        style={{
-          minHeight: '100vh',
-          background: '#000',
-          display: 'flex',
-          flexDirection: 'column',
-          alignItems: 'center',
-          justifyContent: 'center',
-          textAlign: 'center',
-          padding: '2rem',
-          fontFamily: 'Courier New, monospace',
-          color: '#00ff00',
-        }}
-      >
-        <div
-          style={{
-            fontSize: 'clamp(0.6rem, 2vw, 0.9rem)',
-            letterSpacing: '0.3rem',
-            textTransform: 'uppercase',
-            opacity: 0.5,
-            marginBottom: '2rem',
-          }}
-        >
-          A Visual History
-        </div>
-        <h1
-          style={{
-            fontSize: 'clamp(2rem, 8vw, 5rem)',
-            fontWeight: 700,
-            letterSpacing: '-0.03em',
-            color: '#fff',
-            margin: 0,
-            lineHeight: 1,
-            fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-          }}
-        >
-          Web Time Machine
-        </h1>
-        <p
-          style={{
-            marginTop: '1.5rem',
-            color: '#666',
-            fontSize: 'clamp(0.85rem, 2vw, 1.1rem)',
-            maxWidth: '500px',
-            lineHeight: 1.7,
-            fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-          }}
-        >
+      <div className={styles.splash}>
+        <div className={styles.splashEyebrow}>A Visual History</div>
+        <h1 className={styles.splashTitle}>Web Time Machine</h1>
+        <p className={styles.splashLede}>
           Scroll through 30+ years of web design history — styled authentically in each
           era&apos;s visual language.
         </p>
-        <div
-          style={{
-            marginTop: '3rem',
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-            gap: '0.5rem',
-            color: '#333',
-            fontSize: '0.8rem',
-            fontFamily: '-apple-system, sans-serif',
-          }}
-        >
-          <div
-            style={{
-              width: '1px',
-              height: '60px',
-              background: 'linear-gradient(to bottom, transparent, #444)',
-            }}
-          />
+        <div className={styles.splashHint}>
+          <div className={styles.splashHintLine} />
           <span>scroll</span>
         </div>
       </div>
@@ -175,20 +122,11 @@ export default function EraContainer() {
       {/* Era 7: 2021–2026 */}
       <Era2021 />
 
+      </main>
+
       {/* Footer */}
-      <footer
-        style={{
-          background: '#050510',
-          borderTop: '1px solid rgba(255,255,255,0.06)',
-          padding: '3rem 2rem',
-          textAlign: 'center',
-          fontFamily: '-apple-system, BlinkMacSystemFont, sans-serif',
-          color: 'rgba(255,255,255,0.2)',
-          fontSize: '0.75rem',
-          letterSpacing: '0.05rem',
-        }}
-      >
-        <div style={{ marginBottom: '0.5rem' }}>
+      <footer className={styles.footer}>
+        <div className={styles.footerRow}>
           Built with Next.js · GSAP · Tailwind CSS
         </div>
         <div>The web is for everyone — Tim Berners-Lee, 1991</div>

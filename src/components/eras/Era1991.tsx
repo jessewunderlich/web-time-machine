@@ -144,7 +144,11 @@ export default function Era1991() {
   const shown = (key: SeqKey): boolean => source[key] !== undefined;
 
   return (
-    <section ref={eraRef} id="era-1991">
+    // tabIndex={-1} lets the skip-link move focus into this section when
+    // activated. Without it the link scrolls but the next Tab resumes from
+    // the top nav, defeating the skip. All other era sections are reached
+    // via scroll only, so they don't need tabindex.
+    <section ref={eraRef} id="era-1991" tabIndex={-1}>
       <BrowserChrome era="1991">
         <div className={styles.era}>
           <div className={styles.inner}>

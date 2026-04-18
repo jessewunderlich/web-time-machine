@@ -128,10 +128,11 @@ export default function Era2000() {
               </div>
             ) : (
               <>
-                {/* Nav pills */}
-                <nav className={styles.nav}>
+                {/* Nav pills — decorative period mock; aria-hidden so screen
+                 * readers don't announce it as a second "navigation" landmark. */}
+                <nav className={styles.nav} aria-hidden="true">
                   {['HOME', 'PORTFOLIO', 'MUSIC', 'LINKS', 'CONTACT'].map((item) => (
-                    <button key={item} className={styles.navBtn}>
+                    <button key={item} className={styles.navBtn} tabIndex={-1}>
                       {item}
                     </button>
                   ))}

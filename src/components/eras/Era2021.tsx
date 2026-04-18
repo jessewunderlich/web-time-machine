@@ -253,7 +253,7 @@ export default function Era2021() {
             </div>
 
             {/* Final reflection */}
-            <div className={styles.glassCard} style={{ marginTop: '2rem' }}>
+            <div className={`${styles.glassCard} ${styles.finalCard}`}>
               <div className={`${styles.cardAccent} ${styles.accentPurple}`} />
               <div className={styles.cardLabel}>Meta moment</div>
               <div className={styles.cardTitle}>
@@ -265,7 +265,7 @@ export default function Era2021() {
                 to glassmorphic AI interfaces. The web is the most important communication
                 technology ever built — and it&apos;s still only getting started.
               </p>
-              <ul className={styles.list} style={{ marginTop: '1rem' }}>
+              <ul className={`${styles.list} ${styles.listSpaced}`}>
                 <li>This site was built with Next.js 16, GSAP, and Tailwind CSS</li>
                 <li>Each era uses period-accurate CSS to style its section</li>
                 <li>There are 7 easter eggs hidden in the eras — did you find them all?</li>

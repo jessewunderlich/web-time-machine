@@ -93,15 +93,13 @@ export default function Era2010() {
     <section ref={eraRef} id="era-2010">
       <BrowserChrome era="2010">
         <div className={styles.era}>
-          {/* Sticky nav */}
-          <nav className={styles.nav}>
+          {/* Sticky nav — decorative period mock; aria-hidden so screen readers
+           * don't announce a second "navigation" alongside the real EraNav. The
+           * hamburger loses its button role for the same reason — it's a glyph,
+           * not an activator. */}
+          <nav className={styles.nav} aria-hidden="true">
             <span className={styles.navLogo}>Flat Era</span>
-            <div
-              className={styles.hamburger}
-              role="button"
-              tabIndex={0}
-              aria-label="Menu"
-            >
+            <div className={styles.hamburger}>
               <span />
               <span />
               <span />

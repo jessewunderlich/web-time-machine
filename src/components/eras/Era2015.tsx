@@ -65,18 +65,25 @@ export default function Era2015() {
     <section ref={eraRef} id="era-2015">
       <BrowserChrome era="2015">
         <div className={`${styles.era} ${darkMode ? styles.dark : ''}`}>
-          {/* Sticky nav */}
-          <nav className={styles.stickyNav}>
-            <span className={styles.navLogo}>Modern Web</span>
+          {/* Sticky nav — decorative period mock with one real control (dark
+           * mode toggle). Distinct aria-label so screen readers can tell this
+           * apart from the real EraNav; decorative links are aria-hidden. */}
+          <nav className={styles.stickyNav} aria-label="Era 2015 demo nav">
+            <span className={styles.navLogo} aria-hidden="true">Modern Web</span>
             <div className={styles.navItems}>
-              {['About', 'Work', 'Blog', 'Contact'].map((item) => (
-                <span key={item} className={styles.navItem}>
-                  {item}
-                </span>
-              ))}
+              <div className={styles.navItemsList} aria-hidden="true">
+                {['About', 'Work', 'Blog', 'Contact'].map((item) => (
+                  <span key={item} className={styles.navItem}>
+                    {item}
+                  </span>
+                ))}
+              </div>
               <button
+                type="button"
                 className={styles.darkToggle}
                 onClick={() => setDarkMode((d) => !d)}
+                aria-pressed={darkMode}
+                aria-label={darkMode ? 'Switch to light mode (era 2015 demo)' : 'Switch to dark mode (era 2015 demo)'}
               >
                 {darkMode ? '☀ Light' : '◑ Dark'}
               </button>
