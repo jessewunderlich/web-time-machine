@@ -395,3 +395,37 @@
   padding: 10px;
   line-height: 14px;
 }
+
+/* ─── Card captions ───────────────────────────────────────────────── */
+.caption {
+  padding: 8px 10px 10px;
+}
+
+.captionRow {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.siteName {
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.9);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.siteYear {
+  font-size: 10px;
+  color: rgba(255, 255, 255, 0.35);
+  font-family: -apple-system, BlinkMacSystemFont, monospace;
+  flex-shrink: 0;
+}
+
+.siteDesc {
+  margin: 4px 0 0;
+  font-size: 10px;
+  line-height: 1.4;
+  color: rgba(255, 255, 255, 0.45);
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}

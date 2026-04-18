@@ -55,7 +55,6 @@ export default function ProgressBar() {
       end: 'max',
       onUpdate: (self) => {
         setProgress(self.progress);
-        calculatePositions();
       },
     });
 
