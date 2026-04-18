@@ -15,19 +15,43 @@ export default function Era2000() {
   const eraRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const reducedMotion = useReducedMotion();
-  const [showPopup, setShowPopup] = useState(true);
+  // Deep-links to later eras (e.g. #era-2005) must NOT see the popup because
+  // it uses position:fixed + z:9999 and blocks the entire viewport. We check
+  // the initial hash: if it targets a *different* era, suppress the popup
+  // permanently (the ref prevents onEnter from re-opening it later).
+  // Only suppress the popup when deep-linking to eras AFTER 2000.
+  // Users linking to earlier eras (1991, 1996) will scroll forward into
+  // era-2000 and see the popup naturally via ScrollTrigger onEnter.
+  const hash = typeof window !== 'undefined' ? window.location.hash : '';
+  const deepLinkYear = /^#era-(\d{4})$/.exec(hash)?.[1];
+  const deepLinkSkips = deepLinkYear !== undefined && parseInt(deepLinkYear) > 2004;
+  const [showPopup, setShowPopup] = useState(!deepLinkSkips);
   // `loaded` gates the Flash-era loading screen easter egg. It flips true when
   // the user clicks "SKIP INTRO" or the reveal animation finishes. Reduced
   // motion users skip the easter egg (derived, not stored in state).
   const [loadedState, setLoaded] = useState(false);
   const loaded = reducedMotion || loadedState;
   const [hasEntered, setHasEntered] = useState(false);
+  // Tracks whether we've ever shown the popup. Once dismissed, never re-opens
+  // on re-entry (idempotent even across multiple ScrollTrigger onEnter fires).
+  // Also set immediately when deep-link skips to prevent onEnter from re-opening.
+  const hasEnteredOnce = useRef(deepLinkSkips);
 
   useGSAP(
     () => {
       const mm = gsap.matchMedia();
       // Always register the onEnter trigger so the loading-screen state flips,
       // but skip the visual fade for users who prefer reduced motion.
+      const markEntered = () => {
+        setHasEntered(true);
+        // Show the easter-egg popup the first time this era enters the
+        // viewport via organic scrolling. Deep-link state is handled in
+        // useState initializer. Once dismissed, never re-opens.
+        if (!hasEnteredOnce.current) {
+          setShowPopup(true);
+          hasEnteredOnce.current = true;
+        }
+      };
       mm.add('(prefers-reduced-motion: no-preference)', () => {
         gsap.from(innerRef.current, {
           opacity: 0,
@@ -37,7 +61,7 @@ export default function Era2000() {
             trigger: eraRef.current,
             start: 'top 80%',
             toggleActions: 'play none none reverse',
-            onEnter: () => setHasEntered(true),
+            onEnter: markEntered,
           },
         });
       });
@@ -45,7 +69,7 @@ export default function Era2000() {
         ScrollTrigger.create({
           trigger: eraRef.current,
           start: 'top 80%',
-          onEnter: () => setHasEntered(true),
+          onEnter: markEntered,
         });
       });
     },
