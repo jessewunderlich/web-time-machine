@@ -79,6 +79,30 @@ section[id^="era-"] {
   }
 }
 
+/* Skip-to-content link — visually hidden until focused. Lets keyboard /
+ * screen-reader users jump past the fixed era nav dots and sound toggle. */
+.skip-link {
+  position: absolute;
+  left: -9999px;
+  top: 0;
+  z-index: 10000;
+  padding: 0.75rem 1rem;
+  background: #000;
+  color: #fff;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  font-size: 0.9rem;
+  text-decoration: none;
+  border: 2px solid #fff;
+  border-radius: 4px;
+}
+.skip-link:focus,
+.skip-link:focus-visible {
+  left: 1rem;
+  top: 1rem;
+  outline: 2px solid #00ff88;
+  outline-offset: 2px;
+}
+
 /* Site-level intro overlay */
 .site-intro {
   position: fixed;

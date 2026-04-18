@@ -21,22 +21,26 @@ const ASCII_HEADER = `
 `.trim();
 
 // ── Content sequence for typewriter ─────────────────────────────────────────
+// Speeds tuned for ~12s total (was ~60s at uniform 30ms/char). The ASCII
+// header and headings keep a deliberate terminal cadence; body paragraphs
+// render in chunks of 3 chars per tick to preserve texture without making
+// the reader wait. See `tick()` below for chunk handling.
 const SEQUENCE = [
-  { key: 'ascii',    text: ASCII_HEADER,  speed: 10 },
-  { key: 'title',    text: 'The World Wide Web Project', speed: 30 },
-  { key: 'subtitle', text: 'A hypertext information system for the internet \u2014 Tim Berners-Lee, CERN, 1991', speed: 30 },
-  { key: 'para1',    text: 'The WorldWideWeb (W3) is a wide-area hypermedia information retrieval initiative aiming to give universal access to a large universe of documents. Everything there is online about W3 is linked directly or indirectly to this document.', speed: 30 },
-  { key: 'para2',    text: '> In August 1991, Tim Berners-Lee posted a summary of the World Wide Web project to the alt.hypertext newsgroup, marking the public debut of the web. The first website ran on a NeXT workstation at CERN.', speed: 30 },
-  { key: 'h2',       text: 'KEY FACTS:', speed: 30 },
-  { key: 'li1',      text: 'The first web browser was called WorldWideWeb, later renamed Nexus', speed: 30 },
-  { key: 'li2',      text: 'Tim Berners-Lee invented HTML, HTTP, and URLs \u2014 the three foundations of the web', speed: 30 },
-  { key: 'li3',      text: 'NCSA Mosaic (1993) was the first browser with inline images \u2014 it changed everything', speed: 30 },
-  { key: 'li4',      text: 'By 1994 there were 2.7 million web users; by 1995, over 16 million', speed: 30 },
-  { key: 'li5',      text: 'Pages were plain text files with minimal markup \u2014 no CSS, no JavaScript', speed: 30 },
-  { key: 'li6',      text: 'Gopher, FTP, and Usenet were competing protocols \u2014 HTTP won', speed: 30 },
-  { key: 'para3',    text: 'HOW IT WORKED: A user ran a text-mode browser like Lynx. They would see hyperlinks as numbered references. Navigation was purely keyboard-based. Images? You opened them in a separate viewer. Color? Not in the browser \u2014 your terminal emulator determined that.', speed: 30 },
-  { key: 'para4',    text: 'The web in 1991\u20131995 was academic and nerdy in the best possible way. Pages were written in raw HTML by the people who built the web protocols. The first web page still exists at its original URL at CERN.', speed: 30 },
-  { key: 'footer',   text: 'lynx> Waiting for your command', speed: 30 },
+  { key: 'ascii',    text: ASCII_HEADER,  speed: 8,  chunk: 1 },
+  { key: 'title',    text: 'The World Wide Web Project', speed: 20, chunk: 1 },
+  { key: 'subtitle', text: 'A hypertext information system for the internet \u2014 Tim Berners-Lee, CERN, 1991', speed: 12, chunk: 1 },
+  { key: 'para1',    text: 'The WorldWideWeb (W3) is a wide-area hypermedia information retrieval initiative aiming to give universal access to a large universe of documents. Everything there is online about W3 is linked directly or indirectly to this document.', speed: 10, chunk: 3 },
+  { key: 'para2',    text: '> In August 1991, Tim Berners-Lee posted a summary of the World Wide Web project to the alt.hypertext newsgroup, marking the public debut of the web. The first website ran on a NeXT workstation at CERN.', speed: 10, chunk: 3 },
+  { key: 'h2',       text: 'KEY FACTS:', speed: 20, chunk: 1 },
+  { key: 'li1',      text: 'The first web browser was called WorldWideWeb, later renamed Nexus', speed: 10, chunk: 2 },
+  { key: 'li2',      text: 'Tim Berners-Lee invented HTML, HTTP, and URLs \u2014 the three foundations of the web', speed: 10, chunk: 2 },
+  { key: 'li3',      text: 'NCSA Mosaic (1993) was the first browser with inline images \u2014 it changed everything', speed: 10, chunk: 2 },
+  { key: 'li4',      text: 'By 1994 there were 2.7 million web users; by 1995, over 16 million', speed: 10, chunk: 2 },
+  { key: 'li5',      text: 'Pages were plain text files with minimal markup \u2014 no CSS, no JavaScript', speed: 10, chunk: 2 },
+  { key: 'li6',      text: 'Gopher, FTP, and Usenet were competing protocols \u2014 HTTP won', speed: 10, chunk: 2 },
+  { key: 'para3',    text: 'HOW IT WORKED: A user ran a text-mode browser like Lynx. They would see hyperlinks as numbered references. Navigation was purely keyboard-based. Images? You opened them in a separate viewer. Color? Not in the browser \u2014 your terminal emulator determined that.', speed: 10, chunk: 3 },
+  { key: 'para4',    text: 'The web in 1991\u20131995 was academic and nerdy in the best possible way. Pages were written in raw HTML by the people who built the web protocols. The first web page still exists at its original URL at CERN.', speed: 10, chunk: 3 },
+  { key: 'footer',   text: 'lynx> Waiting for your command', speed: 20, chunk: 1 },
 ] as const;
 
 type SeqKey = typeof SEQUENCE[number]['key'];
@@ -111,7 +115,9 @@ export default function Era1991() {
       if (blockIdx >= SEQUENCE.length) return;
 
       const block = SEQUENCE[blockIdx];
-      charIdx++;
+      // Advance by the block's chunk size so long paragraphs render in
+      // multi-char bursts while headings stay one-at-a-time.
+      charIdx = Math.min(charIdx + block.chunk, block.text.length);
       const slice = block.text.slice(0, charIdx);
 
       setVisible((prev) => ({ ...prev, [block.key]: slice }));
@@ -148,7 +154,7 @@ export default function Era1991() {
             {shown('title') && <hr className={styles.hr} />}
 
             {shown('title') && (
-              <h1 className={styles.title}>{t('title')}</h1>
+              <h2 className={styles.title}>{t('title')}</h2>
             )}
             {shown('subtitle') && (
               <p className={styles.subtitle}>{t('subtitle')}</p>
@@ -166,7 +172,7 @@ export default function Era1991() {
             {shown('h2') && <hr className={styles.hr} />}
 
             {shown('h2') && (
-              <h2 className={styles.title}>{t('h2')}</h2>
+              <h3 className={styles.title}>{t('h2')}</h3>
             )}
             {shown('li1') && (
               <ul className={styles.list}>
