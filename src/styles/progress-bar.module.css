@@ -69,6 +69,15 @@
   line-height: 1;
 }
 
+/* On narrow screens, hide inactive era labels — 7 labels in a 40px bar
+ * overlap heavily at <480px. The active label stays visible so the user
+ * always knows which era they're in. EraNav dots provide the nav. */
+@media (max-width: 480px) {
+  .label:not(.labelActive) {
+    display: none;
+  }
+}
+
 .label:hover {
   color: rgba(255, 255, 255, 0.8);
 }

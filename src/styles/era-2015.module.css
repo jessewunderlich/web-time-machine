@@ -336,6 +336,35 @@
   white-space: nowrap;
 }
 
+/* ─── Mobile: compact cookie-banner easter egg ───────────────────────
+ * Default banner at 375px ate ~30% of viewport because the flex-wrap row
+ * kept breaking mid-text. Switch to a 2-column CSS grid: text spans both
+ * columns on top, two buttons sit side-by-side below. Clamp text to 3
+ * lines (it's easter-egg humor, not legal copy, so truncation is fine). */
+@media (max-width: 600px) {
+  .cookieBanner {
+    padding: 0.55rem 0.75rem 0.65rem;
+    gap: 0.4rem 0.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .cookieText {
+    grid-column: 1 / -1;
+    font-size: 0.7rem;
+    line-height: 1.35;
+    min-width: 0;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .cookieAccept,
+  .cookieDecline {
+    padding: 0.4rem 0.5rem;
+    font-size: 0.72rem;
+  }
+}
+
 .list {
   list-style: none;
   padding: 0;

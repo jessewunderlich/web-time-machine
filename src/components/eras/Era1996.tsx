@@ -129,8 +129,9 @@ You are visitor number:
               <strong style={{ color: '#ff00ff' }}>GeoCities</strong> (1994–2009) was a web
               hosting service that let anyone build their own homepage — for free! Organized into
               &quot;neighborhoods&quot; themed by interest, it was the first time millions of regular
-              people could publish on the web. At its peak in 1999, GeoCities was the third-most
-              visited website on the internet.
+              people could publish on the web. At its peak in 1999, GeoCities ranked as one of the
+              most-visited sites on the internet — 4th in December 1999 behind Yahoo, AOL, and MSN.
+              Yahoo! acquired it that year; it finally shut down in 2009.
             </p>
 
             <p className={styles.paragraph}>
