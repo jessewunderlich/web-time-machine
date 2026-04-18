@@ -154,10 +154,10 @@ export default function Era2021() {
 
             {/* Headline */}
             <div ref={headlineRef}>
-              <h1 className={styles.headline}>
+              <h2 className={styles.headline}>
                 AI &<br />
                 <span className={styles.gradientText}>Beyond.</span>
-              </h1>
+              </h2>
               <p className={styles.subHeadline}>
                 The web turned 30. Then it got a brain. Now every product has an AI feature
                 and every AI is a product.

@@ -22,6 +22,11 @@ import Era2021 from './eras/Era2021';
 export default function EraContainer() {
   return (
     <ScrollProvider>
+      {/* Skip to first era section — bypasses fixed nav/sound toggle for
+       * keyboard and screen-reader users. Hidden visually until focused. */}
+      <a href="#era-1991" className="skip-link">
+        Skip to content
+      </a>
       <ProgressBar />
       <EraNav />
       <KeyboardNav />

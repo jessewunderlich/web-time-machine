@@ -111,11 +111,11 @@ export default function Era2010() {
           {/* Hero */}
           <div ref={heroRef} className={styles.hero}>
             <div className={styles.heroEyebrow}>2010 — 2014</div>
-            <h1 className={styles.heroTitle}>
+            <h2 className={styles.heroTitle}>
               Flat Design &
               <br />
               The Mobile Revolution
-            </h1>
+            </h2>
             <p className={styles.heroSubtitle}>
               Goodbye gradients. Goodbye textures. Hello bold colors,
               thin fonts, and a screen in every pocket.
@@ -137,7 +137,7 @@ export default function Era2010() {
 
           {/* Color section: Responsive */}
           <div className={`${styles.colorSection} ${styles.blue}`}>
-            <h2 className={styles.colorSectionTitle}>The Year Everything Went Mobile</h2>
+            <h3 className={styles.colorSectionTitle}>The Year Everything Went Mobile</h3>
             <p className={styles.colorSectionText}>
               By 2014, mobile internet usage overtook desktop for the first time.
               Developers scrambled to make sites that worked on 320px screens.
@@ -170,7 +170,7 @@ export default function Era2010() {
 
           {/* Purple color section: Bootstrap */}
           <div className={`${styles.colorSection} ${styles.purple}`}>
-            <h2 className={styles.colorSectionTitle}>Bootstrap Changed Everything</h2>
+            <h3 className={styles.colorSectionTitle}>Bootstrap Changed Everything</h3>
             <p className={styles.colorSectionText}>
               Released by Twitter engineers Mark Otto and Jacob Thornton in 2011,
               Bootstrap gave every developer a consistent, responsive grid and a set

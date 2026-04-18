@@ -290,10 +290,18 @@
   min-width: 200px;
 }
 
-.cookieText a {
+.cookieLearnMore {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
   color: #fff;
   text-decoration: underline;
   cursor: pointer;
+}
+.cookieLearnMore:hover,
+.cookieLearnMore:focus-visible {
+  color: #ddd;
 }
 
 .cookieAccept {

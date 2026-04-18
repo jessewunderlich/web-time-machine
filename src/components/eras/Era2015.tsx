@@ -87,12 +87,12 @@ export default function Era2015() {
           <div className={styles.videoHero}>
             <div className={styles.videoBg} />
             <div className={styles.heroEyebrow}>2015 — 2020</div>
-            <h1 ref={heroRef} className={styles.heroTitle}>
+            <h2 ref={heroRef} className={styles.heroTitle}>
               Modern{' '}
               <span>Minimal.</span>
               <br />
               Ruthlessly Simple.
-            </h1>
+            </h2>
             <p className={styles.heroSubtitle}>
               Whitespace became a design element. Performance became a moral issue.
               Accessibility stopped being optional.
@@ -106,11 +106,11 @@ export default function Era2015() {
           {/* Fade section 1 */}
           <div ref={section1Ref} className={styles.fadeSection}>
             <div className={styles.sectionLabel}>The Philosophy</div>
-            <h2 className={styles.sectionTitle}>
+            <h3 className={styles.sectionTitle}>
               Design Systems &
               <br />
               The Accessibility Movement
-            </h2>
+            </h3>
             <p className={styles.sectionParagraph}>
               Between 2015 and 2020, the design conversation shifted from aesthetics to systems.
               Google&apos;s Material Design (2014), Apple&apos;s Human Interface Guidelines, and
@@ -146,7 +146,7 @@ export default function Era2015() {
           {/* Fade section 2 */}
           <div ref={section2Ref} className={styles.fadeSection}>
             <div className={styles.sectionLabel}>The Technology Stack</div>
-            <h2 className={styles.sectionTitle}>React, Vue, and the SPA Era</h2>
+            <h3 className={styles.sectionTitle}>React, Vue, and the SPA Era</h3>
             <p className={styles.sectionParagraph}>
               React (2013, popularized 2015+) changed how developers built UIs. Component-based
               architecture, virtual DOM, and one-way data flow became the dominant mental model.
@@ -168,7 +168,14 @@ export default function Era2015() {
             <div className={styles.cookieText}>
               We use cookies to enhance your experience. By continuing to visit this site you
               agree to our use of cookies.{' '}
-              <a>Learn more</a>
+              <button
+                type="button"
+                className={styles.cookieLearnMore}
+                onClick={() => setCookieVisible(false)}
+                aria-label="Learn more about our cookie policy (easter egg — just closes the banner)"
+              >
+                Learn more
+              </button>
               {' '}(This is an easter egg — the cookie banner is itself a 2015–2020 web phenomenon.)
             </div>
             <button
