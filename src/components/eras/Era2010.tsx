@@ -137,7 +137,8 @@ export default function Era2010() {
           <div className={`${styles.colorSection} ${styles.blue}`}>
             <h3 className={styles.colorSectionTitle}>The Year Everything Went Mobile</h3>
             <p className={styles.colorSectionText}>
-              By 2014, mobile internet usage overtook desktop for the first time.
+              By 2014, mobile traffic had climbed past 30% of web use and kept
+              accelerating — it would finally overtake desktop in 2017 (StatCounter).
               Developers scrambled to make sites that worked on 320px screens.
               Media queries, flexbox, and viewport meta tags became essential.
               The mobile-first approach — designing for the smallest screen first —

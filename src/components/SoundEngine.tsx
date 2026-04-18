@@ -65,6 +65,12 @@ function buildEra1996(ctx: AudioContext, dest: AudioNode): SoundHandle {
     osc.start();
     osc.stop(ctx.currentTime + 0.45);
     activeOscs.push(osc);
+    // Drop ref once the osc is done so the array doesn't grow unbounded
+    // during long playback (runs every 450ms).
+    osc.onended = () => {
+      const idx = activeOscs.indexOf(osc);
+      if (idx !== -1) activeOscs.splice(idx, 1);
+    };
     noteIdx++;
   };
 
@@ -94,6 +100,13 @@ function buildEra2000(ctx: AudioContext, dest: AudioNode): SoundHandle {
     osc.start(startTime);
     osc.stop(startTime + dur + 0.01);
     scheduled.push(osc);
+    // Drop the ref once the oscillator finishes so the array doesn't grow
+    // unbounded during long playbacks. stop() still works if it fires before
+    // 'ended' (the osc.stop() call on a stopped oscillator is a no-op).
+    osc.onended = () => {
+      const idx = scheduled.indexOf(osc);
+      if (idx !== -1) scheduled.splice(idx, 1);
+    };
   };
 
   const play = () => {

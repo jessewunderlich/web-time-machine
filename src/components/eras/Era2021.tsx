@@ -92,7 +92,7 @@ export default function Era2021() {
       accent: 'accentPurple',
       label: 'Overview',
       title: 'The AI Era (2021–2026)',
-      text: 'ChatGPT launched in November 2022 and reached 100 million users in 2 months — the fastest adoption of any consumer product in history. The web became a surface for AI interfaces, prompts, and generated content.',
+      text: 'ChatGPT launched in November 2022 and reached 100 million users in 2 months — one of the fastest consumer product adoptions ever (Threads hit that mark in 5 days in 2023). The web became a surface for AI interfaces, prompts, and generated content.',
     },
     {
       span: 'span5',
@@ -119,8 +119,8 @@ export default function Era2021() {
       span: 'span3',
       accent: 'accentPurple',
       label: 'Stat',
-      statNum: '175B+',
-      statLabel: 'Parameters in GPT-4',
+      statNum: '~1.76T',
+      statLabel: 'GPT-4 parameters (estimated; OpenAI never confirmed)',
     },
     {
       span: 'span3',

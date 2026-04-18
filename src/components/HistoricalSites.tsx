@@ -56,7 +56,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
     {
       name: 'Apple.com',
       year: '2001',
-      description: 'Aqua UI — brushed metal and translucency',
+      description: 'Aqua UI — glossy pinstripes, gel buttons, translucency',
       screenshotClass: 'apple01',
     },
     {
@@ -121,7 +121,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
     },
     {
       name: 'GitHub',
-      year: '2018',
+      year: '2020',
       description: 'Dark mode arrives — the web wants to rest',
       screenshotClass: 'github18',
     },

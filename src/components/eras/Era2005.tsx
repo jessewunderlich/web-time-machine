@@ -111,7 +111,7 @@ export default function Era2005() {
                 <ul className={styles.list}>
                   <li>2004 — Gmail launches: 1GB free storage shocks the industry</li>
                   <li>2004 — Facebook opens to Harvard students</li>
-                  <li>2005 — YouTube founded in a garage above a pizza shop</li>
+                  <li>2005 — YouTube founded above a pizzeria in San Mateo</li>
                   <li>2006 — Twitter: &quot;What are you doing?&quot;</li>
                   <li>2007 — iPhone launches — touch screens change everything</li>
                   <li>2006 — jQuery 1.0: JavaScript finally becomes bearable</li>

@@ -216,7 +216,7 @@ export function EraCard({ eraId }: { eraId: EraId }) {
           1991 · 1996 · 2000 · 2005 · 2010 · 2015 · 2021
         </div>
         <div style={{ display: 'flex', color: era.color }}>
-          web-time-machine.com
+          A visual history of the web
         </div>
       </div>
     </div>
