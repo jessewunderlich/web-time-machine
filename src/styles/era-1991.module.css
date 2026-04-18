@@ -7,6 +7,21 @@
   position: relative;
 }
 
+/* Screen-reader-only full-prose duplicate of the Era 1991 typewriter content.
+ * Visually hidden but exposed to assistive tech so the 1991 era is readable
+ * without waiting for the animation to finish. Standard "sr-only" recipe. */
+.srOnly {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .inner {
   max-width: 800px;
   margin: 0 auto;

@@ -151,7 +151,29 @@ export default function Era1991() {
     <section ref={eraRef} id="era-1991" tabIndex={-1}>
       <BrowserChrome era="1991">
         <div className={styles.era}>
-          <div className={styles.inner}>
+          {/* A11y: when the typewriter is animating (not reduced-motion), the
+           * visible tree streams characters in and would be announced by screen
+           * readers as a stuttering, unstable string. Mark the animating tree
+           * aria-hidden and provide the full, stable prose in a visually-hidden
+           * sibling so screen readers get clean, readable content on first paint.
+           * With reduced motion, the content is already fully rendered, so
+           * expose the visible tree and skip the hidden duplicate. */}
+          {!reducedMotion && (
+            <div className={styles.srOnly}>
+              <h2>The World Wide Web Project</h2>
+              <p>{SEQUENCE.find((b) => b.key === 'subtitle')?.text}</p>
+              {SEQUENCE.filter((b) => b.key === 'para1' || b.key === 'para2' || b.key === 'para3' || b.key === 'para4').map((b) => (
+                <p key={b.key}>{b.text}</p>
+              ))}
+              <h3>Key facts</h3>
+              <ul>
+                {SEQUENCE.filter((b) => b.key.startsWith('li')).map((b) => (
+                  <li key={b.key}>{b.text}</li>
+                ))}
+              </ul>
+            </div>
+          )}
+          <div className={styles.inner} aria-hidden={reducedMotion ? undefined : 'true'}>
             {/* ASCII art */}
             <pre className={styles.ascii}>{t('ascii')}</pre>
 

@@ -94,10 +94,14 @@ You are visitor number:
               </span>
             </div>
 
-            <div className={styles.title}>
+            {/* Promoted to h2 so the 1996 era announces itself as a
+             * landmark heading for screen-reader navigation. The "~*~" flair
+             * is period-accurate but decorative; the NEW! badge stays inside
+             * as a visual-only ornament (aria-hidden). */}
+            <h2 className={styles.title}>
               ~*~ The GeoCities Era ~*~
-              <span className={styles.newBadge}>NEW!</span>
-            </div>
+              <span className={styles.newBadge} aria-hidden="true">NEW!</span>
+            </h2>
             <div className={styles.subtitle}>1996 — 1999</div>
 
             {/* Animated row: spinning @ and NEW! badges */}
