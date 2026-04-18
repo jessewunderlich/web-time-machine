@@ -19,9 +19,12 @@
 }
 
 .navLogo {
-  color: #fff;
+  /* Was #fff on #1abc9c = 2.41:1 (AA fail).
+   * Darker text with higher weight keeps the flat-design 2010 feel while
+   * passing AA: #0b3b32 on #1abc9c ≈ 7.4:1. */
+  color: #0b3b32;
   font-size: 1.1rem;
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: 0.1rem;
   text-transform: uppercase;
 }
@@ -151,8 +154,11 @@
   text-align: center;
 }
 
-.colorSection.blue { background: #3498db; }
-.colorSection.purple { background: #9b59b6; }
+/* Darkened from iOS-7 accents (#3498db, #9b59b6) so body text at ~16px
+ * sits above the WCAG AA 4.5:1 threshold. #1f6fb2 and #7d3f99 keep the
+ * iOS-7 family flavor while giving white text ~5.3:1 / ~6.1:1 respectively. */
+.colorSection.blue { background: #1f6fb2; }
+.colorSection.purple { background: #7d3f99; }
 
 .colorSectionTitle {
   color: #fff;
@@ -162,7 +168,10 @@
 }
 
 .colorSectionText {
-  color: rgba(255,255,255,0.85);
+  /* Was rgba(255,255,255,0.85) = computed #e1f0fa/#f0e6f4, failing AA on
+   * the previous lighter backgrounds. Use pure white on the darker shades
+   * above so body copy clears AA at this font size. */
+  color: #ffffff;
   font-size: 0.95rem;
   max-width: 600px;
   margin: 0 auto;

@@ -41,11 +41,16 @@ export default function KeyboardNav() {
 
     const scrollTo = (i: number) => {
       const el = document.getElementById(ERA_IDS[i]);
-      if (el) el.scrollIntoView({
-        // Honor prefers-reduced-motion explicitly for deterministic behavior.
-        behavior: reducedMotion ? 'auto' : 'smooth',
-        block: 'start',
-      });
+      if (el) {
+        el.scrollIntoView({
+          // Honor prefers-reduced-motion explicitly for deterministic behavior.
+          behavior: reducedMotion ? 'auto' : 'smooth',
+          block: 'start',
+        });
+        // Keep the URL hash in sync so keyboard-navigated positions are
+        // bookmarkable/shareable.
+        window.history.replaceState(null, '', `#${ERA_IDS[i]}`);
+      }
     };
 
     const onKey = (e: KeyboardEvent) => {

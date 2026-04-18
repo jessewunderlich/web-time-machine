@@ -18,6 +18,25 @@ export default function ScrollProvider({ children }: { children: React.ReactNode
     ScrollTrigger.config({ limitCallbacks: true });
     gsap.ticker.lagSmoothing(0);
 
+    // Deep-link support: if the page loaded with e.g. /#era-2005, the native
+    // anchor jump fires before our eras finish hydrating, so the browser
+    // often lands in the wrong spot or at the top. Re-scroll to the hashed
+    // element once after mount + ScrollTrigger has measured the page.
+    const hash = typeof window !== 'undefined' ? window.location.hash : '';
+    if (hash && /^#era-\d{4}$/.test(hash)) {
+      // Defer one tick so ScrollTrigger finishes its initial refresh and
+      // pinned-spacer heights are applied. Without this the offsetTop is
+      // computed against a shorter document and the jump undershoots.
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => {
+          const target = document.querySelector(hash);
+          if (target) {
+            target.scrollIntoView({ behavior: 'auto', block: 'start' });
+          }
+        });
+      });
+    }
+
     return () => {
       ScrollTrigger.getAll().forEach((t) => t.kill());
     };
