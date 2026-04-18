@@ -44,6 +44,15 @@
   font-size: 0.85rem;
 }
 
+/* Wrapper around the decorative (aria-hidden) nav links. Separates the
+ * era-period mock links from the real interactive dark-mode toggle so only
+ * the toggle is exposed to assistive tech. */
+.navItemsList {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
 .navItem {
   color: #666;
   cursor: pointer;

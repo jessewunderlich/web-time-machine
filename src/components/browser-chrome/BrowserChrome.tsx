@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import styles from '../../styles/browser-chrome.module.css';
 
 type Era = '1991' | '1996' | '2000' | '2005' | '2010' | '2015' | '2021';
@@ -72,37 +72,65 @@ const ERA_CONFIG: Record<Era, EraChromeConfig> = {
 
 /** CSS custom-property bundle, derived from ERA_CONFIG so per-era colors
  *  stay data-driven while the stylesheet owns every dimension, font, and
- *  gradient. Passed as an inline `style` on the root of each era shell. */
+ *  gradient. Passed as an inline `style` on the root of each era shell.
+ *  React 19 accepts CSS custom properties natively in CSSProperties. */
 function chromeVars(cfg: EraChromeConfig): React.CSSProperties {
   return {
-    // CSS custom properties consumed by browser-chrome.module.css
-    ['--chrome-top-bg' as string]: cfg.topBg,
-    ['--chrome-top-color' as string]: cfg.topColor,
-    ['--chrome-border' as string]: cfg.borderColor,
-  };
+    '--chrome-top-bg': cfg.topBg,
+    '--chrome-top-color': cfg.topColor,
+    '--chrome-border': cfg.borderColor,
+  } as React.CSSProperties;
 }
 
 // ── IE6 BSOD overlay (Era 2000 close-button easter egg) ─────────────────────
+// Uses role="alertdialog" (not "alert") because this is an interactive
+// overlay, not a passive notification: it blocks clicks on the page beneath
+// and requires user action (any key or click) to dismiss. Focus is moved
+// into the dialog on mount and restored to the trigger on dismiss.
 function Bsod({ onDismiss }: { onDismiss: () => void }) {
+  const dialogRef = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
-    const handler = () => onDismiss();
-    window.addEventListener('keydown', handler);
-    return () => window.removeEventListener('keydown', handler);
+    // Remember the element that had focus before the BSOD appeared so we can
+    // restore it on dismiss. Typically this is the IE6 close button.
+    const previouslyFocused = document.activeElement as HTMLElement | null;
+    dialogRef.current?.focus();
+
+    // Any key dismisses — authentic BSOD behavior. Modifier-only presses
+    // (Shift, Control, etc. alone) are ignored so assistive-tech chording
+    // doesn't accidentally close the overlay.
+    const onKey = (e: KeyboardEvent) => {
+      const isModifierOnly =
+        e.key === 'Shift' || e.key === 'Control' || e.key === 'Alt' || e.key === 'Meta';
+      if (!isModifierOnly) onDismiss();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      // Restore focus so keyboard users land back on the button they activated.
+      previouslyFocused?.focus?.();
+    };
   }, [onDismiss]);
 
   return (
     <div
+      ref={dialogRef}
       onClick={onDismiss}
       className={styles.bsod}
-      role="alert"
-      aria-label="Blue screen of death (easter egg) — press any key or click to dismiss"
+      role="alertdialog"
+      aria-modal="true"
+      aria-labelledby="bsod-title"
+      aria-describedby="bsod-desc"
+      tabIndex={-1}
     >
       <div className={styles.bsodBody}>
-        <p className={styles.bsodLead}>
+        <p id="bsod-desc" className={styles.bsodLead}>
           A problem has been detected and Windows has been shut down to prevent damage
           to your computer.
         </p>
-        <p className={styles.bsodCode}>INTERNET_EXPLORER_6_FAULT</p>
+        <p id="bsod-title" className={styles.bsodCode}>
+          INTERNET_EXPLORER_6_FAULT
+        </p>
         <p className={styles.bsodDetail}>
           Stop: 0x0000001E (0x00000000, 0x00000000)
         </p>
@@ -113,9 +141,11 @@ function Bsod({ onDismiss }: { onDismiss: () => void }) {
 }
 
 // ── Shared Win9x toolbar (used by 1996 + 2000) ──────────────────────────────
+// Period-accurate decorative mock. aria-hidden removes it from the a11y tree
+// entirely so screen readers don't announce five fake navigation buttons.
 function Win9xToolbar({ url }: { url: string }) {
   return (
-    <div className={styles.winToolbar}>
+    <div className={styles.winToolbar} aria-hidden="true">
       {['◀', '▶', '✕', '⟳', '🏠'].map((btn) => (
         <div key={btn} className={styles.winToolBtn}>
           {btn}
@@ -136,7 +166,8 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
   if (era === '1991') {
     return (
       <div className={styles.shell1991} style={vars}>
-        <div className={styles.lynxBar}>
+        {/* Decorative Lynx chrome strip. */}
+        <div className={styles.lynxBar} aria-hidden="true">
           <span className={styles.lynxName}>{cfg.name}</span>
           <span className={styles.lynxUrl}>{cfg.url}</span>
         </div>
@@ -152,7 +183,9 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
           <span>
             {cfg.name} — [{cfg.url}]
           </span>
-          <div className={styles.winTitleBtns}>
+          {/* Decorative title-bar controls — Netscape 3.0 has no easter egg
+           * (only IE6 below does), so these three are mocks. */}
+          <div className={styles.winTitleBtns} aria-hidden="true">
             {['_', '□', '✕'].map((btn) => (
               <div key={btn} className={styles.winBtn}>
                 {btn}
@@ -175,40 +208,37 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
           <span>
             {cfg.name} — [{cfg.url}]
           </span>
+          {/* IE6 title-bar controls — real interactive buttons (easter egg).
+           * Use semantic <button> instead of div[role=button]; the browser
+           * handles Space/Enter activation, focus ring, and ARIA role. */}
           <div className={styles.winTitleBtns}>
-            <div
-              role="button"
-              tabIndex={0}
-              className={styles.winBtn}
+            <button
+              type="button"
+              className={`${styles.winBtn} ${styles.winBtnActive}`}
               onClick={() => setMinimized(true)}
-              onKeyDown={(e) => e.key === 'Enter' && setMinimized(true)}
               title="Minimize"
               aria-label="Minimize window"
             >
               _
-            </div>
-            <div
-              role="button"
-              tabIndex={0}
-              className={styles.winBtn}
+            </button>
+            <button
+              type="button"
+              className={`${styles.winBtn} ${styles.winBtnActive}`}
               onClick={() => setMinimized(false)}
-              onKeyDown={(e) => e.key === 'Enter' && setMinimized(false)}
               title="Restore"
               aria-label="Restore window"
             >
               □
-            </div>
-            <div
-              role="button"
-              tabIndex={0}
-              className={styles.winBtn}
+            </button>
+            <button
+              type="button"
+              className={`${styles.winBtn} ${styles.winBtnActive}`}
               onClick={() => setCrashed(true)}
-              onKeyDown={(e) => e.key === 'Enter' && setCrashed(true)}
               title="Close (easter egg: crashes the page, IE6 style)"
               aria-label="Close window (easter egg - crashes the page in IE6 style)"
             >
               ✕
-            </div>
+            </button>
           </div>
         </div>
 
@@ -229,7 +259,10 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
     const tabs = ['MySpace ♥ music', 'Google', 'Del.icio.us'];
     return (
       <div className={styles.shell2005} style={vars}>
-        <div className={styles.ffTabStrip}>
+        {/* Decorative Firefox 1.5 chrome. aria-hidden removes the fake tabs
+         * and decorative nav buttons from the a11y tree; real navigation is
+         * exposed only through EraNav at the page level. */}
+        <div className={styles.ffTabStrip} aria-hidden="true">
           {tabs.map((tab, i) => (
             <div
               key={tab}
@@ -240,9 +273,9 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
             </div>
           ))}
         </div>
-        <div className={styles.ffAddressBar}>
+        <div className={styles.ffAddressBar} aria-hidden="true">
           {['◀', '▶', '⟳'].map((btn) => (
-            <button key={btn} className={styles.ffNavBtn}>
+            <button key={btn} type="button" className={styles.ffNavBtn} tabIndex={-1}>
               {btn}
             </button>
           ))}
@@ -256,10 +289,11 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
   if (era === '2010') {
     return (
       <div className={styles.shell2010} style={vars}>
-        <div className={styles.chrBar}>
+        {/* Decorative Chrome 8 bar. */}
+        <div className={styles.chrBar} aria-hidden="true">
           <div className={styles.chrNav}>
             {['◀', '▶'].map((btn) => (
-              <button key={btn} className={styles.chrNavBtn}>
+              <button key={btn} type="button" className={styles.chrNavBtn} tabIndex={-1}>
                 {btn}
               </button>
             ))}
@@ -281,7 +315,8 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
   if (era === '2015') {
     return (
       <div className={styles.shell2015} style={vars}>
-        <div className={styles.safariBar}>
+        {/* Decorative Safari chrome bar. */}
+        <div className={styles.safariBar} aria-hidden="true">
           <div className={styles.trafficLights}>
             <div className={`${styles.trafficLight} ${styles.lightRed}`} />
             <div className={`${styles.trafficLight} ${styles.lightYellow}`} />
@@ -294,10 +329,10 @@ export default function BrowserChrome({ era, children }: BrowserChromeProps) {
     );
   }
 
-  // 2021 — Arc-style
+  // 2021 — Arc-style. Decorative chrome bar, aria-hidden.
   return (
     <div className={styles.shell2021} style={vars}>
-      <div className={styles.arcBar}>
+      <div className={styles.arcBar} aria-hidden="true">
         <div className={styles.trafficLights}>
           <div className={`${styles.arcLight} ${styles.lightRed}`} />
           <div className={`${styles.arcLight} ${styles.lightYellow}`} />

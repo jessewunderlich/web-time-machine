@@ -38,8 +38,9 @@ export default function Era2005() {
     <section ref={eraRef} id="era-2005">
       <BrowserChrome era="2005">
         <div className={styles.era}>
-          {/* Top nav */}
-          <nav className={styles.topNav}>
+          {/* Top nav — decorative period mock; aria-hidden so the page's real
+           * nav (EraNav) remains the only announced navigation landmark. */}
+          <nav className={styles.topNav} aria-hidden="true">
             <div className={styles.logo}>Web 2.0</div>
             <div className={styles.rssIcon}>RSS</div>
             <div className={styles.navLinks}>
@@ -52,8 +53,10 @@ export default function Era2005() {
           </nav>
 
           <div ref={layoutRef} className={styles.layout}>
-            {/* Main column */}
-            <main className={styles.main}>
+            {/* Main column — period-accurate layout only. Uses <div> not <main>
+             * because a true <main> landmark already exists at the page level
+             * and screen readers should not announce a second one inside an era. */}
+            <div className={styles.main}>
               {/* Hero */}
               <div className={styles.heroBox}>
                 <div className={styles.badge}>Web 2.0 CERTIFIED!</div>
@@ -130,10 +133,11 @@ export default function Era2005() {
                   JavaScript library in history.
                 </p>
               </div>
-            </main>
+            </div>
 
-            {/* Sidebar */}
-            <aside className={styles.sidebar}>
+            {/* Sidebar — decorative era mock; aria-hidden so screen readers
+             * don't surface this as a real complementary landmark. */}
+            <aside className={styles.sidebar} aria-hidden="true">
               {/* Tag cloud */}
               <div className={styles.sidebarWidget}>
                 <div className={styles.widgetTitle}>Tag Cloud</div>

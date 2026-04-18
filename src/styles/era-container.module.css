@@ -1,0 +1,76 @@
+/* ─── EraContainer shell — intro splash + footer ──────────────────────
+ * Extracted from src/components/EraContainer.tsx. The splash is the
+ * hero before era 1991 scrolls in; the footer closes the page after
+ * era 2021. Kept in a module (not globals.css) because these classes
+ * are component-scoped and only this container uses them. */
+
+.splash {
+  min-height: 100vh;
+  background: #000;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 2rem;
+  font-family: 'Courier New', Courier, monospace;
+  color: #00ff00;
+}
+
+.splashEyebrow {
+  font-size: clamp(0.6rem, 2vw, 0.9rem);
+  letter-spacing: 0.3rem;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin-bottom: 2rem;
+}
+
+.splashTitle {
+  font-size: clamp(2rem, 8vw, 5rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: #fff;
+  margin: 0;
+  line-height: 1;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+}
+
+.splashLede {
+  margin-top: 1.5rem;
+  color: #666;
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  max-width: 500px;
+  line-height: 1.7;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+}
+
+.splashHint {
+  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  color: #333;
+  font-size: 0.8rem;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+.splashHintLine {
+  width: 1px;
+  height: 60px;
+  background: linear-gradient(to bottom, transparent, #444);
+}
+
+/* ─── Footer ───────────────────────────────────────────────────────── */
+.footer {
+  background: #050510;
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
+  padding: 3rem 2rem;
+  text-align: center;
+  font-family: -apple-system, BlinkMacSystemFont, 'Inter', sans-serif;
+  color: rgba(255, 255, 255, 0.2);
+  font-size: 0.75rem;
+  letter-spacing: 0.05rem;
+}
+.footerRow {
+  margin-bottom: 0.5rem;
+}

@@ -408,3 +408,12 @@
   color: #a78bfa;
   font-size: 0.6rem;
 }
+
+/* Spacing helpers — replace inline style={{ marginTop: ... }} calls
+ * left over from the earlier bento-grid drafts. */
+.finalCard {
+  margin-top: 2rem;
+}
+.listSpaced {
+  margin-top: 1rem;
+}

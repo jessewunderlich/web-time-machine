@@ -126,10 +126,13 @@ export default function ProgressBar() {
         return (
           <button
             key={id}
+            type="button"
             className={`${styles.label} ${isCurrent ? styles.labelActive : ''}`}
             style={{ left: `${leftPct}%` }}
             onClick={() => scrollToEra(id)}
             title={`Jump to ${era.label}`}
+            aria-label={`Jump to era ${era.label}`}
+            aria-current={isCurrent ? 'true' : undefined}
           >
             {era.label}
           </button>
