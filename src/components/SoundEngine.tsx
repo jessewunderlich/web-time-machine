@@ -42,8 +42,8 @@ function buildEra1991(ctx: AudioContext, dest: AudioNode): SoundHandle {
 
   return {
     stop: () => {
-      try { osc.stop(); } catch (_) {}
-      try { osc2.stop(); } catch (_) {}
+      try { osc.stop(); } catch {}
+      try { osc2.stop(); } catch {}
     },
   };
 }
@@ -74,7 +74,7 @@ function buildEra1996(ctx: AudioContext, dest: AudioNode): SoundHandle {
   return {
     stop: () => {
       clearInterval(intervalId);
-      activeOscs.forEach((o) => { try { o.stop(); } catch (_) {} });
+      activeOscs.forEach((o) => { try { o.stop(); } catch {} });
     },
   };
 }
@@ -111,7 +111,7 @@ function buildEra2000(ctx: AudioContext, dest: AudioNode): SoundHandle {
   return {
     stop: () => {
       clearInterval(intervalId);
-      scheduled.forEach((o) => { try { o.stop(); } catch (_) {} });
+      scheduled.forEach((o) => { try { o.stop(); } catch {} });
     },
   };
 }
@@ -143,7 +143,7 @@ function buildEra2005(ctx: AudioContext, dest: AudioNode): SoundHandle {
   return {
     stop: () => {
       clearInterval(intervalId);
-      activeOscs.forEach((o) => { try { o.stop(); } catch (_) {} });
+      activeOscs.forEach((o) => { try { o.stop(); } catch {} });
     },
   };
 }
@@ -158,7 +158,7 @@ function buildEra2010(ctx: AudioContext, dest: AudioNode): SoundHandle {
   gain.connect(dest);
   osc.start();
 
-  return { stop: () => { try { osc.stop(); } catch (_) {} } };
+  return { stop: () => { try { osc.stop(); } catch {} } };
 }
 
 function buildEra2015(ctx: AudioContext, dest: AudioNode): SoundHandle {
@@ -197,8 +197,8 @@ function buildEra2015(ctx: AudioContext, dest: AudioNode): SoundHandle {
 
   return {
     stop: () => {
-      try { noise.stop(); } catch (_) {}
-      padOscs.forEach((o) => { try { o.stop(); } catch (_) {} });
+      try { noise.stop(); } catch {}
+      padOscs.forEach((o) => { try { o.stop(); } catch {} });
     },
   };
 }
@@ -245,7 +245,7 @@ function buildEra2021(ctx: AudioContext, dest: AudioNode): SoundHandle {
 
   return {
     stop: () => {
-      [base, lfo, harm, high].forEach((o) => { try { o.stop(); } catch (_) {} });
+      [base, lfo, harm, high].forEach((o) => { try { o.stop(); } catch {} });
     },
   };
 }
@@ -331,3 +331,4 @@ export default function SoundEngine({ enabled }: SoundEngineProps) {
 
   return null;
 }
+
