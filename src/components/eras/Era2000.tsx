@@ -84,15 +84,16 @@ export default function Era2000() {
           <div className={styles.popup}>
             <div className={styles.popupTitleBar}>
               <span>Advertisement</span>
-              <div
+              {/* Native <button> handles Enter + Space activation, focus
+               * ring, and role automatically — no need for role/tabIndex/onKeyDown. */}
+              <button
+                type="button"
                 className={styles.popupClose}
                 onClick={() => setShowPopup(false)}
-                role="button"
-                tabIndex={0}
-                onKeyDown={(e) => e.key === 'Enter' && setShowPopup(false)}
+                aria-label="Close advertisement"
               >
                 ✕
-              </div>
+              </button>
             </div>
             <div className={styles.popupContent}>
               <div className={styles.popupAd}>
@@ -113,13 +114,14 @@ export default function Era2000() {
                 CLAIM NOW! →
               </button>
               <div style={{ marginTop: '0.5rem' }}>
-                <span
+                <button
+                  type="button"
                   className={styles.link}
                   onClick={() => setShowPopup(false)}
-                  style={{ cursor: 'pointer', fontSize: '10px' }}
+                  style={{ background: 'none', border: 'none', cursor: 'pointer', fontSize: '10px', padding: 0, textDecoration: 'underline' }}
                 >
                   No thanks, I don&apos;t want a free iPod
-                </span>
+                </button>
               </div>
             </div>
           </div>
