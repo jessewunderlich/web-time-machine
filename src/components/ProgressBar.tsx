@@ -97,13 +97,32 @@ export default function ProgressBar() {
     // Use View Transition crossfade on programmatic era jumps when supported.
     // Smooth-scrolling through 5 intermediate eras on a 1991→2021 jump is
     // visually chaotic; a crossfade is a more honest representation of
-    // "teleporting" through the timeline. Falls back to smooth-scroll where
-    // unsupported (Firefox on non-144+, older Safari).
-    navigateWithTransition(() => {
+    // "teleporting" through the timeline.
+    //
+    // CRITICAL: Inside a View Transition callback the scroll MUST be
+    // instant, not smooth. View Transitions work by snapshotting old state,
+    // letting `mutate()` run to completion synchronously, then snapshotting
+    // new state and crossfading. A smooth scroll kicks off an async
+    // animation that isn't done when `mutate` returns, so VT captures a
+    // mid-scroll snapshot and the crossfade plays on top of continuing
+    // scroll — visually broken. Instant scroll inside VT gets the clean
+    // teleport + crossfade. Unsupported browsers fall through to the
+    // original smooth-scroll below.
+    if (
+      typeof document !== 'undefined' &&
+      typeof document.startViewTransition === 'function' &&
+      !reducedMotion
+    ) {
+      navigateWithTransition(() => {
+        document.getElementById(id)?.scrollIntoView({
+          behavior: 'instant' as ScrollBehavior,
+        });
+      });
+    } else {
       document.getElementById(id)?.scrollIntoView({
         behavior: reducedMotion ? 'auto' : 'smooth',
       });
-    });
+    }
     // Update active label immediately (optimistic) so color + underline match
     // the URL before IntersectionObserver fires at scroll-end.
     setCurrentEra(id as EraId);

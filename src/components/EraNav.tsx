@@ -55,13 +55,25 @@ export default function EraNav() {
     ERAS.find((e) => e.id === currentEraId)?.eraStyle ?? 'terminal';
 
   const scrollToEra = (id: string) => {
-    // View Transition crossfade on programmatic era jumps (see ProgressBar
-    // for rationale). Native fallback preserves the current smooth-scroll.
-    navigateWithTransition(() => {
+    // View Transition crossfade on programmatic era jumps. See ProgressBar
+    // for the why-instant-not-smooth-inside-VT explanation. Browsers that
+    // don't support View Transitions fall through to the original
+    // smooth-scroll path below.
+    if (
+      typeof document !== 'undefined' &&
+      typeof document.startViewTransition === 'function' &&
+      !reducedMotion
+    ) {
+      navigateWithTransition(() => {
+        document.getElementById(id)?.scrollIntoView({
+          behavior: 'instant' as ScrollBehavior,
+        });
+      });
+    } else {
       document.getElementById(id)?.scrollIntoView({
         behavior: reducedMotion ? 'auto' : 'smooth',
       });
-    });
+    }
     // Update active dot immediately (optimistic) so it matches the URL update
     // below. IntersectionObserver will confirm the same value once the scroll
     // animation lands — no flash or conflict.

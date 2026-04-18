@@ -40,14 +40,14 @@ export default function KeyboardNav() {
       return best;
     };
 
-    const scrollToElement = (i: number) => {
+    const scrollToElement = (i: number, instant = false) => {
       const el = document.getElementById(ERA_IDS[i]);
       if (el) {
-        el.scrollIntoView({
-          // Honor prefers-reduced-motion explicitly for deterministic behavior.
-          behavior: reducedMotion ? 'auto' : 'smooth',
-          block: 'start',
-        });
+        let behavior: ScrollBehavior;
+        if (reducedMotion) behavior = 'auto';
+        else if (instant) behavior = 'instant' as ScrollBehavior;
+        else behavior = 'smooth';
+        el.scrollIntoView({ behavior, block: 'start' });
         // Keep the URL hash in sync so keyboard-navigated positions are
         // bookmarkable/shareable.
         window.history.replaceState(null, '', `#${ERA_IDS[i]}`);
@@ -58,8 +58,22 @@ export default function KeyboardNav() {
     // distance, continuity is nice. Number-key jumps (1–7) are arbitrary
     // long-range teleports, where a crossfade View Transition reads better
     // than a chaotic multi-era smooth scroll.
-    const scrollAdjacent = scrollToElement;
-    const scrollJump = (i: number) => navigateWithTransition(() => scrollToElement(i));
+    //
+    // Inside a View Transition the scroll must be instant (see ProgressBar
+    // comment for why): VT snapshots before/after mutate() runs, and a
+    // smooth scroll isn't finished when mutate() returns.
+    const scrollAdjacent = (i: number) => scrollToElement(i, false);
+    const scrollJump = (i: number) => {
+      if (
+        typeof document !== 'undefined' &&
+        typeof document.startViewTransition === 'function' &&
+        !reducedMotion
+      ) {
+        navigateWithTransition(() => scrollToElement(i, true));
+      } else {
+        scrollToElement(i, false);
+      }
+    };
 
     const onKey = (e: KeyboardEvent) => {
       const tag = (e.target as HTMLElement).tagName;

@@ -4,11 +4,11 @@
  * When a user jumps between eras via nav dots or keyboard shortcuts, we'd
  * rather crossfade between the two visual states than scroll through every
  * era in between. View Transitions API makes that trivial when supported
- * (Chrome 126+, Edge 126+, Safari 18.2+ \u2014 ~85% of users as of April 2026).
+ * (Chrome 126+, Edge 126+, Safari 18.2+ — ~85% of users as of April 2026).
  *
  * Falls back to the current smooth-scroll behavior in unsupported browsers
  * (Firefox same-document support landed in 144, but we treat it as graceful
- * enhancement \u2014 nothing breaks if the API is absent).
+ * enhancement — nothing breaks if the API is absent).
  */
 
 /**
@@ -18,7 +18,7 @@
  * transition across).
  */
 export function navigateWithTransition(mutate: () => void) {
-  // Bail on reduced-motion \u2014 respect user preference, skip the crossfade
+  // Bail on reduced-motion — respect user preference, skip the crossfade
   // and do the mutation instantly.
   if (
     typeof window !== 'undefined' &&
