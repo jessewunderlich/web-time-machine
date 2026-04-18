@@ -1,6 +1,6 @@
 'use client';
 
-import { useRef, useEffect } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
@@ -22,45 +22,42 @@ export default function EraTransition({
   label,
 }: EraTransitionProps) {
   const containerRef = useRef<HTMLDivElement>(null);
-  const yearRef = useRef<HTMLDivElement>(null);
   const fromBgRef = useRef<HTMLDivElement>(null);
   const toBgRef = useRef<HTMLDivElement>(null);
-  const arrowRef = useRef<HTMLDivElement>(null);
+  const [displayYear, setDisplayYear] = useState(fromYear);
+  const [scale, setScale] = useState(1);
 
   useEffect(() => {
     const container = containerRef.current;
-    const yearEl = yearRef.current;
     const fromBg = fromBgRef.current;
     const toBg = toBgRef.current;
-    if (!container || !yearEl || !fromBg || !toBg) return;
+    if (!container || !fromBg || !toBg) return;
 
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: container,
-        start: 'top top',
-        end: 'bottom top',
-        scrub: 1,
-        pin: true,
-        anticipatePin: 1,
+    // Numeric year counter driven by scroll progress
+    const from = parseInt(fromYear, 10);
+    const to = parseInt(toYear, 10);
+
+    const st = ScrollTrigger.create({
+      trigger: container,
+      start: 'top top',
+      end: 'bottom top',
+      scrub: 1,
+      pin: true,
+      anticipatePin: 1,
+      onUpdate: (self) => {
+        // Background crossfade
+        gsap.set(fromBg, { opacity: 1 - self.progress });
+        gsap.set(toBg, { opacity: self.progress });
+        // Year counter: interpolate and update via React state
+        const current = Math.round(from + (to - from) * self.progress);
+        setDisplayYear(String(current));
+        // Slight scale bump in the middle
+        setScale(1 + Math.sin(self.progress * Math.PI) * 0.1);
       },
     });
 
-    tl.fromTo(fromBg, { opacity: 1 }, { opacity: 0, duration: 0.5 })
-      .fromTo(toBg, { opacity: 0 }, { opacity: 1, duration: 0.5 }, '<')
-      .fromTo(
-        yearEl,
-        { innerHTML: fromYear, scale: 1 },
-        {
-          innerHTML: toYear,
-          scale: 1.1,
-          duration: 0.4,
-          snap: { innerHTML: 1 },
-        },
-        0.2
-      );
-
     return () => {
-      tl.scrollTrigger?.kill();
+      st.kill();
     };
   }, [fromYear, toYear]);
 
@@ -93,7 +90,7 @@ export default function EraTransition({
         }}
       />
 
-      {/* Centered content */}
+      {/* Centered content — sticky so it stays visible while pinned */}
       <div
         style={{
           position: 'sticky',
@@ -122,7 +119,6 @@ export default function EraTransition({
         </div>
 
         <div
-          ref={yearRef}
           style={{
             fontFamily: 'monospace',
             fontSize: 'clamp(4rem, 15vw, 10rem)',
@@ -132,14 +128,15 @@ export default function EraTransition({
             lineHeight: 1,
             letterSpacing: '-0.03em',
             textShadow: '0 4px 40px rgba(0,0,0,0.4)',
-            transition: 'color 0.5s',
+            transform: `scale(${scale})`,
+            transition: 'transform 0.05s linear',
+            willChange: 'transform',
           }}
         >
-          {fromYear}
+          {displayYear}
         </div>
 
         <div
-          ref={arrowRef}
           style={{
             color: 'rgba(255,255,255,0.4)',
             fontSize: '2rem',

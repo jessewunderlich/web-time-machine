@@ -13,7 +13,11 @@ export default function Era2000() {
   const eraRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const [showPopup, setShowPopup] = useState(true);
+  // Start with content visible — the loading screen is a decorative easter egg
+  // triggered only when the user clicks "SKIP INTRO" or the animation finishes.
+  // Starting false caused a janky flash-then-reveal on scroll-into-view.
   const [loaded, setLoaded] = useState(false);
+  const [hasEntered, setHasEntered] = useState(false);
 
   useGSAP(
     () => {
@@ -23,10 +27,10 @@ export default function Era2000() {
         duration: 0.8,
         scrollTrigger: {
           trigger: eraRef.current,
-          start: 'top 75%',
+          start: 'top 80%',
           toggleActions: 'play none none reverse',
+          onEnter: () => setHasEntered(true),
         },
-        onComplete: () => setLoaded(true),
       });
     },
     { scope: eraRef }
@@ -92,7 +96,7 @@ export default function Era2000() {
               SKIP INTRO »
             </button>
 
-            {!loaded ? (
+            {hasEntered && !loaded ? (
               <div className={styles.loadingScreen}>
                 <div className={styles.loadingTitle}>FLASH ERA</div>
                 <div className={styles.loadingBarWrapper}>
