@@ -103,6 +103,9 @@
 }
 
 .heroTitle {
+  /* h2 element: zero the UA top margin so promoting from div to heading
+   * preserves the original hero-box spacing. */
+  margin-top: 0;
   font-size: 1.5rem;
   font-weight: bold;
   color: #ffffff;
@@ -147,6 +150,8 @@
 }
 
 .cardTitle {
+  /* h3 element: must keep the negative top margin for the tab-style card
+   * header. Explicit margin-top (-1rem) overrides UA default. */
   font-size: 0.95rem;
   font-weight: bold;
   color: #336699;

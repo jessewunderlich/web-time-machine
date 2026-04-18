@@ -60,7 +60,9 @@ export default function Era2005() {
               {/* Hero */}
               <div className={styles.heroBox}>
                 <div className={styles.badge}>Web 2.0 CERTIFIED!</div>
-                <div className={styles.heroTitle}>The Web Gets Social</div>
+                {/* Era-level heading (h2). Was a styled div — screen-reader
+                 * users couldn't reach the 2005 era via heading navigation. */}
+                <h2 className={styles.heroTitle}>The Web Gets Social</h2>
                 <p className={styles.heroParagraph}>
                   Between 2004 and 2009, the web transformed from a read-only medium into a
                   participatory platform. Blogs, wikis, social networks, and user-generated content
@@ -70,7 +72,8 @@ export default function Era2005() {
 
               {/* Card: What was Web 2.0 */}
               <div className={styles.card}>
-                <div className={styles.cardTitle}>What Was Web 2.0?</div>
+                {/* Subsection heading under the era h2. */}
+                <h3 className={styles.cardTitle}>What Was Web 2.0?</h3>
                 <p className={styles.paragraph}>
                   Tim O&apos;Reilly coined the term at the 2004 O&apos;Reilly Media Web 2.0
                   Conference. It described a shift: from static pages to dynamic, user-driven
@@ -93,7 +96,7 @@ export default function Era2005() {
 
               {/* Card: MySpace & Social */}
               <div className={styles.card}>
-                <div className={styles.cardTitle}>MySpace, Facebook & The Social Web</div>
+                <h3 className={styles.cardTitle}>MySpace, Facebook & The Social Web</h3>
                 <p className={styles.paragraph}>
                   MySpace launched in 2003 and let users customize their profiles with raw HTML and
                   CSS — leading to gloriously chaotic personal pages reminiscent of GeoCities.
@@ -117,7 +120,7 @@ export default function Era2005() {
 
               {/* Card: AJAX & jQuery */}
               <div className={styles.card}>
-                <div className={styles.cardTitle}>AJAX & jQuery — Interactivity Unleashed</div>
+                <h3 className={styles.cardTitle}>AJAX & jQuery — Interactivity Unleashed</h3>
                 <p className={styles.paragraph}>
                   Jesse James Garrett coined &quot;Ajax&quot; in 2005. It described using
                   XMLHttpRequest to fetch data without a page reload. Google Maps used it to pan

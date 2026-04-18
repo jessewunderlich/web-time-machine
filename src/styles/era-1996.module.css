@@ -44,6 +44,9 @@
 }
 
 .title {
+  /* h2 element: zero the UA's default top margin to preserve the original
+   * visual spacing this section had when .title was a div. */
+  margin-top: 0;
   text-align: center;
   font-size: clamp(1.5rem, 4vw, 2.5rem);
   font-weight: bold;

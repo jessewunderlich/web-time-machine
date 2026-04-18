@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 import styles from '../styles/era-nav.module.css';
 
 const ERAS = [
@@ -30,6 +31,7 @@ const DOT_STYLE_CLASS: Record<EraStyleKey, string> = {
 export default function EraNav() {
   const [currentEraId, setCurrentEraId] = useState('');
   const [hovered, setHovered] = useState<string | null>(null);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
@@ -52,7 +54,12 @@ export default function EraNav() {
     ERAS.find((e) => e.id === currentEraId)?.eraStyle ?? 'terminal';
 
   const scrollToEra = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    // Browsers already honor prefers-reduced-motion for scrollIntoView's
+    // smooth behavior, but being explicit guarantees deterministic behavior
+    // across engines and for programmatic a11y testing.
+    document.getElementById(id)?.scrollIntoView({
+      behavior: reducedMotion ? 'auto' : 'smooth',
+    });
   };
 
   return (

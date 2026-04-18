@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 import styles from '../styles/progress-bar.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -35,6 +36,7 @@ export default function ProgressBar() {
   const [currentEra, setCurrentEra] = useState<EraId | ''>('');
   const [eraPositions, setEraPositions] = useState<EraPosition[]>([]);
   const triggerRef = useRef<ScrollTrigger | null>(null);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const calculatePositions = () => {
@@ -91,7 +93,12 @@ export default function ProgressBar() {
   }, []);
 
   const scrollToEra = (id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' });
+    // Explicit reduced-motion handling: jump instead of smooth-scroll when
+    // the user has requested reduced motion. Belt-and-suspenders over the
+    // browser-level handling of `behavior: 'smooth'`.
+    document.getElementById(id)?.scrollIntoView({
+      behavior: reducedMotion ? 'auto' : 'smooth',
+    });
   };
 
   const currentColor =

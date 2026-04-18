@@ -9,8 +9,13 @@ export default function SoundToggle() {
   return (
     <>
       <SoundEngine enabled={enabled} />
+      {/* Toggle button: aria-pressed communicates on/off state to screen
+       * readers (the icon alone is decorative — 🔊 vs 🔇 isn't spoken consistently).
+       * aria-label changes with state so SRs get a clear action phrasing. */}
       <button
-        aria-label={enabled ? 'Mute sound' : 'Enable sound'}
+        type="button"
+        aria-label={enabled ? 'Mute ambient sound' : 'Enable ambient sound'}
+        aria-pressed={enabled}
         onClick={() => setEnabled((v) => !v)}
         style={{
           position: 'fixed',

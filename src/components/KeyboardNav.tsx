@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 const ERA_IDS = [
   'era-1991',
@@ -14,6 +15,7 @@ const ERA_IDS = [
 
 export default function KeyboardNav() {
   const [showHint, setShowHint] = useState(true);
+  const reducedMotion = useReducedMotion();
 
   useEffect(() => {
     const timer = setTimeout(() => setShowHint(false), 3000);
@@ -39,7 +41,11 @@ export default function KeyboardNav() {
 
     const scrollTo = (i: number) => {
       const el = document.getElementById(ERA_IDS[i]);
-      if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      if (el) el.scrollIntoView({
+        // Honor prefers-reduced-motion explicitly for deterministic behavior.
+        behavior: reducedMotion ? 'auto' : 'smooth',
+        block: 'start',
+      });
     };
 
     const onKey = (e: KeyboardEvent) => {
@@ -59,7 +65,7 @@ export default function KeyboardNav() {
 
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, []);
+  }, [reducedMotion]);
 
   return (
     <div

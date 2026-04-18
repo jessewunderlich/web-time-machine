@@ -140,7 +140,9 @@ export default function Era2000() {
 
                 {/* Content */}
                 <div className={styles.contentBox}>
-                  <div className={styles.sectionTitle}>The Flash Era (2000–2004)</div>
+                  {/* Era-level heading (h2). Was a styled div — screen-reader users
+                   * couldn't jump to this era via heading navigation. */}
+                  <h2 className={styles.sectionTitle}>The Flash Era (2000–2004)</h2>
                   <p className={styles.paragraph}>
                     After the dot-com bubble burst in 2000–2001, the web got slicker. Flash by
                     Macromedia (later Adobe) enabled animation, video, and interactive games entirely
@@ -155,7 +157,8 @@ export default function Era2000() {
                 </div>
 
                 <div className={styles.contentBox}>
-                  <div className={styles.sectionTitle}>Key Technologies</div>
+                  {/* Subsection under the era h2 → h3. */}
+                  <h3 className={styles.sectionTitle}>Key Technologies</h3>
                   <ul className={styles.list}>
                     <li>Macromedia Flash 5–MX — animation, games, entire sites</li>
                     <li>CSS 2.0 — mostly ignored by IE6</li>
@@ -185,7 +188,8 @@ export default function Era2000() {
 
                 {/* Pixel icons */}
                 <div className={styles.contentBox}>
-                  <div className={styles.sectionTitle}>The Dot-Com Boom & Bust</div>
+                  {/* Subsection under the era h2 → h3. */}
+                  <h3 className={styles.sectionTitle}>The Dot-Com Boom & Bust</h3>
                   <p className={styles.paragraph}>
                     Between 1995 and 2000, internet companies raised billions with no viable business
                     models. Pets.com, Webvan, and Kozmo.com burned through VC money at absurd rates.
