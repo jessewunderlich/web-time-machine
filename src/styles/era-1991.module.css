@@ -1,0 +1,135 @@
+.era {
+  background: #000;
+  color: #00ff00;
+  font-family: 'Courier New', Courier, monospace;
+  min-height: 100vh;
+  padding: 2rem;
+  position: relative;
+}
+
+.inner {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.ascii {
+  white-space: pre;
+  color: #00ff00;
+  font-size: clamp(0.4rem, 1vw, 0.75rem);
+  line-height: 1.2;
+  margin-bottom: 2rem;
+  overflow-x: auto;
+}
+
+.title {
+  color: #ffffff;
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 1.5rem 0 0.5rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.subtitle {
+  color: #00ff00;
+  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.hr {
+  border: none;
+  border-top: 1px solid #00ff00;
+  margin: 1.5rem 0;
+}
+
+.paragraph {
+  color: #00cc00;
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+}
+
+.link {
+  color: #0000ff;
+  text-decoration: underline;
+  cursor: pointer;
+  background: #c0c0c0;
+}
+
+.link:hover {
+  color: #0000aa;
+}
+
+.list {
+  list-style: disc;
+  margin-left: 2rem;
+  color: #00cc00;
+  line-height: 1.8;
+}
+
+.list li::marker {
+  content: '* ';
+  color: #00ff00;
+}
+
+.prompt {
+  color: #00ff00;
+  margin-top: 2rem;
+}
+
+.cursor {
+  display: inline-block;
+  width: 8px;
+  height: 1em;
+  background: #00ff00;
+  animation: blink 1s step-end infinite;
+  vertical-align: text-bottom;
+  margin-left: 2px;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+.statusBar {
+  position: sticky;
+  bottom: 0;
+  background: #00cc00;
+  color: #000;
+  font-size: 0.75rem;
+  padding: 0.25rem 0.5rem;
+  font-family: 'Courier New', Courier, monospace;
+  display: flex;
+  gap: 2rem;
+}
+
+.tag {
+  color: #ffff00;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+.viewSource {
+  color: #ff8800;
+  text-decoration: underline;
+  cursor: pointer;
+  font-size: 0.8rem;
+  margin-top: 0.5rem;
+  display: inline-block;
+}
+
+.sourceCode {
+  background: #001100;
+  border: 1px solid #00ff00;
+  padding: 1rem;
+  margin-top: 1rem;
+  font-size: 0.75rem;
+  color: #00ff00;
+  white-space: pre;
+  overflow-x: auto;
+  display: none;
+}
+
+.sourceCode.visible {
+  display: block;
+}
