@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { navigateWithTransition } from '../lib/view-transition';
+import { navigateWithTransition, willUseViewTransition } from '../lib/view-transition';
 import styles from '../styles/progress-bar.module.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -99,30 +99,18 @@ export default function ProgressBar() {
     // visually chaotic; a crossfade is a more honest representation of
     // "teleporting" through the timeline.
     //
-    // CRITICAL: Inside a View Transition callback the scroll MUST be
-    // instant, not smooth. View Transitions work by snapshotting old state,
-    // letting `mutate()` run to completion synchronously, then snapshotting
-    // new state and crossfading. A smooth scroll kicks off an async
-    // animation that isn't done when `mutate` returns, so VT captures a
-    // mid-scroll snapshot and the crossfade plays on top of continuing
-    // scroll — visually broken. Instant scroll inside VT gets the clean
-    // teleport + crossfade. Unsupported browsers fall through to the
-    // original smooth-scroll below.
-    if (
-      typeof document !== 'undefined' &&
-      typeof document.startViewTransition === 'function' &&
-      !reducedMotion
-    ) {
-      navigateWithTransition(() => {
-        document.getElementById(id)?.scrollIntoView({
-          behavior: 'instant' as ScrollBehavior,
-        });
-      });
-    } else {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: reducedMotion ? 'auto' : 'smooth',
-      });
-    }
+    // Scroll behavior depends on whether VT is active: 'instant' inside a
+    // VT callback so the scroll completes synchronously and the crossfade
+    // plays cleanly; 'smooth' otherwise. See lib/view-transition.ts.
+    const useVT = willUseViewTransition();
+    let behavior: ScrollBehavior;
+    if (reducedMotion) behavior = 'auto';
+    else if (useVT) behavior = 'instant' as ScrollBehavior;
+    else behavior = 'smooth';
+
+    navigateWithTransition(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior });
+    });
     // Update active label immediately (optimistic) so color + underline match
     // the URL before IntersectionObserver fires at scroll-end.
     setCurrentEra(id as EraId);

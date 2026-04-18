@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { navigateWithTransition } from '../lib/view-transition';
+import { navigateWithTransition, willUseViewTransition } from '../lib/view-transition';
 
 const ERA_IDS = [
   'era-1991',
@@ -59,20 +59,13 @@ export default function KeyboardNav() {
     // long-range teleports, where a crossfade View Transition reads better
     // than a chaotic multi-era smooth scroll.
     //
-    // Inside a View Transition the scroll must be instant (see ProgressBar
-    // comment for why): VT snapshots before/after mutate() runs, and a
-    // smooth scroll isn't finished when mutate() returns.
+    // Inside a View Transition the scroll must be instant (VT snapshots
+    // before/after mutate() runs synchronously, so a smooth scroll would
+    // play over the crossfade). See lib/view-transition.ts.
     const scrollAdjacent = (i: number) => scrollToElement(i, false);
     const scrollJump = (i: number) => {
-      if (
-        typeof document !== 'undefined' &&
-        typeof document.startViewTransition === 'function' &&
-        !reducedMotion
-      ) {
-        navigateWithTransition(() => scrollToElement(i, true));
-      } else {
-        scrollToElement(i, false);
-      }
+      const useVT = willUseViewTransition();
+      navigateWithTransition(() => scrollToElement(i, useVT));
     };
 
     const onKey = (e: KeyboardEvent) => {

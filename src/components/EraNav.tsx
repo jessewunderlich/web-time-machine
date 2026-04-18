@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-import { navigateWithTransition } from '../lib/view-transition';
+import { navigateWithTransition, willUseViewTransition } from '../lib/view-transition';
 import styles from '../styles/era-nav.module.css';
 
 const ERAS = [
@@ -55,25 +55,19 @@ export default function EraNav() {
     ERAS.find((e) => e.id === currentEraId)?.eraStyle ?? 'terminal';
 
   const scrollToEra = (id: string) => {
-    // View Transition crossfade on programmatic era jumps. See ProgressBar
-    // for the why-instant-not-smooth-inside-VT explanation. Browsers that
-    // don't support View Transitions fall through to the original
-    // smooth-scroll path below.
-    if (
-      typeof document !== 'undefined' &&
-      typeof document.startViewTransition === 'function' &&
-      !reducedMotion
-    ) {
-      navigateWithTransition(() => {
-        document.getElementById(id)?.scrollIntoView({
-          behavior: 'instant' as ScrollBehavior,
-        });
-      });
-    } else {
-      document.getElementById(id)?.scrollIntoView({
-        behavior: reducedMotion ? 'auto' : 'smooth',
-      });
-    }
+    // View Transition crossfade on programmatic era jumps (see ProgressBar
+    // for rationale). Scroll behavior depends on whether VT is active:
+    // 'instant' inside VT so the scroll completes synchronously and the
+    // crossfade plays cleanly; 'smooth' otherwise.
+    const useVT = willUseViewTransition();
+    let behavior: ScrollBehavior;
+    if (reducedMotion) behavior = 'auto';
+    else if (useVT) behavior = 'instant' as ScrollBehavior;
+    else behavior = 'smooth';
+
+    navigateWithTransition(() => {
+      document.getElementById(id)?.scrollIntoView({ behavior });
+    });
     // Update active dot immediately (optimistic) so it matches the URL update
     // below. IntersectionObserver will confirm the same value once the scroll
     // animation lands — no flash or conflict.
