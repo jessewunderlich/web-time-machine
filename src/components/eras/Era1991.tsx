@@ -1,8 +1,9 @@
 'use client';
 
-import { useRef, useState, useEffect } from 'react';
+import { useRef, useState, useEffect, useMemo } from 'react';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
 import HistoricalSites from '../HistoricalSites';
+import { useReducedMotion } from '../../hooks/useReducedMotion';
 import styles from '../../styles/era-1991.module.css';
 
 const ASCII_HEADER = `
@@ -68,10 +69,18 @@ Mailing lists</a>
 export default function Era1991() {
   const eraRef = useRef<HTMLDivElement>(null);
   const hasStartedRef = useRef(false);
+  const reducedMotion = useReducedMotion();
 
   const [started, setStarted] = useState(false);
   const [visible, setVisible] = useState<Partial<Record<SeqKey, string>>>({});
   const [showSource, setShowSource] = useState(false);
+
+  // Pre-computed full content map — rendered directly when reduced motion is on.
+  const fullContent = useMemo<Partial<Record<SeqKey, string>>>(() => {
+    const all: Partial<Record<SeqKey, string>> = {};
+    for (const block of SEQUENCE) all[block.key] = block.text;
+    return all;
+  }, []);
 
   // ── Start typewriter when era enters viewport ────────────────────────────
   useEffect(() => {
@@ -89,9 +98,10 @@ export default function Era1991() {
     return () => obs.disconnect();
   }, []);
 
-  // ── Recursive setTimeout typewriter ─────────────────────────────────────
+  // ── Recursive setTimeout typewriter ─────────────────────────────────
   useEffect(() => {
-    if (!started) return;
+    // Reduced motion: no animation. The render path reads `fullContent` directly.
+    if (!started || reducedMotion) return;
 
     let blockIdx = 0;
     let charIdx = 0;
@@ -118,11 +128,14 @@ export default function Era1991() {
 
     timerId = setTimeout(tick, SEQUENCE[0].speed);
     return () => clearTimeout(timerId);
-  }, [started]);
+  }, [started, reducedMotion]);
 
   // ── Helper: show text only after it starts appearing ────────────────────
-  const t = (key: SeqKey): string => visible[key] ?? '';
-  const shown = (key: SeqKey): boolean => visible[key] !== undefined;
+  // When reduced motion is active, fall back to the full content map so
+  // everything is visible on first paint — no setState in effect required.
+  const source = reducedMotion ? fullContent : visible;
+  const t = (key: SeqKey): string => source[key] ?? '';
+  const shown = (key: SeqKey): boolean => source[key] !== undefined;
 
   return (
     <section ref={eraRef} id="era-1991">

@@ -3,6 +3,7 @@
 import { useRef, useEffect, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useReducedMotion } from '../hooks/useReducedMotion';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,14 +25,28 @@ export default function EraTransition({
   const containerRef = useRef<HTMLDivElement>(null);
   const fromBgRef = useRef<HTMLDivElement>(null);
   const toBgRef = useRef<HTMLDivElement>(null);
-  const [displayYear, setDisplayYear] = useState(fromYear);
-  const [scale, setScale] = useState(1);
+  const reducedMotion = useReducedMotion();
+  // Year text and scale are updated from inside ScrollTrigger.onUpdate during
+  // normal scroll. When reduced motion is on we skip the effect entirely and
+  // derive the "destination" state in render so no setState is needed on mount.
+  const [scrubYear, setScrubYear] = useState(fromYear);
+  const [scrubScale, setScrubScale] = useState(1);
+  const displayYear = reducedMotion ? toYear : scrubYear;
+  const scale = reducedMotion ? 1 : scrubScale;
 
   useEffect(() => {
     const container = containerRef.current;
     const fromBg = fromBgRef.current;
     const toBg = toBgRef.current;
     if (!container || !fromBg || !toBg) return;
+
+    // Reduced motion: no pinning, no scrub animation. Paint the destination
+    // background directly; display values are derived in render.
+    if (reducedMotion) {
+      gsap.set(fromBg, { opacity: 0 });
+      gsap.set(toBg, { opacity: 1 });
+      return;
+    }
 
     // Numeric year counter driven by scroll progress
     const from = parseInt(fromYear, 10);
@@ -50,21 +65,26 @@ export default function EraTransition({
         gsap.set(toBg, { opacity: self.progress });
         // Year counter: interpolate and update via React state
         const current = Math.round(from + (to - from) * self.progress);
-        setDisplayYear(String(current));
+        setScrubYear(String(current));
         // Slight scale bump in the middle
-        setScale(1 + Math.sin(self.progress * Math.PI) * 0.1);
+        setScrubScale(1 + Math.sin(self.progress * Math.PI) * 0.1);
       },
     });
 
     return () => {
       st.kill();
     };
-  }, [fromYear, toYear]);
+  }, [fromYear, toYear, reducedMotion]);
 
   return (
     <div
       ref={containerRef}
-      style={{ height: '200vh', position: 'relative' }}
+      style={{
+        // Collapse the 200vh pinned zone when motion is reduced —
+        // the transition becomes a short static bumper instead.
+        height: reducedMotion ? '50vh' : '200vh',
+        position: 'relative',
+      }}
     >
       {/* From background */}
       <div

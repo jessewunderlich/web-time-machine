@@ -4,10 +4,11 @@
 A single-page scrolling site about the history of the web, where each era section is styled authentically in the visual language of that time period. As you scroll through time, the design transforms.
 
 ## Tech Stack
-- **Next.js 15** (App Router, TypeScript, Tailwind CSS)
-- **GSAP + ScrollTrigger** for scroll-driven era transitions
-- **Framer Motion** for micro-animations within sections
-- All components must be `'use client'` where GSAP/Framer is used
+- **Next.js 16** (App Router, TypeScript, Tailwind CSS v4)
+- **React 19**
+- **GSAP 3 + ScrollTrigger** (via `@gsap/react` `useGSAP`) for scroll-driven era transitions and micro-animations
+- All components using GSAP or browser APIs must be `'use client'`
+- Respect `prefers-reduced-motion` — use `gsap.matchMedia()` and CSS `@media` guards
 
 ## Project Structure
 ```
