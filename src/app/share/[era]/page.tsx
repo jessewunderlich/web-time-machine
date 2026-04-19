@@ -44,7 +44,7 @@ export async function generateMetadata({
   if (!isEraId(era)) {
     return {
       title: 'Web Time Machine',
-      description: 'Scroll through 30+ years of web design history.',
+      description: 'Scroll through 35+ years of web design history.',
     };
   }
   const e = ERA_CARDS[era];

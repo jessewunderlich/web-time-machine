@@ -257,7 +257,7 @@ export default function Era2021() {
               <div className={`${styles.cardAccent} ${styles.accentPurple}`} />
               <div className={styles.cardLabel}>Meta moment</div>
               <div className={styles.cardTitle}>
-                You just scrolled through 30+ years of web history.
+                You just scrolled through 35+ years of web history.
               </div>
               <p className={styles.cardText}>
                 From a single page on a NeXT workstation at CERN in 1991, to a global network

@@ -24,7 +24,7 @@ export async function generateImageMetadata({
       id: 'twitter',
       alt: isValid
         ? eraCardAlt(era as EraId)
-        : 'Web Time Machine — scroll through 30+ years of web design history.',
+        : 'Web Time Machine — scroll through 35+ years of web design history.',
       size: ERA_CARD_SIZE,
       contentType: 'image/png',
     },

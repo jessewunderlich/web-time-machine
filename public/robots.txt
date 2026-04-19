@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://web-time-machine-coral.vercel.app/sitemap.xml

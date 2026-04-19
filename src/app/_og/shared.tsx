@@ -3,7 +3,7 @@
 // not routed — Next.js treats leading-underscore folders as private.
 
 export const SHARE_CARD_ALT =
-  'Web Time Machine \u2014 scroll through 30+ years of web design history, styled in each era\'s authentic visual language.';
+  'Web Time Machine \u2014 scroll through 35+ years of web design history, styled in each era\'s authentic visual language.';
 
 export const SHARE_CARD_SIZE = { width: 1200, height: 630 } as const;
 
@@ -80,7 +80,7 @@ export function ShareCard() {
             display: 'flex',
           }}
         >
-          Scroll through 30+ years of web design history &mdash; styled authentically
+          Scroll through 35+ years of web design history &mdash; styled authentically
           in each era&rsquo;s visual language.
         </div>
       </div>
