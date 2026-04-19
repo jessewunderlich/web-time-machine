@@ -25,7 +25,10 @@ export default function Era2000() {
   const hash = typeof window !== 'undefined' ? window.location.hash : '';
   const deepLinkYear = /^#era-(\d{4})$/.exec(hash)?.[1];
   const deepLinkSkips = deepLinkYear !== undefined && parseInt(deepLinkYear) > 2004;
-  const [showPopup, setShowPopup] = useState(!deepLinkSkips);
+  // Start hidden — ScrollTrigger onEnter opens it on first viewport entry.
+  // Previous bug: initialising as `true` caused a double-popup because
+  // onEnter would re-open after the user dismissed the initial render.
+  const [showPopup, setShowPopup] = useState(false);
   // `loaded` gates the Flash-era loading screen easter egg. It flips true when
   // the user clicks "SKIP INTRO" or the reveal animation finishes. Reduced
   // motion users skip the easter egg (derived, not stored in state).

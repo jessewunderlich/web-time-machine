@@ -46,12 +46,18 @@ export default function ProgressBar() {
       const totalHeight =
         document.documentElement.scrollHeight - window.innerHeight;
       if (totalHeight <= 0) return;
-      setEraPositions(
-        ERAS.map(({ id }) => {
-          const el = document.getElementById(id);
-          return { id, position: el ? el.offsetTop / totalHeight : 0 };
-        })
-      );
+
+      const positions = ERAS.map(({ id }, i) => {
+        const el = document.getElementById(id);
+        // If element exists and has a real offset, use it. Otherwise
+        // distribute labels evenly — prevents all-stacked-at-2% on
+        // initial render before GSAP pins/layout settles.
+        const pos = el && el.offsetTop > 0
+          ? el.offsetTop / totalHeight
+          : i / ERAS.length;
+        return { id, position: pos };
+      });
+      setEraPositions(positions);
     };
 
     // GSAP ScrollTrigger drives progress for the JS fill and color
@@ -63,17 +69,28 @@ export default function ProgressBar() {
       },
     });
 
-    // Recalculate era positions whenever page height changes (lazy-loaded eras)
+    // Recalculate era positions whenever page height changes (lazy-loaded eras,
+    // GSAP pin re-layout). Observe documentElement — body ResizeObserver missed
+    // pin-triggered height changes that shifted all labels to left:2%.
     const ro = new ResizeObserver(calculatePositions);
-    ro.observe(document.body);
+    ro.observe(document.documentElement);
 
-    // Initial calculation after a tick (let eras lazy-load)
-    const timer = setTimeout(calculatePositions, 500);
+    // Recalculate after ScrollTrigger finishes its initial pin layout.
+    // This is the authoritative moment when era offsetTops are correct.
+    ScrollTrigger.addEventListener('refresh', calculatePositions);
+
+    // Initial calculation — run immediately, then again at 500ms and 2s
+    // to catch progressive layout shifts from GSAP + lazy eras.
+    calculatePositions();
+    const t1 = setTimeout(calculatePositions, 500);
+    const t2 = setTimeout(calculatePositions, 2000);
 
     return () => {
       triggerRef.current?.kill();
       ro.disconnect();
-      clearTimeout(timer);
+      ScrollTrigger.removeEventListener('refresh', calculatePositions);
+      clearTimeout(t1);
+      clearTimeout(t2);
     };
   }, []);
 

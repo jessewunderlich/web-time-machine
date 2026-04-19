@@ -93,9 +93,10 @@ export default function EraTransition({
     <div
       ref={containerRef}
       style={{
-        // Collapse the 200vh pinned zone when motion is reduced —
-        // the transition becomes a short static bumper instead.
-        height: reducedMotion ? '50vh' : '200vh',
+        // Pinned scroll zone. 120vh (down from 200vh) keeps the year-counter
+        // crossfade snappy — 200vh felt like dead scrolling because adjacent
+        // era backgrounds are often near-identical dark tones.
+        height: reducedMotion ? '50vh' : '120vh',
         position: 'relative',
       }}
     >
