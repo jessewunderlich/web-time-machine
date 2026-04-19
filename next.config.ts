@@ -1,6 +1,12 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
+  images: {
+    // Allow next/image to optimise local screenshots in /public/screenshots/
+    localPatterns: [
+      { pathname: '/screenshots/**', search: '' },
+    ],
+  },
   async headers() {
     return [
       {
