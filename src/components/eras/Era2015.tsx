@@ -113,7 +113,7 @@ export default function Era2015() {
           {/* Fade section 1 */}
           <div ref={section1Ref} className={styles.fadeSection}>
             <div className={styles.sectionLabel}>The Philosophy</div>
-            <h3 className={styles.sectionTitle}>
+            <h3 id="era-2015-design-systems" className={styles.sectionTitle}>
               Design Systems &
               <br />
               The Accessibility Movement
@@ -153,7 +153,7 @@ export default function Era2015() {
           {/* Fade section 2 */}
           <div ref={section2Ref} className={styles.fadeSection}>
             <div className={styles.sectionLabel}>The Technology Stack</div>
-            <h3 className={styles.sectionTitle}>React, Vue, and the SPA Era</h3>
+            <h3 id="era-2015-spa" className={styles.sectionTitle}>React, Vue, and the SPA Era</h3>
             <p className={styles.sectionParagraph}>
               React (2013, popularized 2015+) changed how developers built UIs. Component-based
               architecture, virtual DOM, and one-way data flow became the dominant mental model.

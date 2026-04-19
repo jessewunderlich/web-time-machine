@@ -20,6 +20,7 @@ import Era2010 from './eras/Era2010';
 import Era2015 from './eras/Era2015';
 import Era2021 from './eras/Era2021';
 import Era2026 from './eras/Era2026';
+import EmbedButton from './EmbedButton';
 import styles from '../styles/era-container.module.css';
 
 export default function EraContainer() {
@@ -57,7 +58,10 @@ export default function EraContainer() {
       </div>
 
       {/* Era 1: 1991–1995 */}
-      <Era1991 />
+      <div className={styles.eraWrap}>
+        <Era1991 />
+        <EmbedButton era="1991" />
+      </div>
 
       <EraTransition
         fromYear="1995"
@@ -68,7 +72,10 @@ export default function EraContainer() {
       />
 
       {/* Era 2: 1996–1999 */}
-      <Era1996 />
+      <div className={styles.eraWrap}>
+        <Era1996 />
+        <EmbedButton era="1996" />
+      </div>
 
       <EraTransition
         fromYear="1999"
@@ -79,7 +86,10 @@ export default function EraContainer() {
       />
 
       {/* Era 3: 2000–2004 */}
-      <Era2000 />
+      <div className={styles.eraWrap}>
+        <Era2000 />
+        <EmbedButton era="2000" />
+      </div>
 
       <EraTransition
         fromYear="2004"
@@ -90,7 +100,10 @@ export default function EraContainer() {
       />
 
       {/* Era 4: 2005–2009 */}
-      <Era2005 />
+      <div className={styles.eraWrap}>
+        <Era2005 />
+        <EmbedButton era="2005" />
+      </div>
 
       <EraTransition
         fromYear="2009"
@@ -101,7 +114,10 @@ export default function EraContainer() {
       />
 
       {/* Era 5: 2010–2014 */}
-      <Era2010 />
+      <div className={styles.eraWrap}>
+        <Era2010 />
+        <EmbedButton era="2010" />
+      </div>
 
       <EraTransition
         fromYear="2014"
@@ -112,7 +128,10 @@ export default function EraContainer() {
       />
 
       {/* Era 6: 2015–2020 */}
-      <Era2015 />
+      <div className={styles.eraWrap}>
+        <Era2015 />
+        <EmbedButton era="2015" />
+      </div>
 
       <EraTransition
         fromYear="2020"
@@ -123,7 +142,10 @@ export default function EraContainer() {
       />
 
       {/* Era 7: 2021–2025 */}
-      <Era2021 />
+      <div className={styles.eraWrap}>
+        <Era2021 />
+        <EmbedButton era="2021" />
+      </div>
 
       <EraTransition
         fromYear="2025"
@@ -134,7 +156,10 @@ export default function EraContainer() {
       />
 
       {/* Era 8: 2026 (the agentic era) */}
-      <Era2026 />
+      <div className={styles.eraWrap}>
+        <Era2026 />
+        <EmbedButton era="2026" />
+      </div>
 
       </main>
 

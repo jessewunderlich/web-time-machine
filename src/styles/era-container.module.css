@@ -4,6 +4,10 @@
  * era 2021. Kept in a module (not globals.css) because these classes
  * are component-scoped and only this container uses them. */
 
+.eraWrap {
+  position: relative;
+}
+
 .splash {
   min-height: 100vh;
   background: #000;

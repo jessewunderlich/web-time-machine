@@ -198,7 +198,7 @@ export default function Era1991() {
             {shown('h2') && <hr className={styles.hr} />}
 
             {shown('h2') && (
-              <h3 className={styles.title}>{t('h2')}</h3>
+              <h3 id="era-1991-key-facts" className={styles.title}>{t('h2')}</h3>
             )}
             {shown('li1') && (
               <ul className={styles.list}>
@@ -226,6 +226,7 @@ export default function Era1991() {
             {shown('footer') && (
               <div className={styles.easterEgg}>
                 <button
+                  id="era-1991-source"
                   className={styles.viewSource}
                   onClick={() => setShowSource((v) => !v)}
                   style={{ background: 'none', border: 'none', cursor: 'pointer' }}

@@ -73,7 +73,7 @@ export default function Era2005() {
               {/* Card: What was Web 2.0 */}
               <div className={styles.card}>
                 {/* Subsection heading under the era h2. */}
-                <h3 className={styles.cardTitle}>What Was Web 2.0?</h3>
+                <h3 id="era-2005-web2" className={styles.cardTitle}>What Was Web 2.0?</h3>
                 <p className={styles.paragraph}>
                   Tim O&apos;Reilly coined the term at the 2004 O&apos;Reilly Media Web 2.0
                   Conference. It described a shift: from static pages to dynamic, user-driven
@@ -96,7 +96,7 @@ export default function Era2005() {
 
               {/* Card: MySpace & Social */}
               <div className={styles.card}>
-                <h3 className={styles.cardTitle}>MySpace, Facebook & The Social Web</h3>
+                <h3 id="era-2005-social" className={styles.cardTitle}>MySpace, Facebook & The Social Web</h3>
                 <p className={styles.paragraph}>
                   MySpace launched in 2003 and let users customize their profiles with raw HTML and
                   CSS — leading to gloriously chaotic personal pages reminiscent of GeoCities.
@@ -120,7 +120,7 @@ export default function Era2005() {
 
               {/* Card: AJAX & jQuery */}
               <div className={styles.card}>
-                <h3 className={styles.cardTitle}>AJAX & jQuery — Interactivity Unleashed</h3>
+                <h3 id="era-2005-ajax" className={styles.cardTitle}>AJAX & jQuery — Interactivity Unleashed</h3>
                 <p className={styles.paragraph}>
                   Jesse James Garrett coined &quot;Ajax&quot; in 2005. It described using
                   XMLHttpRequest to fetch data without a page reload. Google Maps used it to pan

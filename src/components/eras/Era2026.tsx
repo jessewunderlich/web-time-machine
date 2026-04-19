@@ -277,7 +277,7 @@ export default function Era2026() {
 
           <div className={styles.contentSections}>
             <div className={styles.contentCard}>
-              <h3 className={styles.contentHeading}>
+              <h3 id="era-2026-tool-loop" className={styles.contentHeading}>
                 From chatbot to tool loop
               </h3>
               <p className={styles.contentText}>
@@ -308,7 +308,7 @@ export default function Era2026() {
             </div>
 
             <div className={styles.contentCard}>
-              <h3 className={styles.contentHeading}>
+              <h3 id="era-2026-mcp" className={styles.contentHeading}>
                 MCP — the protocol that made it portable
               </h3>
               <p className={styles.contentText}>

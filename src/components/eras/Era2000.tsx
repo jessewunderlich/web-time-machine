@@ -184,7 +184,7 @@ export default function Era2000() {
 
                 <div className={styles.contentBox}>
                   {/* Subsection under the era h2 → h3. */}
-                  <h3 className={styles.sectionTitle}>Key Technologies</h3>
+                  <h3 id="era-2000-tech" className={styles.sectionTitle}>Key Technologies</h3>
                   <ul className={styles.list}>
                     <li>Macromedia Flash 5–MX — animation, games, entire sites</li>
                     <li>CSS 2.0 — mostly ignored by IE6</li>
@@ -215,7 +215,7 @@ export default function Era2000() {
                 {/* Pixel icons */}
                 <div className={styles.contentBox}>
                   {/* Subsection under the era h2 → h3. */}
-                  <h3 className={styles.sectionTitle}>The Dot-Com Boom & Bust</h3>
+                  <h3 id="era-2000-dotcom" className={styles.sectionTitle}>The Dot-Com Boom & Bust</h3>
                   <p className={styles.paragraph}>
                     Between 1995 and 2000, internet companies raised billions with no viable business
                     models. Pets.com, Webvan, and Kozmo.com burned through VC money at absurd rates.

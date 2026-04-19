@@ -253,7 +253,7 @@ export default function Era2021() {
             </div>
 
             {/* Final reflection */}
-            <div className={`${styles.glassCard} ${styles.finalCard}`}>
+            <div id="era-2021-meta" className={`${styles.glassCard} ${styles.finalCard}`}>
               <div className={`${styles.cardAccent} ${styles.accentPurple}`} />
               <div className={styles.cardLabel}>Meta moment</div>
               <div className={styles.cardTitle}>
@@ -268,7 +268,7 @@ export default function Era2021() {
               <ul className={`${styles.list} ${styles.listSpaced}`}>
                 <li>This site was built with Next.js 16, GSAP, and Tailwind CSS</li>
                 <li>Each era uses period-accurate CSS to style its section</li>
-                <li>There are 7 easter eggs hidden in the eras — did you find them all?</li>
+                <li>There are 8 easter eggs hidden in the eras — did you find them all?</li>
                 <li>Tim Berners-Lee never patented the web. He gave it to all of us.</li>
               </ul>
             </div>

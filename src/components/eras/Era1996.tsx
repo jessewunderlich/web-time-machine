@@ -160,7 +160,7 @@ You are visitor number:
             <hr className={styles.hr} />
 
             {/* Visitor counter */}
-            <div className={styles.counter}>
+            <div id="era-1996-counter" className={styles.counter}>
               You are visitor number:{' '}
               <span className={styles.counterNum}>0&#x200B;0&#x200B;4&#x200B;2&#x200B;1&#x200B;7</span>
               <br />
@@ -168,7 +168,7 @@ You are visitor number:
             </div>
 
             {/* Buttons row */}
-            <div className={styles.guestbook}>
+            <div id="era-1996-guestbook" className={styles.guestbook}>
               <span className={styles.guestbookLink}>✉ Sign My Guestbook</span>
               <span className={styles.guestbookLink}>📖 View Guestbook</span>
               <span className={styles.guestbookLink}>💌 Email Me</span>
@@ -192,7 +192,7 @@ You are visitor number:
             <hr className={styles.hr} />
 
             {/* Webring */}
-            <div className={styles.webring}>
+            <div id="era-1996-webring" className={styles.webring}>
               <div>[ HTML FANATICS WEB RING ]</div>
               <div className={styles.webringLinks}>
                 <span className={styles.webringLink}>◀ Previous</span>

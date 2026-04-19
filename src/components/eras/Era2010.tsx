@@ -135,7 +135,7 @@ export default function Era2010() {
 
           {/* Color section: Responsive */}
           <div className={`${styles.colorSection} ${styles.blue}`}>
-            <h3 className={styles.colorSectionTitle}>The Year Everything Went Mobile</h3>
+            <h3 id="era-2010-mobile" className={styles.colorSectionTitle}>The Year Everything Went Mobile</h3>
             <p className={styles.colorSectionText}>
               By 2014, mobile traffic had climbed past 30% of web use and kept
               accelerating — it would finally overtake desktop in 2017 (StatCounter).
@@ -169,7 +169,7 @@ export default function Era2010() {
 
           {/* Purple color section: Bootstrap */}
           <div className={`${styles.colorSection} ${styles.purple}`}>
-            <h3 className={styles.colorSectionTitle}>Bootstrap Changed Everything</h3>
+            <h3 id="era-2010-bootstrap" className={styles.colorSectionTitle}>Bootstrap Changed Everything</h3>
             <p className={styles.colorSectionText}>
               Released by Twitter engineers Mark Otto and Jacob Thornton in 2011,
               Bootstrap gave every developer a consistent, responsive grid and a set

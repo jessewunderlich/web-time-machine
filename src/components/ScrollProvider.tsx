@@ -29,15 +29,48 @@ export default function ScrollProvider({ children }: { children: React.ReactNode
     // often lands in the wrong spot or at the top. Re-scroll to the hashed
     // element once after mount + ScrollTrigger has measured the page.
     const hash = typeof window !== 'undefined' ? window.location.hash : '';
-    if (hash && /^#era-\d{4}$/.test(hash)) {
+    // Support both simple (#era-2000) and compound (#era-2000/flash) hashes.
+    // Compound hashes deep-link to a named sub-section within an era.
+    const compoundMatch = hash.match(/^#(era-\d{4})\/(.+)$/);
+    const simpleMatch = hash.match(/^#(era-\d{4})$/);
+    const targetSelector = compoundMatch
+      ? `#${compoundMatch[1]}-${compoundMatch[2]}`
+      : simpleMatch
+        ? `#${simpleMatch[1]}`
+        : null;
+    if (targetSelector) {
       // Defer one tick so ScrollTrigger finishes its initial refresh and
       // pinned-spacer heights are applied. Without this the offsetTop is
       // computed against a shorter document and the jump undershoots.
+      //
+      // For compound hashes (#era-YYYY/section), the sub-section element
+      // may not exist in the DOM yet (e.g. Era1991's typewriter renders
+      // content progressively). Strategy: scroll to the era first, then
+      // retry the sub-section target a few times with increasing delays.
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          const target = document.querySelector(hash);
+          let target = document.querySelector(targetSelector);
           if (target) {
             target.scrollIntoView({ behavior: 'auto', block: 'start' });
+            return;
+          }
+          // If compound hash, scroll to the era first to trigger rendering,
+          // then retry the sub-section.
+          if (compoundMatch) {
+            const eraEl = document.getElementById(compoundMatch[1]);
+            if (eraEl) eraEl.scrollIntoView({ behavior: 'auto', block: 'start' });
+            // Retry sub-section with exponential backoff (200, 600, 1400ms)
+            let attempt = 0;
+            const retry = () => {
+              target = document.querySelector(targetSelector);
+              if (target) {
+                target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+              } else if (attempt < 3) {
+                attempt++;
+                setTimeout(retry, 200 * Math.pow(2, attempt));
+              }
+            };
+            setTimeout(retry, 200);
           }
         });
       });
