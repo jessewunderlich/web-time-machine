@@ -91,7 +91,7 @@ export default function Era2021() {
       span: 'span7',
       accent: 'accentPurple',
       label: 'Overview',
-      title: 'The AI Era (2021–2026)',
+      title: 'The AI Era (2021–2025)',
       text: 'ChatGPT launched in November 2022 and reached 100 million users in 2 months — one of the fastest consumer product adoptions ever (Threads hit that mark in 5 days in 2023). The web became a surface for AI interfaces, prompts, and generated content.',
     },
     {

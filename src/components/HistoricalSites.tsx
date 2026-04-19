@@ -2,7 +2,7 @@
 
 import styles from '../styles/historical-sites.module.css';
 
-type EraKey = '1991' | '1996' | '2000' | '2005' | '2010' | '2015' | '2021';
+type EraKey = '1991' | '1996' | '2000' | '2005' | '2010' | '2015' | '2021' | '2026';
 
 interface SiteCard {
   name: string;
@@ -144,6 +144,26 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       year: '2023',
       description: 'Reimagining the browser as an OS',
       screenshotClass: 'arc23',
+    },
+  ],
+  '2026': [
+    {
+      name: 'Claude Code',
+      year: '2025',
+      description: 'Terminal-native AI agent (GA May 2025)',
+      screenshotClass: 'claudecode25',
+    },
+    {
+      name: 'Cursor',
+      year: '2024',
+      description: 'Editor-integrated agent mode reshaped IDEs',
+      screenshotClass: 'cursor24',
+    },
+    {
+      name: 'MCP Registry',
+      year: '2025',
+      description: 'Open protocol for agent-to-tool connections',
+      screenshotClass: 'mcp25',
     },
   ],
 };

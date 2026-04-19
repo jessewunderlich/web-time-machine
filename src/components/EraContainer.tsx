@@ -3,6 +3,7 @@
 import ScrollProvider from './ScrollProvider';
 import EraTransition from './EraTransition';
 import KeyboardNav from './KeyboardNav';
+import HelpModal from './HelpModal';
 import SoundToggle from './SoundToggle';
 import ProgressBar from './ProgressBar';
 import EraNav from './EraNav';
@@ -18,6 +19,7 @@ import Era2005 from './eras/Era2005';
 import Era2010 from './eras/Era2010';
 import Era2015 from './eras/Era2015';
 import Era2021 from './eras/Era2021';
+import Era2026 from './eras/Era2026';
 import styles from '../styles/era-container.module.css';
 
 export default function EraContainer() {
@@ -32,6 +34,7 @@ export default function EraContainer() {
       <ProgressBar />
       <EraNav />
       <KeyboardNav />
+      <HelpModal />
       <SoundToggle />
 
       {/* Single page-level <main> landmark wraps every era + the intro splash.
@@ -119,8 +122,19 @@ export default function EraContainer() {
         label="The AI era begins"
       />
 
-      {/* Era 7: 2021–2026 */}
+      {/* Era 7: 2021–2025 */}
       <Era2021 />
+
+      <EraTransition
+        fromYear="2025"
+        toYear="2026"
+        fromColor="#050510"
+        toColor="#0a0a0f"
+        label="The browser stopped being the destination"
+      />
+
+      {/* Era 8: 2026 (the agentic era) */}
+      <Era2026 />
 
       </main>
 

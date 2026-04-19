@@ -9,7 +9,7 @@
 // this intentionally flat — no CSS modules, no @media, only inline styles
 // on `div`-like elements with explicit `display`.
 
-export type EraId = '1991' | '1996' | '2000' | '2005' | '2010' | '2015' | '2021';
+export type EraId = '1991' | '1996' | '2000' | '2005' | '2010' | '2015' | '2021' | '2026';
 
 type EraCardData = {
   year: string;
@@ -92,6 +92,19 @@ export const ERA_CARDS: Record<EraId, EraCardData> = {
     bgEnd: '#241540',
     fontFamily: 'sans-serif',
     accentChar: '\u2728',
+  },
+  '2026': {
+    year: '2026',
+    label: 'The Agentic Era',
+    tagline: 'Tool loops. MCP. The browser stopped being the destination.',
+    color: '#6ae2ff',
+    bgStart: '#07070b',
+    bgEnd: '#101028',
+    fontFamily: 'monospace',
+    // Using '>' instead of an arrow glyph because Satori (Next.js OG
+    // renderer) renders Unicode arrows (▸, →, etc.) as a missing-glyph
+    // box in its default font bundle. ASCII carets render reliably.
+    accentChar: '>',
   },
 };
 
@@ -213,7 +226,7 @@ export function EraCard({ eraId }: { eraId: EraId }) {
         }}
       >
         <div style={{ display: 'flex' }}>
-          1991 · 1996 · 2000 · 2005 · 2010 · 2015 · 2021
+          1991 · 1996 · 2000 · 2005 · 2010 · 2015 · 2021 · 2026
         </div>
         <div style={{ display: 'flex', color: era.color }}>
           A visual history of the web

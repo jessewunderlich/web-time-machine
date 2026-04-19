@@ -3,7 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import styles from '../../styles/browser-chrome.module.css';
 
-type Era = '1991' | '1996' | '2000' | '2005' | '2010' | '2015' | '2021';
+type Era = '1991' | '1996' | '2000' | '2005' | '2010' | '2015' | '2021' | '2026';
 
 interface BrowserChromeProps {
   era: Era;
@@ -67,6 +67,16 @@ const ERA_CONFIG: Record<Era, EraChromeConfig> = {
     topBg: '#1a1a2e',
     topColor: '#ccc',
     borderColor: '#333',
+  },
+  '2026': {
+    // Terminal-first: Era 2026's "browser" is a terminal because the
+    // dominant dev surface isn't a browser anymore. Keeping the chrome
+    // component for visual consistency across eras.
+    name: 'Claude Code',
+    url: '~/projects/app/src',
+    topBg: '#0a0a0f',
+    topColor: '#d0d0dc',
+    borderColor: '#2a2a35',
   },
 };
 

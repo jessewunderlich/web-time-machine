@@ -1,10 +1,21 @@
 'use client';
 
 import { useState } from 'react';
+import { track } from '@vercel/analytics';
 import SoundEngine from './SoundEngine';
 
 export default function SoundToggle() {
   const [enabled, setEnabled] = useState(false);
+
+  const handleToggle = () => {
+    setEnabled((v) => {
+      const next = !v;
+      // Tracks whether anyone ever turns sound on. Answers "is the ambient
+      // synth worth the effort or should we cut it?".
+      track('sound_toggle', { enabled: next ? 'on' : 'off' });
+      return next;
+    });
+  };
 
   return (
     <>
@@ -16,7 +27,7 @@ export default function SoundToggle() {
         type="button"
         aria-label={enabled ? 'Mute ambient sound' : 'Enable ambient sound'}
         aria-pressed={enabled}
-        onClick={() => setEnabled((v) => !v)}
+        onClick={handleToggle}
         style={{
           position: 'fixed',
           bottom: '1.5rem',

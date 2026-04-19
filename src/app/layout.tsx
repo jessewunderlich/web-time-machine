@@ -1,5 +1,7 @@
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
+import { Analytics } from '@vercel/analytics/next';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
 
 const inter = Inter({
@@ -42,7 +44,16 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       {/* No manual <head> needed — Next.js injects viewport, charset, and
        * metadata tags automatically from the exported `metadata` object.
        * A manual viewport meta here caused a duplicate in the rendered HTML. */}
-      <body>{children}</body>
+      <body>
+        {children}
+        {/* Vercel Analytics — cookieless, GDPR-compliant, free tier.
+         * Ships only on production deploys (no-op in dev). Tracks page
+         * views + any custom events we fire via track(). */}
+        <Analytics />
+        {/* Speed Insights — real-user Web Vitals from actual visitors.
+         * Complements Lighthouse synthetic scores with field data. */}
+        <SpeedInsights />
+      </body>
     </html>
   );
 }

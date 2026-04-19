@@ -12,7 +12,8 @@ const ERAS = [
   { id: 'era-2005', label: '2005–2009', year: '2005', eraStyle: 'gradient' as const },
   { id: 'era-2010', label: '2010–2014', year: '2010', eraStyle: 'flat'     as const },
   { id: 'era-2015', label: '2015–2020', year: '2015', eraStyle: 'ring'     as const },
-  { id: 'era-2021', label: '2021–Now',  year: '2021', eraStyle: 'glass'    as const },
+  { id: 'era-2021', label: '2021–2025', year: '2021', eraStyle: 'glass'    as const },
+  { id: 'era-2026', label: '2026–Now',  year: '2026', eraStyle: 'agentic' as const },
 ] as const;
 
 type EraStyleKey = (typeof ERAS)[number]['eraStyle'];
@@ -27,6 +28,9 @@ const DOT_STYLE_CLASS: Record<EraStyleKey, string> = {
   flat:     styles.dotFlat,
   ring:     styles.dotRing,
   glass:    styles.dotGlass,
+  // Era 2026 terminal/agent aesthetic — reuse the glass style for now.
+  // Could get a dedicated .dotAgentic treatment later.
+  agentic:  styles.dotGlass,
 };
 
 export default function EraNav() {

@@ -402,6 +402,49 @@
   line-height: 14px;
 }
 
+/* ─── Era 2026 cards (terminal-themed, monospace log aesthetic) ─── */
+.claudecode25 {
+  background: #0a0a0f;
+  border-top: 1px solid rgba(106, 226, 255, 0.2);
+}
+.claudecode25::before {
+  content: '$ claude\A> add dark mode\A▸ reading 4 files\A▸ writing patch\A✓ 12 tests passed\A⏙ done — +18 −14';
+  white-space: pre-wrap;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 9px;
+  color: #6ae2ff;
+  padding: 10px;
+  line-height: 14px;
+}
+
+.cursor24 {
+  background: linear-gradient(180deg, #1a1a1f 0%, #0a0a0f 100%);
+  border-top: 1px solid rgba(168, 120, 255, 0.2);
+}
+.cursor24::before {
+  content: '⌨ cursor\Aagent · bg worker #3\A▸ analyzing repo\A▸ drafting changes\A▸ awaiting review\A  ⌚ 00:04:17';
+  white-space: pre-wrap;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 9px;
+  color: #a878ff;
+  padding: 10px;
+  line-height: 14px;
+}
+
+.mcp25 {
+  background: #0f0f14;
+  border-top: 1px solid rgba(52, 211, 153, 0.2);
+}
+.mcp25::before {
+  content: '{\A  "protocol": "mcp",\A  "version": "2025-11",\A  "servers": 247,\A  "tools": 1840\A}';
+  white-space: pre-wrap;
+  font-family: "JetBrains Mono", "Courier New", monospace;
+  font-size: 9px;
+  color: #34d399;
+  padding: 10px;
+  line-height: 14px;
+}
+
 /* ─── Card captions ───────────────────────────────────────────────── */
 .caption {
   padding: 8px 10px 10px;

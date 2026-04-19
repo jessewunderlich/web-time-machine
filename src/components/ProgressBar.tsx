@@ -3,6 +3,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { track } from '@vercel/analytics';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { navigateWithTransition, willUseViewTransition } from '../lib/view-transition';
 import styles from '../styles/progress-bar.module.css';
@@ -23,6 +24,7 @@ const ERAS = [
   { id: 'era-2010', label: '2010', color: '#1abc9c' },
   { id: 'era-2015', label: '2015', color: '#e0e0e0' },
   { id: 'era-2021', label: '2021', color: '#8b5cf6' },
+  { id: 'era-2026', label: '2026', color: '#6ae2ff' },
 ] as const;
 
 type EraId = (typeof ERAS)[number]['id'];
@@ -78,12 +80,24 @@ export default function ProgressBar() {
   // IntersectionObserver to track which era is currently visible
   useEffect(() => {
     const observers: IntersectionObserver[] = [];
+    // De-dupe analytics: only fire era_entered the first time a visitor
+    // reaches each era in the session. Repeated scroll-by-ness isn't
+    // interesting and would inflate event counts.
+    const seen = new Set<EraId>();
     ERAS.forEach(({ id }) => {
       const el = document.getElementById(id);
       if (!el) return;
       const obs = new IntersectionObserver(
         ([entry]) => {
-          if (entry.isIntersecting) setCurrentEra(id);
+          if (entry.isIntersecting) {
+            setCurrentEra(id);
+            if (!seen.has(id)) {
+              seen.add(id);
+              // Custom Vercel Analytics event. No PII — just the era id.
+              // Lets us answer "do people reach era 2021?" with field data.
+              track('era_entered', { era: id });
+            }
+          }
         },
         { threshold: 0.3 }
       );

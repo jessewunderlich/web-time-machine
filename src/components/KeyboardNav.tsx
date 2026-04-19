@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { navigateWithTransition, willUseViewTransition } from '../lib/view-transition';
 
@@ -12,16 +12,15 @@ const ERA_IDS = [
   'era-2010',
   'era-2015',
   'era-2021',
+  'era-2026',
 ] as const;
 
+// KeyboardNav owns the keydown handlers for arrow / number-key era
+// navigation. The visible "press ? for shortcuts" hint + full help modal
+// live in HelpModal; this component renders no UI so it stays a pure
+// behavior component.
 export default function KeyboardNav() {
-  const [showHint, setShowHint] = useState(true);
   const reducedMotion = useReducedMotion();
-
-  useEffect(() => {
-    const timer = setTimeout(() => setShowHint(false), 3000);
-    return () => clearTimeout(timer);
-  }, []);
 
   useEffect(() => {
     const getCurrentIndex = (): number => {
@@ -78,7 +77,7 @@ export default function KeyboardNav() {
       } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
         e.preventDefault();
         scrollAdjacent(Math.max(getCurrentIndex() - 1, 0));
-      } else if (e.key >= '1' && e.key <= '7') {
+      } else if (e.key >= '1' && e.key <= '8') {
         scrollJump(parseInt(e.key, 10) - 1);
       }
     };
@@ -87,29 +86,5 @@ export default function KeyboardNav() {
     return () => window.removeEventListener('keydown', onKey);
   }, [reducedMotion]);
 
-  return (
-    <div
-      aria-hidden="true"
-      style={{
-        position: 'fixed',
-        bottom: '5rem',
-        left: '50%',
-        transform: 'translateX(-50%)',
-        background: 'rgba(0,0,0,0.8)',
-        backdropFilter: 'blur(4px)',
-        color: '#fff',
-        padding: '0.5rem 1rem',
-        borderRadius: '6px',
-        fontSize: '0.75rem',
-        fontFamily: 'monospace',
-        zIndex: 9000,
-        pointerEvents: 'none',
-        transition: 'opacity 0.8s ease',
-        opacity: showHint ? 1 : 0,
-        whiteSpace: 'nowrap',
-      }}
-    >
-      ← → Navigate eras · 1–7 Jump to era
-    </div>
-  );
+  return null;
 }
