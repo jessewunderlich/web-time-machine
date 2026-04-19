@@ -94,7 +94,7 @@ export default function HelpModal() {
         type="button"
         className="help-hint"
         onClick={() => setOpen(true)}
-        aria-label="Show keyboard shortcuts"
+        aria-label="press ? for shortcuts"
         style={{
           position: 'fixed',
           bottom: '1.5rem',

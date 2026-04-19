@@ -126,8 +126,7 @@ You are visitor number:
             <hr className={styles.hr} />
 
             <p className={styles.paragraph}>
-              <strong style={{ color: '#ff00ff' }}>GeoCities</strong> (1994–2009) was a web
-              hosting service that let anyone build their own homepage — for free! Organized into
+              <strong style={{ color: '#ff00ff' }}>GeoCities</strong>{' '}(1994–2009) was a web hosting service that let anyone build their own homepage — for free! Organized into
               &quot;neighborhoods&quot; themed by interest, it was the first time millions of regular
               people could publish on the web. At its peak in 1999, GeoCities was the third-most
               visited website on the internet.

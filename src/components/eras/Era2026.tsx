@@ -288,22 +288,10 @@ export default function Era2026() {
                 it&apos;s a live log of structured operations.
               </p>
               <ul className={styles.contentList}>
-                <li>
-                  <strong>Claude Code</strong> — Anthropic&apos;s terminal-native
-                  agent, GA May 2025
-                </li>
-                <li>
-                  <strong>Cursor agent mode</strong> — editor-integrated
-                  background workers
-                </li>
-                <li>
-                  <strong>Devin</strong> — Cognition&apos;s autonomous engineer,
-                  launched March 2024
-                </li>
-                <li>
-                  <strong>Operator / ChatGPT Agent Mode</strong> — browser-use
-                  agents for general tasks
-                </li>
+                <li><strong>Claude Code</strong> — Anthropic&apos;s terminal-native agent, GA May 2025</li>
+                <li><strong>Cursor agent mode</strong> — editor-integrated background workers</li>
+                <li><strong>Devin</strong> — Cognition&apos;s autonomous engineer, launched March 2024</li>
+                <li><strong>Operator / ChatGPT Agent Mode</strong> — browser-use agents for general tasks</li>
               </ul>
             </div>
 
@@ -320,10 +308,7 @@ export default function Era2026() {
               </p>
               <p className={styles.contentText}>
                 In December 2025 Anthropic donated MCP to the newly formed{' '}
-                <strong>Agentic AI Foundation</strong> under the Linux
-                Foundation, removing single-vendor control from the protocol.
-                97M+ monthly SDK downloads across Python and TypeScript by
-                early 2026.
+                <strong>Agentic AI Foundation</strong>{' '}under the Linux Foundation, removing single-vendor control from the protocol. 97M+ monthly SDK downloads across Python and TypeScript by early 2026.
               </p>
             </div>
 
@@ -332,9 +317,7 @@ export default function Era2026() {
                 What it means for web design
               </h3>
               <p className={styles.contentText}>
-                UIs now have two audiences: <em>humans</em> who glance at a
-                streaming log and <em>other agents</em> that parse structured
-                output. &ldquo;Design&rdquo; expands to include tool schemas,
+                UIs now have two audiences: <em>humans</em> who glance at a streaming log and <em>other agents</em>{' '}that parse structured output. &ldquo;Design&rdquo; expands to include tool schemas,
                 error envelopes, streaming formats, and prompt scaffolds.
                 The visual metaphor of the era isn&apos;t a page — it&apos;s
                 a <em>trace</em>.
