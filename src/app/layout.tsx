@@ -24,8 +24,13 @@ export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: 'Web Time Machine — A Visual History of the Web',
   description:
-    'Scroll through 30+ years of web design history. Each era is styled authentically in the visual language of its time.',
-  keywords: ['web history', 'web design', 'geocities', 'flash era', 'web 2.0', 'css history'],
+    'Scroll through 35+ years of web design history. Each era is styled authentically in the visual language of its time.',
+  keywords: ['web history', 'web design', 'geocities', 'flash era', 'web 2.0', 'css history', 'agentic era', 'ai web design'],
+  alternates: {
+    types: {
+      'application/atom+xml': '/feed.atom',
+    },
+  },
   openGraph: {
     title: 'Web Time Machine',
     description: 'A visual history of the web, styled in each era\'s authentic design language.',

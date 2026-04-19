@@ -48,7 +48,7 @@ export default function EraContainer() {
         <div className={styles.splashEyebrow}>A Visual History</div>
         <h1 className={styles.splashTitle}>Web Time Machine</h1>
         <p className={styles.splashLede}>
-          Scroll through 30+ years of web design history — styled authentically in each
+          Scroll through 35 years of web design history — styled authentically in each
           era&apos;s visual language.
         </p>
         <div className={styles.splashHint}>
