@@ -28,6 +28,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       year: '1993',
       description: 'First browser with inline images — changed everything',
       screenshotClass: 'mosaic93',
+      screenshot: '/screenshots/mosaic93.webp',
     },
   ],
   '1996': [
@@ -173,18 +174,21 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       year: '2025',
       description: 'Terminal-native AI agent (GA May 2025)',
       screenshotClass: 'claudecode25',
+      screenshot: '/screenshots/claudecode25.webp',
     },
     {
       name: 'Cursor',
       year: '2024',
       description: 'Editor-integrated agent mode reshaped IDEs',
       screenshotClass: 'cursor24',
+      screenshot: '/screenshots/cursor24.webp',
     },
     {
       name: 'MCP Registry',
       year: '2025',
       description: 'Open protocol for agent-to-tool connections',
       screenshotClass: 'mcp25',
+      screenshot: '/screenshots/mcp25.webp',
     },
   ],
 };
