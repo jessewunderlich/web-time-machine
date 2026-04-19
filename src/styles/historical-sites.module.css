@@ -107,15 +107,29 @@
 .mosaic93 {
   background: #c0c0c0;
   border: 2px inset #999;
+  display: flex;
+  flex-direction: column;
 }
 .mosaic93::before {
-  content: '▤ NCSA Mosaic for X 2.4\A━━━━━━━━━━━━━━━━━━\A🌐 Welcome to NCSA Mosaic\Aan Internet information\Abrowser and World Wide\AWeb client.';
-  white-space: pre-wrap;
+  content: '▤ File  Edit  Options  Navigate  Annotate  Help';
+  display: block;
   font-family: 'Courier New', monospace;
-  font-size: 10px;
+  font-size: 8px;
   color: #000;
+  background: #d4d0c8;
+  border-bottom: 1px solid #808080;
+  padding: 2px 4px;
+}
+.mosaic93::after {
+  content: 'NCSA Mosaic\A━━━━━━━━━━━━━━━━━━\A🌐 Welcome to NCSA Mosaic,\Aan Internet information\Abrowser and World Wide\AWeb client.\A\AStarting Points:\A• NCSA Home Page\A• What\'s New';
+  white-space: pre-wrap;
+  font-family: 'Times New Roman', serif;
+  font-size: 10px;
+  color: #00008b;
   padding: 6px;
-  line-height: 16px;
+  line-height: 14px;
+  flex: 1;
+  background: #fff;
 }
 
 /* === 1996 Era === */
@@ -135,24 +149,30 @@
 
 .yahoo97 {
   background: #fff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .yahoo97::before {
-  content: 'Yahoo!\A━━━━━━━━━━\A• Arts & Humanities\A• Business & Economy\A• Computers & Internet\A• Education\A• Entertainment\A• Government';
-  white-space: pre-wrap;
-  font-family: Arial, sans-serif;
-  font-size: 10px;
-  color: #000;
-  padding: 6px;
-  line-height: 15px;
+  content: 'Yahoo!';
+  font-family: 'Arial Black', Impact, sans-serif;
+  font-size: 28px;
+  font-weight: 900;
+  color: #f00;
+  margin-top: 8px;
+  letter-spacing: -1px;
 }
 .yahoo97::after {
-  content: 'Yahoo!';
-  position: absolute;
-  top: 4px;
-  left: 8px;
-  font-family: Impact, sans-serif;
-  font-size: 16px;
-  color: #f00;
+  content: '[ Search _____________________ ]\A\A• Arts & Humanities    • News & Media\A• Business & Economy  • Recreation\A• Computers & Internet • Reference\A• Education            • Science\A• Entertainment        • Social Science';
+  white-space: pre-wrap;
+  font-family: Arial, sans-serif;
+  font-size: 9px;
+  color: #0000cc;
+  text-decoration: underline;
+  padding: 6px 10px;
+  line-height: 13px;
+  text-align: left;
+  width: 100%;
 }
 
 .geocities97 {
@@ -227,15 +247,29 @@
 /* === 2005 Era === */
 .myspace05 {
   background: #003366;
+  display: flex;
+  flex-direction: column;
 }
 .myspace05::before {
-  content: 'MySpace\A━━━━━━━━━\ATom\'s Profile\A\A♫ Now Playing:\A  Blink 182 — All The Small\A  Things\A\AFriends: 847,293';
+  content: 'MySpace   Home | Browse | Search | Mail';
+  display: block;
+  font-family: Verdana, sans-serif;
+  font-size: 8px;
+  color: #fff;
+  background: #003366;
+  border-bottom: 2px solid #ff8800;
+  padding: 4px 6px;
+}
+.myspace05::after {
+  content: 'Tom\'s Profile\A━━━━━━━━━━━━\A👤 Tom  |  Male  |  32\A    Los Angeles, CA\A\A♫ Now Playing:\A  Blink 182 — All The\A  Small Things\A\AFriends: 847,293';
   white-space: pre-wrap;
   font-family: Verdana, sans-serif;
   font-size: 9px;
   color: #fff;
-  padding: 8px;
-  line-height: 14px;
+  padding: 6px;
+  line-height: 13px;
+  flex: 1;
+  background: linear-gradient(180deg, #003366 0%, #001a33 100%);
 }
 
 .youtube05 {
@@ -280,16 +314,29 @@
 }
 
 .bootstrap11 {
-  background: #2c2c2c;
+  background: linear-gradient(135deg, #563d7c 0%, #6f42c1 100%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 .bootstrap11::before {
-  content: 'Bootstrap\Afrom Twitter\A━━━━━━━━━━━━━━━\ASimple and flexible HTML,\ACSS, and JavaScript\Afor popular UI components.\A\A[Download Bootstrap] [View on GitHub]';
+  content: 'Bootstrap';
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 26px;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+.bootstrap11::after {
+  content: 'Build responsive, mobile-first\Aprojects on the web.\A\A[Get Started]  [Download]';
   white-space: pre-wrap;
   font-family: 'Helvetica Neue', sans-serif;
-  font-size: 9px;
-  color: #fff;
-  padding: 10px;
-  line-height: 14px;
+  font-size: 10px;
+  color: rgba(255,255,255,0.8);
+  text-align: center;
+  margin-top: 6px;
+  line-height: 15px;
 }
 
 .flatui13 {
@@ -364,29 +411,54 @@
 /* === 2021 Era === */
 .chatgpt22 {
   background: #343541;
+  display: flex;
+  flex-direction: column;
 }
 .chatgpt22::before {
-  content: '◉ ChatGPT\A━━━━━━━━━━━━━━━\A\A🧑 Write me a haiku about\A   the web\A\A🤖 Pixels dance and glow\A   Links connect the scattered\A   thoughts — One web, all of us';
+  content: '○ ChatGPT';
+  display: block;
+  font-family: -apple-system, sans-serif;
+  font-size: 11px;
+  font-weight: 600;
+  color: #ececf1;
+  padding: 8px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.chatgpt22::after {
+  content: '🧑 Write me a haiku\A    about the web\A\A🤖 Pixels dance and glow,\A    Links connect the scattered\A    thoughts — One web, all of us.\A\A○ Regenerate response';
   white-space: pre-wrap;
-  font-family: 'Söhne', -apple-system, sans-serif;
+  font-family: -apple-system, sans-serif;
   font-size: 9px;
   color: #d1d5db;
   padding: 10px;
   line-height: 14px;
+  flex: 1;
 }
 
 .vercel22 {
   background: #000;
   border: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
 }
 .vercel22::before {
-  content: '▲ Vercel\A━━━━━━━━━━━━━━━\A\AYour Web. Accelerated.\A\ADeployments: 3\AFramework: Next.js 14\AStatus: ● Ready';
+  content: '▲ Vercel  Overview  Deployments  Analytics';
+  display: block;
+  font-family: 'Inter', -apple-system, sans-serif;
+  font-size: 8px;
+  color: #888;
+  padding: 6px 10px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+.vercel22::after {
+  content: 'web-time-machine\A\A● Production  •  25s  •  Ready\A\AFramework  Next.js 16\ANode.js    v25\ARegion     iad1\A\ADeployments\A────────────────────\A● main  25s  Ready';
   white-space: pre-wrap;
   font-family: 'Inter', -apple-system, sans-serif;
   font-size: 9px;
   color: #eee;
   padding: 10px;
-  line-height: 14px;
+  line-height: 13px;
+  flex: 1;
 }
 
 .arc23 {
