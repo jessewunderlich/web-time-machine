@@ -30,6 +30,7 @@ export const metadata: Metadata = {
     'Scroll through 35+ years of web design history. Each era is styled authentically in the visual language of its time.',
   keywords: ['web history', 'web design', 'geocities', 'flash era', 'web 2.0', 'css history', 'agentic era', 'ai web design'],
   alternates: {
+    canonical: '/',
     types: {
       'application/atom+xml': '/feed.atom',
     },
