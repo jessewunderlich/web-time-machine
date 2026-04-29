@@ -12,6 +12,13 @@ interface SiteCard {
   screenshotClass: string;
   /** Path to a real screenshot in /public (e.g. '/screenshots/cern91.webp') */
   screenshot?: string;
+  /**
+   * Domain shown in the fake browser URL bar. If omitted we fall back to a
+   * derived string, but most real sites need an explicit value because their
+   * name already includes a TLD (apple.com, info.cern.ch) or is a product
+   * rather than a domain (Bootstrap → getbootstrap.com).
+   */
+  urlBar?: string;
 }
 
 const ERA_SITES: Record<EraKey, SiteCard[]> = {
@@ -22,6 +29,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'First website ever — Tim Berners-Lee at CERN',
       screenshotClass: 'cern91',
       screenshot: '/screenshots/cern91.webp',
+      urlBar: 'info.cern.ch',
     },
     {
       name: 'NCSA Mosaic',
@@ -29,6 +37,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'First browser with inline images — changed everything',
       screenshotClass: 'mosaic93',
       screenshot: '/screenshots/mosaic93.webp',
+      urlBar: 'ncsa.illinois.edu/mosaic',
     },
   ],
   '1996': [
@@ -38,6 +47,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'The legendary movie site — still live today',
       screenshotClass: 'spacejam96',
       screenshot: '/screenshots/spacejam96.webp',
+      urlBar: 'spacejam.com',
     },
     {
       name: 'Yahoo!',
@@ -45,6 +55,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'The original web directory and portal',
       screenshotClass: 'yahoo97',
       screenshot: '/screenshots/yahoo97.webp',
+      urlBar: 'yahoo.com',
     },
     {
       name: 'GeoCities',
@@ -52,29 +63,33 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Your neighborhood on the web',
       screenshotClass: 'geocities97',
       screenshot: '/screenshots/geocities97.webp',
+      urlBar: 'geocities.com',
     },
   ],
   '2000': [
     {
-      name: 'Newgrounds.com',
+      name: 'Newgrounds',
       year: '2000',
       description: 'Flash games and animations for the masses',
       screenshotClass: 'newgrounds00',
       screenshot: '/screenshots/newgrounds00.webp',
+      urlBar: 'newgrounds.com',
     },
     {
-      name: 'Apple.com',
+      name: 'Apple',
       year: '2001',
       description: 'Aqua UI — glossy pinstripes, gel buttons, translucency',
       screenshotClass: 'apple01',
       screenshot: '/screenshots/apple01.webp',
+      urlBar: 'apple.com',
     },
     {
-      name: 'Google.com',
+      name: 'Google',
       year: '2002',
       description: 'Radical simplicity in the age of portals',
       screenshotClass: 'google02',
       screenshot: '/screenshots/google02.webp',
+      urlBar: 'google.com',
     },
   ],
   '2005': [
@@ -84,6 +99,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Your profile, your HTML, your background music',
       screenshotClass: 'myspace05',
       screenshot: '/screenshots/myspace05.webp',
+      urlBar: 'myspace.com',
     },
     {
       name: 'YouTube',
@@ -91,6 +107,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Broadcast yourself — founded in a garage',
       screenshotClass: 'youtube05',
       screenshot: '/screenshots/youtube05.webp',
+      urlBar: 'youtube.com',
     },
     {
       name: 'Facebook',
@@ -98,6 +115,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'The feed-based social network that won',
       screenshotClass: 'facebook06',
       screenshot: '/screenshots/facebook06.webp',
+      urlBar: 'facebook.com',
     },
   ],
   '2010': [
@@ -107,6 +125,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Apple goes flat — skeuomorphism is dead',
       screenshotClass: 'ios7appstore',
       screenshot: '/screenshots/ios7appstore.webp',
+      urlBar: 'apple.com/ios/ios7',
     },
     {
       name: 'Bootstrap',
@@ -114,6 +133,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'The grid system that homogenized the web',
       screenshotClass: 'bootstrap11',
       screenshot: '/screenshots/bootstrap11.webp',
+      urlBar: 'getbootstrap.com',
     },
     {
       name: 'Flat UI',
@@ -121,15 +141,17 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Bold colors, thin fonts, zero shadows',
       screenshotClass: 'flatui13',
       screenshot: '/screenshots/flatui13.webp',
+      urlBar: 'designmodo.github.io/Flat-UI',
     },
   ],
   '2015': [
     {
-      name: 'Stripe.com',
+      name: 'Stripe',
       year: '2016',
       description: 'The gold standard of developer-focused design',
       screenshotClass: 'stripe16',
       screenshot: '/screenshots/stripe16.webp',
+      urlBar: 'stripe.com',
     },
     {
       name: 'Airbnb',
@@ -137,6 +159,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Large photos, generous whitespace, trust signals',
       screenshotClass: 'airbnb17',
       screenshot: '/screenshots/airbnb17.webp',
+      urlBar: 'airbnb.com',
     },
     {
       name: 'GitHub',
@@ -144,6 +167,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Dark mode arrives — the web wants to rest',
       screenshotClass: 'github18',
       screenshot: '/screenshots/github18.webp',
+      urlBar: 'github.com',
     },
   ],
   '2021': [
@@ -152,6 +176,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       year: '2022',
       description: 'The chat interface that changed everything',
       screenshotClass: 'chatgpt22',
+      urlBar: 'chat.openai.com',
     },
     {
       name: 'Vercel',
@@ -159,6 +184,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Glassmorphic dashboard for the edge-first web',
       screenshotClass: 'vercel22',
       screenshot: '/screenshots/vercel22.webp',
+      urlBar: 'vercel.com',
     },
     {
       name: 'Arc Browser',
@@ -166,6 +192,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Reimagining the browser as an OS',
       screenshotClass: 'arc23',
       screenshot: '/screenshots/arc23.webp',
+      urlBar: 'arc.net',
     },
   ],
   '2026': [
@@ -175,6 +202,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Terminal-native AI agent (GA May 2025)',
       screenshotClass: 'claudecode25',
       screenshot: '/screenshots/claudecode25.webp',
+      urlBar: 'claude.com/product/claude-code',
     },
     {
       name: 'Cursor',
@@ -182,6 +210,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Editor-integrated agent mode reshaped IDEs',
       screenshotClass: 'cursor24',
       screenshot: '/screenshots/cursor24.webp',
+      urlBar: 'cursor.com',
     },
     {
       name: 'MCP Registry',
@@ -189,6 +218,7 @@ const ERA_SITES: Record<EraKey, SiteCard[]> = {
       description: 'Open protocol for agent-to-tool connections',
       screenshotClass: 'mcp25',
       screenshot: '/screenshots/mcp25.webp',
+      urlBar: 'modelcontextprotocol.io',
     },
   ],
 };
@@ -214,7 +244,7 @@ export default function HistoricalSites({ era }: HistoricalSitesProps) {
                 <span className={`${styles.light} ${styles.lightGreen}`} />
               </div>
               <div className={styles.urlBar}>
-                {site.name.toLowerCase().replace(/\s+/g, '') + '.com'}
+                {site.urlBar ?? `${site.name.toLowerCase().replace(/[^a-z0-9]+/g, '')}.com`}
               </div>
             </div>
             {/* Screenshot: real image when available, CSS art fallback */}
