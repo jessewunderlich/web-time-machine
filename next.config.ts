@@ -30,9 +30,11 @@ const nextConfig: NextConfig = {
       {
         // Allow any third-party site to embed era widgets via iframe.
         // Main site pages keep the default X-Frame-Options: SAMEORIGIN.
+        // Next applies every matching headers() entry, so the baseline
+        // security headers from `/:path*` above already apply here —
+        // we only need to add the iframe-specific overrides.
         source: '/embed/:path*',
         headers: [
-          ...baseSecurityHeaders,
           {
             key: 'Content-Security-Policy',
             value: 'frame-ancestors *',
