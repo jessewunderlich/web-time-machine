@@ -30,8 +30,10 @@ export default function SoundToggle() {
         onClick={handleToggle}
         style={{
           position: 'fixed',
-          bottom: '1.5rem',
-          right: '1.5rem',
+          // Use safe-area-inset-bottom so the button clears iOS/Android
+          // gesture-navigation bars. Falls back to 1.5rem on desktop.
+          bottom: 'max(1.5rem, calc(env(safe-area-inset-bottom) + 0.75rem))',
+          right: 'max(1.5rem, env(safe-area-inset-right))',
           zIndex: 9001,
           background: 'rgba(0,0,0,0.75)',
           backdropFilter: 'blur(4px)',

@@ -147,6 +147,12 @@
   color: #404040;
   font-size: 11px;
   margin-left: auto;
+  /* Constrain long URLs on narrow viewports — the Lynx bar is flex, so the
+   * URL span needs min-width: 0 to shrink; truncate with ellipsis. */
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 /* ─── 1996 / 2000 — Win9x title bar ──────────────────────────────────── */
@@ -160,10 +166,21 @@
   color: #fff;
   font-weight: bold;
   font-family: Arial, sans-serif;
+  gap: 0.5rem;
+}
+/* Truncate the 'Internet Explorer 6 — [http://…]' title on narrow viewports
+ * so the title-bar controls don't get pushed off-screen. min-width: 0 is
+ * required for a flex child to shrink below its content width. */
+.winTitle > span {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 .winTitleBtns {
   display: flex;
   gap: 2px;
+  flex-shrink: 0;
 }
 
 /* ─── 1996 / 2000 — toolbar ──────────────────────────────────────────── */
@@ -390,4 +407,40 @@
 .arcMenu {
   color: rgba(255, 255, 255, 0.3);
   font-size: 14px;
+}
+
+/* ─── Mobile tightening (≤600px) ────────────────────────────────────────
+ * Every browser-chrome variant uses a flex row with an address/URL field.
+ * On phones these rows get pushed past the viewport when the URL string is
+ * long. Shrink paddings + font-sizes, ensure flex children can truncate. */
+@media (max-width: 600px) {
+  .lynxBar,
+  .winTitle,
+  .winToolbar,
+  .ffTabStrip,
+  .ffAddressBar,
+  .chrBar,
+  .safariBar,
+  .arcBar {
+    font-size: 10px;
+    padding-left: 6px;
+    padding-right: 6px;
+    gap: 4px;
+  }
+  .winAddr,
+  .ffUrlBox,
+  .chrOmnibox,
+  .safariUrl,
+  .arcUrl {
+    font-size: 10px;
+    min-width: 0;
+  }
+  /* Tab strips are decorative — don't let a long active tab title wrap. */
+  .ffTab {
+    padding: 3px 6px;
+    font-size: 10px;
+    max-width: 140px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
 }

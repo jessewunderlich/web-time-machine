@@ -164,7 +164,7 @@ export default function Era2015() {
               <li>2015 — React popularizes component architecture; ES6 lands</li>
               <li>2016 — Vue.js gains momentum as a &ldquo;progressive&rdquo; framework</li>
               <li>2017 — CSS Grid finally ships in all major browsers</li>
-              <li>2018 — GitHub goes dark mode; design systems proliferate</li>
+              <li>2018 — Design systems proliferate; WCAG 2.1 raises accessibility bar</li>
               <li>2019 — Figma displaces Sketch as the design tool of record</li>
               <li>2020 — Tailwind CSS gains critical mass; utility-first wins</li>
             </ul>
