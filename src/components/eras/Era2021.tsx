@@ -1,15 +1,11 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, useGSAP } from '../../lib/gsap';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
 import HistoricalSites from '../HistoricalSites';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import styles from '../../styles/era-2021.module.css';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const AI_MESSAGES = [
   { role: 'user', text: 'What is this website?' },

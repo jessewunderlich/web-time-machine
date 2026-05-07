@@ -1,11 +1,8 @@
 'use client';
 
 import { useRef, useEffect, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger } from '../lib/gsap';
 import { useReducedMotion } from '../hooks/useReducedMotion';
-
-gsap.registerPlugin(ScrollTrigger);
 
 interface EraTransitionProps {
   fromYear: string;

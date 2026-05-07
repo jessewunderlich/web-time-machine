@@ -1,14 +1,11 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { ScrollTrigger } from '../lib/gsap';
 import { track } from '@vercel/analytics';
 import { useReducedMotion } from '../hooks/useReducedMotion';
 import { navigateWithTransition, willUseViewTransition } from '../lib/view-transition';
 import styles from '../styles/progress-bar.module.css';
-
-gsap.registerPlugin(ScrollTrigger);
 
 /*
  * Scroll progress is driven by GSAP ScrollTrigger (universal fallback).
