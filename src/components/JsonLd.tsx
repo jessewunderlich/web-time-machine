@@ -7,6 +7,8 @@
  * rich results for queries like "history of web design."
  */
 
+import { SITE_URL as siteUrl } from '../lib/site';
+
 const ERAS = [
   {
     year: '1991',
@@ -65,8 +67,6 @@ const ERAS = [
       'Tool loops, MCP, Claude Code, and autonomous agents. The browser stops being the destination.',
   },
 ] as const;
-
-const siteUrl = 'https://web-time-machine-coral.vercel.app';
 
 function buildJsonLd() {
   return {

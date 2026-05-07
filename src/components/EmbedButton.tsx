@@ -3,7 +3,7 @@
 import { useState, useRef, useEffect } from 'react';
 import styles from '../styles/embed-button.module.css';
 
-const SITE_URL = 'https://web-time-machine-coral.vercel.app';
+import { SITE_URL } from '../lib/site';
 
 interface Props {
   era: string;

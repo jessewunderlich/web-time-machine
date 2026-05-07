@@ -1,6 +1,7 @@
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import EmbedEraClient from './EmbedEraClient';
+import { SITE_URL } from '../../../../lib/site';
 
 /**
  * /embed/era/[era] — Embeddable single-era widget.
@@ -47,13 +48,7 @@ export default async function EmbedEraPage({ params }: PageProps) {
   const { era } = await params;
   if (!VALID_ERAS.includes(era as EraId)) notFound();
 
-  const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-    ? process.env.NEXT_PUBLIC_SITE_URL
-    : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : 'https://web-time-machine-coral.vercel.app';
-
   return (
-    <EmbedEraClient era={era as EraId} siteUrl={siteUrl} />
+    <EmbedEraClient era={era as EraId} siteUrl={SITE_URL} />
   );
 }
