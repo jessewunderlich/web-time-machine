@@ -16,6 +16,23 @@ concurrency:
 jobs:
   # PR previews: wait for Vercel's preview deployment, then audit it.
   # Catches regressions BEFORE merge.
+  #
+  # ── Vercel deployment-protection setup (one-time) ─────────────────────────
+  # Vercel preview deployments require auth by default and return 401 to
+  # anonymous Lighthouse traffic. To enable PR audits:
+  #   1. Vercel dashboard → Project → Settings → Deployment Protection →
+  #      Protection Bypass for Automation → Add Secret. Copy the value.
+  #   2. GitHub repo → Settings → Secrets and variables → Actions → New
+  #      repository secret. Name: VERCEL_AUTOMATION_BYPASS_SECRET. Paste
+  #      the value.
+  # Without the secret, this job skips and the production job below still
+  # runs after merge. With the secret, Lighthouse appends the bypass query
+  # params on every URL and audits run normally against the preview.
+  #
+  # Why query params, not headers: Lighthouse CI's lighthouserc.json doesn't
+  # interpolate env vars, and treosh/lighthouse-ci-action has no direct
+  # extraHeaders input. Vercel's bypass works via query params with a
+  # set-cookie companion, so subsequent navigations carry the bypass through.
   pr-preview:
     if: github.event_name == 'pull_request'
     runs-on: ubuntu-latest
@@ -23,7 +40,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Check for Vercel bypass secret
+        id: bypass-check
+        run: |
+          if [ -n "${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" ]; then
+            echo "configured=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "configured=false" >> "$GITHUB_OUTPUT"
+            echo "::warning::VERCEL_AUTOMATION_BYPASS_SECRET not set; preview audit skipped. See workflow header for setup."
+          fi
+
       - name: Wait for Vercel preview
+        if: steps.bypass-check.outputs.configured == 'true'
         uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
         id: vercel-preview
         with:
@@ -32,17 +60,18 @@ jobs:
           check_interval: 5
 
       - name: Run Lighthouse against preview
+        if: steps.bypass-check.outputs.configured == 'true'
         uses: treosh/lighthouse-ci-action@v12
         with:
           urls: |
-            ${{ steps.vercel-preview.outputs.url }}
-            ${{ steps.vercel-preview.outputs.url }}/share/2000
+            ${{ steps.vercel-preview.outputs.url }}/?x-vercel-protection-bypass=${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}&x-vercel-set-bypass-cookie=true
+            ${{ steps.vercel-preview.outputs.url }}/share/2000?x-vercel-protection-bypass=${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}&x-vercel-set-bypass-cookie=true
           configPath: ./.lighthouserc.json
           uploadArtifacts: true
           temporaryPublicStorage: true
 
   # Main branch: audit production after the merge deploys, for trend tracking.
-  # Failures here mean a regression slipped through preview gating.
+  # Production URL is publicly accessible; no bypass needed.
   production:
     if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
@@ -50,7 +79,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Wait briefly for Vercel to deploy main. 5 min is enough for this
+      # Wait briefly for Vercel to deploy main. 90s is enough for this
       # project's build (~1-2 min typical).
       - name: Sleep 90s for Vercel main deploy
         run: sleep 90
