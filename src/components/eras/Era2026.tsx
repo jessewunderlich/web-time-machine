@@ -1,15 +1,11 @@
 'use client';
 
 import { useRef, useState, useEffect } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, useGSAP } from '../../lib/gsap';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
 import HistoricalSites from '../HistoricalSites';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import styles from '../../styles/era-2026.module.css';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 /**
  * Era 2026 — The Agentic Era.

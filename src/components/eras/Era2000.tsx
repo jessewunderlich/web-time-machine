@@ -1,15 +1,11 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useGSAP } from '@gsap/react';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { gsap, ScrollTrigger, useGSAP } from '../../lib/gsap';
 import BrowserChrome from '../browser-chrome/BrowserChrome';
 import HistoricalSites from '../HistoricalSites';
 import { useReducedMotion } from '../../hooks/useReducedMotion';
 import styles from '../../styles/era-2000.module.css';
-
-gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 export default function Era2000() {
   const eraRef = useRef<HTMLDivElement>(null);
