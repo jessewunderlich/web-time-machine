@@ -6,7 +6,7 @@
  * subscriber-retention channel.
  */
 
-const SITE_URL = 'https://web-time-machine-coral.vercel.app';
+import { SITE_URL } from '../../lib/site';
 const FEED_TITLE = 'Web Time Machine';
 const FEED_SUBTITLE = 'A visual history of the web — new eras and updates.';
 const AUTHOR = 'Jesse Wunderlich';

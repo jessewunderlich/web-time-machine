@@ -1,6 +1,5 @@
 import type { MetadataRoute } from 'next';
-
-const BASE = 'https://web-time-machine-coral.vercel.app';
+import { SITE_URL as BASE } from '../lib/site';
 
 const ERAS = [1991, 1996, 2000, 2005, 2010, 2015, 2021, 2026] as const;
 

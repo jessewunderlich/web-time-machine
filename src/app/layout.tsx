@@ -3,25 +3,13 @@ import { Inter } from 'next/font/google';
 import { Analytics } from '@vercel/analytics/next';
 import { SpeedInsights } from '@vercel/speed-insights/next';
 import './globals.css';
+import { SITE_URL } from '../lib/site';
 
 const inter = Inter({
   subsets: ['latin'],
   variable: '--font-inter',
   display: 'swap',
 });
-
-// Canonical production domain. VERCEL_URL returns the deployment-specific
-// subdomain (e.g. web-time-machine-abc123-user.vercel.app), which is wrong
-// for OG images and feed autodiscovery links — those must use the stable
-// alias that social scrapers and RSS readers will actually resolve.
-// VERCEL_ENV is 'production' on the main-branch deploy, 'preview' otherwise.
-const CANONICAL = 'https://web-time-machine-coral.vercel.app';
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL
-  ?? (process.env.VERCEL_ENV === 'production'
-    ? CANONICAL
-    : process.env.VERCEL_URL
-      ? `https://${process.env.VERCEL_URL}`
-      : CANONICAL);
 
 // viewport-fit=cover enables env(safe-area-inset-*) CSS variables so
 // fixed elements (SoundToggle button) can clear iOS/Android gesture bars.
@@ -32,7 +20,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: new URL(SITE_URL),
   title: 'Web Time Machine — A Visual History of the Web',
   description:
     'Scroll through 35+ years of web design history. Each era is styled authentically in the visual language of its time.',
