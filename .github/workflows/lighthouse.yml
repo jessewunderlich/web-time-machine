@@ -1,0 +1,66 @@
+name: Lighthouse CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+# Only one Lighthouse run per ref at a time. New pushes cancel in-flight runs
+# so PR feedback stays fast.
+concurrency:
+  group: lighthouse-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  # PR previews: wait for Vercel's preview deployment, then audit it.
+  # Catches regressions BEFORE merge.
+  pr-preview:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for Vercel preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        id: vercel-preview
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 300
+          check_interval: 5
+
+      - name: Run Lighthouse against preview
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            ${{ steps.vercel-preview.outputs.url }}
+            ${{ steps.vercel-preview.outputs.url }}/share/2000
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
+
+  # Main branch: audit production after the merge deploys, for trend tracking.
+  # Failures here mean a regression slipped through preview gating.
+  production:
+    if: github.event_name == 'push' || github.event_name == 'workflow_dispatch'
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+
+      # Wait briefly for Vercel to deploy main. 5 min is enough for this
+      # project's build (~1-2 min typical).
+      - name: Sleep 90s for Vercel main deploy
+        run: sleep 90
+
+      - name: Run Lighthouse against production
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          urls: |
+            https://web-time-machine-coral.vercel.app/
+            https://web-time-machine-coral.vercel.app/share/2000
+          configPath: ./.lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
