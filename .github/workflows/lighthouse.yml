@@ -25,9 +25,12 @@ jobs:
   #   2. GitHub repo → Settings → Secrets and variables → Actions → New
   #      repository secret. Name: VERCEL_AUTOMATION_BYPASS_SECRET. Paste
   #      the value.
-  # Without the secret, this job skips and the production job below still
-  # runs after merge. With the secret, Lighthouse appends the bypass query
-  # params on every URL and audits run normally against the preview.
+  # Without the secret, the preview audit is SKIPPED (not failed) and a notice
+  # is written to the PR's job summary so the skip is visible rather than
+  # silently green. The production job below is the real gate until the secret
+  # is configured — it audits prod on every merge to main. With the secret,
+  # Lighthouse appends the bypass query params on every URL and audits run
+  # normally against the preview, catching regressions before merge.
   #
   # Why query params, not headers: Lighthouse CI's lighthouserc.json doesn't
   # interpolate env vars, and treosh/lighthouse-ci-action has no direct
@@ -38,16 +41,28 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Check for Vercel bypass secret
         id: bypass-check
         run: |
           if [ -n "${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}" ]; then
             echo "configured=true" >> "$GITHUB_OUTPUT"
+            echo "✅ Vercel bypass secret present — auditing the preview deployment." >> "$GITHUB_STEP_SUMMARY"
           else
             echo "configured=false" >> "$GITHUB_OUTPUT"
             echo "::warning::VERCEL_AUTOMATION_BYPASS_SECRET not set; preview audit skipped. See workflow header for setup."
+            {
+              echo "### ⚠️ Lighthouse preview audit skipped"
+              echo ""
+              echo "\`VERCEL_AUTOMATION_BYPASS_SECRET\` is not configured, so this PR's"
+              echo "Vercel preview was **not** audited by Lighthouse. This check is green"
+              echo "by skip, not by passing."
+              echo ""
+              echo "Production is still audited on every merge to \`main\` (see the"
+              echo "\`production\` job). To enable pre-merge preview audits, add the secret"
+              echo "per the setup steps in the workflow header."
+            } >> "$GITHUB_STEP_SUMMARY"
           fi
 
       - name: Wait for Vercel preview
@@ -77,7 +92,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 10
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       # Wait briefly for Vercel to deploy main. 90s is enough for this
       # project's build (~1-2 min typical).
