@@ -19,7 +19,19 @@ interface FeedEntry {
   updated: string; // ISO 8601
 }
 
+// Newest entry first. `updated` must be a real ISO date for the change it
+// describes — feed readers sort and de-dupe on it, and the feed-level
+// <updated> is derived from ENTRIES[0]. When you ship something feed-worthy,
+// prepend an entry here with the actual ship date.
 const ENTRIES: FeedEntry[] = [
+  {
+    id: 'perf-screenshots-webp',
+    title: 'Faster loads: historical screenshots re-encoded to WebP',
+    summary:
+      'Every archived site screenshot is now true WebP — about 40% smaller overall, so the Notable Sites galleries paint quicker, especially on mobile.',
+    link: `${SITE_URL}/#era-2021`,
+    updated: '2026-05-31T00:00:00Z',
+  },
   {
     id: 'era-2026-launch',
     title: 'New Era: 2026 — The Agentic Era',
